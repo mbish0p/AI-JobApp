@@ -3,7 +3,7 @@ import React from 'react'
 const SuggeestAnswer = (props) => {
 
     const clickHandler = () => {
-        props.choosenOption(props.values.fields.title.stringValue)
+        props.choosenOption(props.values.fields.title.stringValue, props.id)
     }
 
     return (

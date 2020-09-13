@@ -1,5 +1,6 @@
 import {
     SAVE_MESSAGE,
+    DELETE_MESSAGE
 } from '../_actions/types';
 
 export default function (state = { messages: [] }, action) {
@@ -9,6 +10,13 @@ export default function (state = { messages: [] }, action) {
                 ...state,
                 messages: state.messages.concat(action.payload)
             }
+        case DELETE_MESSAGE: {
+            return {
+                messages: state.messages.filter((message) => {
+                    return message.id !== action.payload
+                })
+            }
+        }
         default:
             return state;
     }

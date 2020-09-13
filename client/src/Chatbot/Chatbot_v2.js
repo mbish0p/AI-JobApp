@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { saveMessage } from '../_actions/message_actions'
+import { saveMessage, deleteMessage } from '../_actions/message_actions'
 import Message from './Sections/Message'
 import SuggeestAnswer from './Sections/SuggestAnswer'
 import { List, Icon, Avatar } from 'antd';
@@ -111,13 +111,27 @@ const Chatbot = () => {
         }
     }
 
-    const choosenOption = (buttonTitle) => {
+    const choosenOption = (buttonTitle, id) => {
         console.log(buttonTitle)
+        console.log(id)
+        dispatch(deleteMessage(id))
+
+        const converstaion = {
+            id: uuidv4(),
+            who: 'User',
+            content: {
+                text: {
+                    text: buttonTitle
+                }
+            }
+        }
+        dispatch(saveMessage(converstaion))
+
     }
 
-    const renderSuggestedAnswer = (values) => {
+    const renderSuggestedAnswer = (values, id) => {
         return values.map((value, i) => {
-            return <SuggeestAnswer key={i} values={value.structValue} choosenOption={choosenOption} />
+            return <SuggeestAnswer key={i} values={value.structValue} choosenOption={choosenOption} id={id} />
         })
     }
 
@@ -139,7 +153,7 @@ const Chatbot = () => {
                     <List.Item.Meta
                         avatar={<Avatar icon={AvatarSrc} />}
                         title={message.who}
-                        description={renderSuggestedAnswer(message.content.payload.fields.quick_replies.listValue.values)}
+                        description={renderSuggestedAnswer(message.content.payload.fields.quick_replies.listValue.values, message.id)}
                     />
                 </List.Item>
             </div>

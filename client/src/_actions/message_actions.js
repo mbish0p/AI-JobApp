@@ -11,8 +11,9 @@ export function saveMessage(dataToSubmit) {
     }
 }
 
-export function deleteMessage() {
+export function deleteMessage(messageId) {
     return {
-
+        type: DELETE_MESSAGE,
+        payload: messageId
     }
 }
