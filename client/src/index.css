@@ -18,7 +18,6 @@ body {
 
 .ant-list-item-meta-content {
   max-width: 500px;
-  overflow-x: scroll;
 }
 
 .ant-list-item-meta-title {
@@ -29,4 +28,5 @@ body {
   display: flex;
   color: black !important;
 }
+
 

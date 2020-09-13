@@ -18,7 +18,7 @@ function Chatbot() {
 
     const textQuery = async (text) => {
 
-        //  First  Need to  take care of the message I sent     
+        //  First  Need to  take care of the message I sent
         let conversation = {
             who: 'user',
             content: {
@@ -31,12 +31,12 @@ function Chatbot() {
         dispatch(saveMessage(conversation))
         // console.log('text I sent', conversation)
 
-        // We need to take care of the message Chatbot sent 
+        // We need to take care of the message Chatbot sent
         const textQueryVariables = {
             text
         }
         try {
-            //I will send request to the textQuery ROUTE 
+            //I will send request to the textQuery ROUTE
             const response = await Axios.post('/api/dialogflow/textQuery', textQueryVariables)
 
             for (let content of response.data.fulfillmentMessages) {
@@ -70,12 +70,12 @@ function Chatbot() {
 
     const eventQuery = async (event) => {
 
-        // We need to take care of the message Chatbot sent 
+        // We need to take care of the message Chatbot sent
         const eventQueryVariables = {
             event
         }
         try {
-            //I will send request to the textQuery ROUTE 
+            //I will send request to the textQuery ROUTE
             const response = await Axios.post('/api/dialogflow/eventQuery', eventQueryVariables)
             for (let content of response.data.fulfillmentMessages) {
 
@@ -110,7 +110,7 @@ function Chatbot() {
                 return alert('you need to type somthing first')
             }
 
-            //we will send request to text query route 
+            //we will send request to text query route
             textQuery(e.target.value)
 
 
@@ -119,20 +119,33 @@ function Chatbot() {
     }
 
     const renderCards = (cards) => {
-        return cards.map((card,i) => <Card key={i} cardInfo={card.structValue} />)
+        return cards.map((card, i) => <Card key={i} cardInfo={card.structValue} />)
     }
 
+    const renderReplies = (quick_replies) => {
+        return quick_replies.map((reply, i) => {
+            const title = reply.structValue.fields.title.stringValue
+            const payload = reply.structValue.fields.payload.stringValue
+            return (
+                <div key={i}>
+                    <button>{title}</button>
+                </div>
+            )
+        })
+    }
 
     const renderOneMessage = (message, i) => {
         console.log('message', message)
 
-        // we need to give some condition here to separate message kinds 
+        // we need to give some condition here to separate message kinds
 
-        // template for normal text 
+        // template for normal text
         if (message.content && message.content.text && message.content.text.text) {
+            console.log('chuj')
             return <Message key={i} who={message.who} text={message.content.text.text} />
         } else if (message.content && message.content.payload.fields.card) {
-
+            console.log()
+            console.log('tralall')
             const AvatarSrc = message.who === 'bot' ? <Icon type="robot" /> : <Icon type="smile" />
 
             return <div>
@@ -144,14 +157,25 @@ function Chatbot() {
                     />
                 </List.Item>
             </div>
+        } else if (message.content && message.content.payload.fields.quick_replies) {
+            console.log('dupa')
+            const AvatarSrc = message.who === 'bot' ? <Icon type="robot" /> : <Icon type="smile" />
+            const quick_replies = message.content.payload.fields.quick_replies.listValue.values
+
+            return (
+                <div>
+                    <List.Item style={{ padding: '1rem' }}>
+                        <List.Item.Meta
+                            avatar={<Avatar icon={AvatarSrc} />}
+                            title={message.who}
+                            description={renderReplies(quick_replies)}
+                        />
+                    </List.Item>
+                </div>
+            )
         }
 
-
-
-
-
-
-        // template for card message 
+        // template for card message
 
 
 

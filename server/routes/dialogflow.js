@@ -1,27 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const structjson = require('./structjson.js');
-const dialogflow = require('dialogflow');
-const uuid = require('uuid');
+const dialogflow = require('dialogflow')
+const structJSON = require('./structjson')
 
-const config = require('../config/keys');
+const config = require('../config/dev')
 
 const projectId = config.googleProjectID
-const sessionId = config.dialogFlowSessionID
+const sesionId = config.dialogFlowSessionID
 const languageCode = config.dialogFlowSessionLanguageCode
-
 
 // Create a new session
 const sessionClient = new dialogflow.SessionsClient();
-const sessionPath = sessionClient.sessionPath(projectId, sessionId);
-
-// We will make two routes 
-
-
-// Text Query Route
+const sessionPath = sessionClient.sessionPath(projectId, sesionId);
 
 router.post('/textQuery', async (req, res) => {
-    //We need to send some information that comes from the client to Dialogflow API 
+
     // The text query request.
     const request = {
         session: sessionPath,
@@ -39,18 +32,17 @@ router.post('/textQuery', async (req, res) => {
     const responses = await sessionClient.detectIntent(request);
     console.log('Detected intent');
     const result = responses[0].queryResult;
+    console.log(result.intent.displayName);
     console.log(`  Query: ${result.queryText}`);
     console.log(`  Response: ${result.fulfillmentText}`);
 
     res.send(result)
+
 })
 
 
-
-//Event Query Route
-
 router.post('/eventQuery', async (req, res) => {
-    //We need to send some information that comes from the client to Dialogflow API 
+
     // The text query request.
     const request = {
         session: sessionPath,
@@ -66,18 +58,13 @@ router.post('/eventQuery', async (req, res) => {
 
     // Send request and log result
     const responses = await sessionClient.detectIntent(request);
-    console.log('Detected intent');
+    console.log('Detected intent',);
     const result = responses[0].queryResult;
     console.log(`  Query: ${result.queryText}`);
     console.log(`  Response: ${result.fulfillmentText}`);
 
     res.send(result)
+
 })
-
-
-
-
-
-
 
 module.exports = router;
