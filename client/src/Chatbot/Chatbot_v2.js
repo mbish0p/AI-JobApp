@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { saveMessage } from '../_actions/message_actions'
 import Message from './Sections/Message'
+import SuggeestAnswer from './Sections/SuggestAnswer'
+import { List, Icon, Avatar } from 'antd';
+import { v4 as uuidv4 } from 'uuid'
 
 const Chatbot = () => {
 
@@ -16,6 +19,7 @@ const Chatbot = () => {
     const textQuery = async (text) => {
 
         let converstaion = {
+            id: uuidv4(),
             who: 'User',
             content: {
                 text: {
@@ -38,16 +42,17 @@ const Chatbot = () => {
             for (let content of response.data.fulfillmentMessages) {
 
                 converstaion = {
+                    id: uuidv4(),
                     who: 'Arnold',
                     content: content
                 }
-                console.log('response from Arnold ', converstaion)
             }
 
             dispatch(saveMessage(converstaion))
             console.log('Bot says', response)
         } catch (error) {
             converstaion = {
+                id: uuidv4(),
                 who: 'Arnold',
                 content: {
                     text: {
@@ -74,12 +79,14 @@ const Chatbot = () => {
             })
             const result = response.data.fulfillmentMessages[0]
             let converstaion = {
+                id: uuidv4(),
                 who: 'Arnold',
                 content: result
             }
             dispatch(saveMessage(converstaion))
         } catch (error) {
             let converstaion = {
+                id: uuidv4(),
                 who: 'Arnold',
                 content: {
                     text: {
@@ -104,6 +111,16 @@ const Chatbot = () => {
         }
     }
 
+    const choosenOption = (buttonTitle) => {
+        console.log(buttonTitle)
+    }
+
+    const renderSuggestedAnswer = (values) => {
+        return values.map((value, i) => {
+            return <SuggeestAnswer key={i} values={value.structValue} choosenOption={choosenOption} />
+        })
+    }
+
     const renderOneTextMessage = (message, i) => {
         console.log(message)
         if (message.content && message.content.text && message.content.text.text) {
@@ -114,7 +131,18 @@ const Chatbot = () => {
                     null
             )
         } else if (message.content && message.content.payload.fields) {
-            console.log('doopsko')
+
+            const AvatarSrc = message.who === 'bot' ? <Icon type="robot" /> : <Icon type="smile" />
+
+            return <div key={i}>
+                <List.Item style={{ padding: '1rem' }}>
+                    <List.Item.Meta
+                        avatar={<Avatar icon={AvatarSrc} />}
+                        title={message.who}
+                        description={renderSuggestedAnswer(message.content.payload.fields.quick_replies.listValue.values)}
+                    />
+                </List.Item>
+            </div>
         }
     }
 

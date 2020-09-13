@@ -29,4 +29,17 @@ body {
   color: black !important;
 }
 
+.suggest-answer--button{
+    border-color: #031994;
+    color: #031994;
+    margin:0.5rem 0.7rem;
+    border-radius: 20px;
+    padding: 2px 8px;
+    outline: none;
+}
+.suggest-answer--button:hover{
+    background: #041a96;
+    color: white;
+    cursor: pointer;
+}
 

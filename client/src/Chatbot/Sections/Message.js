@@ -1,6 +1,5 @@
 import React from 'react'
 import { List, Icon, Avatar } from 'antd';
-import { SmileTwoTone, } from '@ant-design/icons';
 
 function Message(props) {
 
