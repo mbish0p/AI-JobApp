@@ -9,6 +9,10 @@ body {
   max-height: 800px;
 }
 
+#root{
+    margin: 2rem 0
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -55,4 +59,64 @@ body {
     flex-direction: row-reverse;
 }
 
+.chat--header{
+    height: 50;
+    width: 500;
+    border: solid 3px black;
+    border-radius: 7px 7px 0px 0px;
+    margin: 0;
+    border-bottom: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
+.chat--minimize-button{
+    margin-right: 16px;
+    border: none;
+    background-color: inherit;
+    font-size: 2.4rem;
+    color: black;
+    width: 3.6rem;
+    outline: none;
+}
+
+.chat--header-minimize{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat--header-minimize button{
+    font-size: 1.7rem;
+    padding: 0;
+}
+
+.chat--minimize{
+    border: solid 3px black;
+    border-radius: 7px 7px 0px 0px;
+    width: 300px;
+    height: 50px;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+}
+
+.chat--minimize-button:hover{
+    cursor: pointer;
+}
+
+.fade-enter {
+    opacity: 0;
+}
+.fade-enter-active {
+    opacity: 1;
+    transition: opacity 600ms;
+}
+.fade-exit {
+    opacity: 1;
+}
+.fade-exit-active {
+    opacity: 0;
+    transition: opacity 600ms;
+}

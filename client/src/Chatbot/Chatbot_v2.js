@@ -1,18 +1,23 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { saveMessage, deleteMessage } from '../_actions/message_actions'
 import Message from './Sections/Message'
 import SuggeestAnswer from './Sections/SuggestAnswer'
-import { List, Icon, Avatar } from 'antd';
+import { List, Icon, Avatar, Typography } from 'antd';
 import { v4 as uuidv4 } from 'uuid'
+import { MinusOutlined, UpOutlined } from '@ant-design/icons';
+import { CSSTransition } from 'react-transition-group';
+
 
 const Chatbot = () => {
 
+    const { Title } = Typography;
+
     const dispatch = useDispatch()
     const messagesFromRedux = useSelector(state => state.message.messages)
-
     const messagesEndRef = useRef(null)
+    const [minimizeChat, setMinimizeChat] = useState(false)
 
 
     const scrollToBottom = () => {
@@ -146,6 +151,10 @@ const Chatbot = () => {
         })
     }
 
+    const minimizeChatTamplate = () => {
+        setMinimizeChat(!minimizeChat)
+    }
+
     const renderOneTextMessage = (message, i) => {
         console.log(message)
         if (message.content && message.content.text && message.content.text.text) {
@@ -184,21 +193,77 @@ const Chatbot = () => {
     }
 
     return (
-        <div>
-            <div style={{ height: '50px', width: 500, border: 'solid 3px black', borderRadius: '7px 7px 0px 0px', margin: 0, borderBottom: 'none' }} ></div>
-            <div style={{ height: '650px', width: 500, border: 'solid 3px black', borderRadius: '0px 0px 7px 7px', margin: 0 }}>
 
-                <div style={{ height: '599px', width: '100%', overflow: 'auto' }}>
-                    {renderMessages(messagesFromRedux)}
-                    <div ref={messagesEndRef} />
+        !minimizeChat ?
+            <CSSTransition
+                in={minimizeChat}
+                timeout={600}
+                classNames='fade'
+                appear
+            >
+                <div>
+                    <div>
+                        <div className='chat--header' >
+                            <Title level={2} style={{ margin: '4px 12px' }}><Icon type="robot" />  Arnold &nbsp;</Title>
+                            <button className='chat--minimize-button' onClick={minimizeChatTamplate}><MinusOutlined /></button>
+                        </div>
+                        <div style={{ height: '650px', width: 500, border: 'solid 3px black', borderRadius: '0px 0px 7px 7px', margin: 0 }}>
+
+                            <div style={{ height: '599px', width: '100%', overflow: 'auto' }}>
+                                {renderMessages(messagesFromRedux)}
+                                <div ref={messagesEndRef} />
+                            </div>
+                            <input className='mmm' style={{ width: '100%', height: '45px', borderRadius: '4px', margin: 0, padding: '5px', fontSize: '1rem' }}
+                                placeholder='Send a message'
+                                onKeyPress={sumbitHandler}
+                                type='text'
+                            />
+                        </div>
+                    </div>
                 </div>
-                <input style={{ width: '100%', height: '45px', borderRadius: '4px', margin: 0, padding: '5px', fontSize: '1rem' }}
-                    placeholder='Send a message'
-                    onKeyPress={sumbitHandler}
-                    type='text'
-                />
+            </CSSTransition>
+            :
+            <div className='chat--minimize'>
+                <div className='chat--header-minimize' >
+                    <Title level={2} style={{ margin: '4px 12px' }}><Icon type="robot" />  Arnold &nbsp;</Title>
+                    <button className='chat--minimize-button' onClick={minimizeChatTamplate}><UpOutlined /></button>
+                </div>
+                <div ref={messagesEndRef} />
             </div>
-        </div>
+
+        // <CSSTransition
+        //     in={minimizeChat}
+        //     timeout={600}
+        //     classNames='fade'
+        //     appear
+        // >
+        //     <div>
+        //         <div className='chat--header' >
+        //             <Title level={2} style={{ margin: '4px 12px' }}><Icon type="robot" />  Arnold &nbsp;</Title>
+        //             <button className='chat--minimize-button' onClick={minimizeChatTamplate}><MinusOutlined /></button>
+        //         </div>
+        //         <div style={{ height: '650px', width: 500, border: 'solid 3px black', borderRadius: '0px 0px 7px 7px', margin: 0 }}>
+
+        //             <div style={{ height: '599px', width: '100%', overflow: 'auto' }}>
+        //                 {renderMessages(messagesFromRedux)}
+        //                 <div ref={messagesEndRef} />
+        //             </div>
+        //             <input className='mmm' style={{ width: '100%', height: '45px', borderRadius: '4px', margin: 0, padding: '5px', fontSize: '1rem' }}
+        //                 placeholder='Send a message'
+        //                 onKeyPress={sumbitHandler}
+        //                 type='text'
+        //             />
+        //         </div>
+        //     </div>
+        //     <div className='chat--header-minimize' >
+        //         <Title level={2} style={{ margin: '4px 12px' }}><Icon type="robot" />  Arnold &nbsp;</Title>
+        //         <button className='chat--minimize-button' onClick={minimizeChatTamplate}><MinusOutlined /></button>
+        //     </div>
+        //     <div>
+
+        //     </div>
+
+        // </CSSTransition>
     )
 }
 
