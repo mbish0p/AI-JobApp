@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { saveMessage, deleteMessage } from '../_actions/message_actions'
@@ -12,9 +12,20 @@ const Chatbot = () => {
     const dispatch = useDispatch()
     const messagesFromRedux = useSelector(state => state.message.messages)
 
+    const messagesEndRef = useRef(null)
+
+
+    const scrollToBottom = () => {
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+    }
+
     useEffect(() => {
         eventQuery('welcomeToMyWebsite')
     }, [])
+
+    useEffect(() => {
+        scrollToBottom()
+    })
 
     const textQuery = async (text) => {
 
@@ -174,10 +185,12 @@ const Chatbot = () => {
 
     return (
         <div>
-            <div style={{ height: '650px', width: 500, border: 'solid 3px black', borderRadius: '7px', margin: 0 }}>
+            <div style={{ height: '50px', width: 500, border: 'solid 3px black', borderRadius: '7px 7px 0px 0px', margin: 0, borderBottom: 'none' }} ></div>
+            <div style={{ height: '650px', width: 500, border: 'solid 3px black', borderRadius: '0px 0px 7px 7px', margin: 0 }}>
 
                 <div style={{ height: '599px', width: '100%', overflow: 'auto' }}>
                     {renderMessages(messagesFromRedux)}
+                    <div ref={messagesEndRef} />
                 </div>
                 <input style={{ width: '100%', height: '45px', borderRadius: '4px', margin: 0, padding: '5px', fontSize: '1rem' }}
                     placeholder='Send a message'
