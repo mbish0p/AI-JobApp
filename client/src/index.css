@@ -43,3 +43,16 @@ body {
     cursor: pointer;
 }
 
+.user-message .ant-list-item-meta-avatar{
+    order: 5;
+    margin-right: 0;
+    margin-left: 16px;
+}
+
+.user-message .ant-list-item-meta-content .ant-list-item-meta-title,
+.user-message .ant-list-item-meta-content .ant-list-item-meta-description{
+    text-align: right;
+    flex-direction: row-reverse;
+}
+
+
