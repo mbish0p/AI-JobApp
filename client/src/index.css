@@ -95,7 +95,7 @@ body {
 .chat--minimize{
     border: solid 3px black;
     border-radius: 7px 7px 0px 0px;
-    width: 300px;
+    width: 350px;
     height: 50px;
     position: fixed;
     bottom: 16px;
@@ -104,6 +104,15 @@ body {
 
 .chat--minimize-button:hover{
     cursor: pointer;
+}
+
+.fade-appear{
+    opacity: 0;
+}
+
+.fade-appear .fade-appear-active{
+    opacity: 1;
+    transition: opacity 600ms;
 }
 
 .fade-enter {
