@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const dialogflow = require('dialogflow')
 const structJSON = require('./structjson')
+const serviceAccount = require('../config/arnoldbot-crte-cc8074304beb.json')
 
 const config = require('../config/dev')
 
@@ -10,7 +11,7 @@ const sesionId = config.dialogFlowSessionID
 const languageCode = config.dialogFlowSessionLanguageCode
 
 // Create a new session
-const sessionClient = new dialogflow.SessionsClient();
+const sessionClient = new dialogflow.SessionsClient({ credentials: serviceAccount });
 const sessionPath = sessionClient.sessionPath(projectId, sesionId);
 
 router.post('/textQuery', async (req, res) => {
