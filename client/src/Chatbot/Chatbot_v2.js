@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { saveMessage, deleteMessage } from '../_actions/message_actions'
 import Message from './Sections/Message'
 import SuggeestAnswer from './Sections/SuggestAnswer'
+import JobOfferForm from './Sections/JobOfferForm'
 import { List, Icon, Avatar, Typography } from 'antd';
 import { v4 as uuidv4 } from 'uuid'
 import { MinusOutlined, UpOutlined } from '@ant-design/icons';
@@ -128,27 +129,18 @@ const Chatbot = () => {
     }
 
     const choosenOption = (buttonTitle, id) => {
-        console.log(buttonTitle)
-        console.log(id)
         dispatch(deleteMessage(id))
-
-        const converstaion = {
-            id: uuidv4(),
-            who: 'User',
-            content: {
-                text: {
-                    text: buttonTitle
-                }
-            }
-        }
-        dispatch(saveMessage(converstaion))
-
+        textQuery(buttonTitle)
     }
 
     const renderSuggestedAnswer = (values, id) => {
         return values.map((value, i) => {
             return <SuggeestAnswer key={i} values={value.structValue} choosenOption={choosenOption} id={id} />
         })
+    }
+
+    const renderJobOfferForm = (content, id) => {
+        return <JobOfferForm content={content} />
     }
 
     const minimizeChatTamplate = () => {
@@ -164,7 +156,7 @@ const Chatbot = () => {
                     <Message key={i} who={message.who} text={message.content.text.text} /> :
                     null
             )
-        } else if (message.content && message.content.payload.fields) {
+        } else if (message.content && message.content.payload.fields && message.content.payload.fields.quick_replies) {
 
             const AvatarSrc = message.who === 'bot' ? <Icon type="robot" /> : <Icon type="smile" />
 
@@ -177,7 +169,22 @@ const Chatbot = () => {
                     />
                 </List.Item>
             </div>
+        } else if (message.content && message.content.payload.fields && message.content.payload.fields.create_job_form) {
+            const AvatarSrc = message.who === 'bot' ? <Icon type="robot" /> : <Icon type="smile" />
+
+            console.log('Job', message.content)
+            return <div key={i}>
+                <List.Item style={{ padding: '1rem' }}>
+                    <List.Item.Meta
+                        avatar={<Avatar icon={AvatarSrc} />}
+                        title={message.who}
+                        description={renderJobOfferForm(message.content.payload.fields.create_job_form.listValue.values[0].structValue, message.id)}
+                    />
+                </List.Item>
+            </div>
         }
+
+
     }
 
     const renderMessages = (messages) => {
