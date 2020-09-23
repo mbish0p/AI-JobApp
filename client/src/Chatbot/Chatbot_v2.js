@@ -139,8 +139,8 @@ const Chatbot = () => {
         })
     }
 
-    const renderJobOfferForm = (content, id) => {
-        return <JobOfferForm content={content} />
+    const renderJobOfferForm = (content) => {
+        return <JobOfferForm content={content} submitJobForm={() => textQuery("Submitted")} />
     }
 
     const minimizeChatTamplate = () => {
@@ -170,9 +170,10 @@ const Chatbot = () => {
                 </List.Item>
             </div>
         } else if (message.content && message.content.payload.fields && message.content.payload.fields.create_job_form) {
+
             const AvatarSrc = message.who === 'bot' ? <Icon type="robot" /> : <Icon type="smile" />
 
-            console.log('Job', message.content)
+            console.log('Job offer', message.content.payload.fields.create_job_form.listValue.values[0].structValue)
             return <div key={i}>
                 <List.Item style={{ padding: '1rem' }}>
                     <List.Item.Meta
