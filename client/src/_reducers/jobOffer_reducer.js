@@ -1,4 +1,16 @@
-import { SAVE_JOB_CATEGORY, SAVE_POSITION_NAME, SAVE_EXPERIENCE_LVL } from '../_actions/types'
+import {
+    SAVE_JOB_CATEGORY,
+    SAVE_POSITION_NAME,
+    SAVE_EXPERIENCE_LVL,
+    SAVE_CONTRACT_TYPE,
+    SAVE_CITY_ADDRESS,
+    SAVE_MAX_SALARY,
+    SAVE_MIN_SALARY,
+    SAVE_REMOTE_WORK,
+    SAVE_STREET_ADDRESS,
+    SAVE_DESCRIPTION
+}
+    from '../_actions/types'
 
 const initialState = {
     job_category: undefined,
@@ -30,6 +42,41 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 experience_level: action.payload
+            }
+        case SAVE_STREET_ADDRESS:
+            return {
+                ...state,
+                street: action.payload
+            }
+        case SAVE_CITY_ADDRESS:
+            return {
+                ...state,
+                city: action.payload
+            }
+        case SAVE_CONTRACT_TYPE:
+            return {
+                ...state,
+                contract_type: action.payload
+            }
+        case SAVE_REMOTE_WORK:
+            return {
+                ...state,
+                remote_work: action.payload
+            }
+        case SAVE_MIN_SALARY:
+            return {
+                ...state,
+                min_salary: action.payload
+            }
+        case SAVE_MAX_SALARY:
+            return {
+                ...state,
+                max_salary: action.payload
+            }
+        case SAVE_DESCRIPTION:
+            return {
+                ...state,
+                description: action.payload
             }
         default:
             return state

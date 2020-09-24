@@ -106,6 +106,9 @@ body {
     cursor: pointer;
 }
 
+
+
+
 .fade-appear{
     opacity: 0;
 }
@@ -129,3 +132,6 @@ body {
     opacity: 0;
     transition: opacity 600ms;
 }
+
+
+/* chat job offer styling */

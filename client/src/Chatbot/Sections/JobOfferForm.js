@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { saveJobCategory, saveExperienceLvl, savePositionName } from '../../_actions/jobOffer_action'
+import {
+    saveJobCategory,
+    saveExperienceLvl,
+    savePositionName,
+    saveCityAddress,
+    saveStreetAddress
+} from '../../_actions/jobOffer_action'
 
 
 const JobOfferForm = (props) => {
@@ -66,6 +72,39 @@ const JobOfferForm = (props) => {
                     </form>
                     <button onClick={submitSecondForm}>Submit</button>
                 </div>
+            )
+        case "2":
+            const [showAddressInput, setShowAddressInput] = useState(true)
+            const [cityInput, setCityInput] = useState('')
+            const [streetInput, setStreetInput] = useState('')
+
+            text = props.content.fields.text.stringValue
+
+            const submitAddressForm = (e) => {
+                e.preventDefault()
+
+                dispatch(saveStreetAddress(streetInput))
+                dispatch(saveCityAddress(cityInput))
+
+                props.submitJobForm()
+            }
+
+            return (
+                showAddressInput ?
+                    <div>
+                        <p>{text}</p>
+                        <form>
+                            <input value={cityInput} onChange={(e) => { setCityInput(e.target.value) }} />
+                            <input value={streetInput} onChange={(e) => { setStreetInput(e.target.value) }} />
+                            <button onClick={() => { setShowAddressInput(false) }}>X</button>
+                        </form>
+                        <button onClick={submitAddressForm}>Submit</button>
+                    </div> :
+                    <div>
+                        <p>{text}</p>
+                        <button onClick={() => { setShowAddressInput(true) }}>+</button>
+                        <button onClick={submitAddressForm}>Submit</button>
+                    </div>
             )
         default:
             console.log('default')
