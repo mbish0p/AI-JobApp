@@ -1,4 +1,4 @@
-import { SAVE_JOB_CATEGORY } from '../_actions/types'
+import { SAVE_JOB_CATEGORY, SAVE_POSITION_NAME, SAVE_EXPERIENCE_LVL } from '../_actions/types'
 
 const initialState = {
     job_category: undefined,
@@ -20,6 +20,16 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 job_category: action.payload
+            }
+        case SAVE_POSITION_NAME:
+            return {
+                ...state,
+                offer_title: action.payload
+            }
+        case SAVE_EXPERIENCE_LVL:
+            return {
+                ...state,
+                experience_level: action.payload
             }
         default:
             return state

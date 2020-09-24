@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { saveJobCategory } from '../../_actions/jobOffer_action'
+import { saveJobCategory, saveExperienceLvl, savePositionName } from '../../_actions/jobOffer_action'
 
 
 const JobOfferForm = (props) => {
@@ -12,7 +12,7 @@ const JobOfferForm = (props) => {
             const [selectValue, setSelectValue] = useState(undefined)
 
             let text = props.content.fields.text.stringValue
-            const selectChildern = props.content.fields.Select_input_childrens.listValue.values
+            let selectChildern = props.content.fields.Select_input_childrens.listValue.values
             console.log(selectChildern)
 
             const submitSelectForm = (event) => {
@@ -37,6 +37,36 @@ const JobOfferForm = (props) => {
                 </div>
             )
         case '1':
+
+            const [positionName, setPositionName] = useState('')
+            const [experienceLevel, setExperienceLevel] = useState(undefined)
+
+            text = props.content.fields.text.stringValue
+            selectChildern = props.content.fields.Select_input_childrens.listValue.values
+
+            const submitSecondForm = (event) => {
+                event.preventDefault()
+
+                dispatch(saveExperienceLvl(experienceLevel))
+                dispatch(savePositionName(positionName))
+
+                props.submitJobForm()
+            }
+            return (
+                <div>
+                    <p>{text}</p>
+                    <form>
+                        <input value={positionName} onChange={(event) => setPositionName(event.target.value)} />
+                        <select value={experienceLevel} onChange={(event) => setExperienceLevel(event.target.value)}>
+                            <option />
+                            {selectChildern.map((child, index) => {
+                                return <option key={index} value={child.stringValue.toLowerCase()}>{child.stringValue}</option>
+                            })}
+                        </select>
+                    </form>
+                    <button onClick={submitSecondForm}>Submit</button>
+                </div>
+            )
         default:
             console.log('default')
     }
