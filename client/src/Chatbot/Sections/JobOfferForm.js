@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import {
     saveJobCategory,
     saveExperienceLvl,
     savePositionName,
     saveCityAddress,
-    saveStreetAddress
+    saveStreetAddress,
+    saveRemoteWork
 } from '../../_actions/jobOffer_action'
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
+
 
 
 const JobOfferForm = (props) => {
@@ -105,6 +109,52 @@ const JobOfferForm = (props) => {
                         <button onClick={() => { setShowAddressInput(true) }}>+</button>
                         <button onClick={submitAddressForm}>Submit</button>
                     </div>
+            )
+        case "3":
+            const [sliderValue, setSliderValue] = useState(0)
+
+            text = props.content.fields.text.stringValue;
+            const marks = [
+                {
+                    value: 0,
+                    label: '0%',
+                },
+                {
+                    value: 100,
+                    label: '100%',
+                },
+            ];
+
+            function valuetext(value) {
+
+                // be aware of errors, cousing warning
+                setSliderValue(value)
+                return `{value}%`
+            }
+
+            const submitSliderForm = (e) => {
+                e.preventDefault()
+
+                dispatch(saveRemoteWork(sliderValue))
+                props.submitJobForm()
+            }
+
+            return (
+                <div>
+                    <p>{text}</p>
+                    <Typography id="discrete-slider-custom" gutterBottom>
+                        Remote work
+                    </Typography>
+                    <Slider
+                        defaultValue={0}
+                        getAriaValueText={valuetext}
+                        aria-labelledby="discrete-slider-custom"
+                        step={10}
+                        valueLabelDisplay="auto"
+                        marks={marks}
+                    />
+                    <button onClick={submitSliderForm}>Submit</button>
+                </div>
             )
         default:
             console.log('default')
