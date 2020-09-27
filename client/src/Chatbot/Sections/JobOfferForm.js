@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
     saveJobCategory,
@@ -6,7 +6,10 @@ import {
     savePositionName,
     saveCityAddress,
     saveStreetAddress,
-    saveRemoteWork
+    saveRemoteWork,
+    saveContractType,
+    saveMinSalary,
+    saveMaxSalary
 } from '../../_actions/jobOffer_action'
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
@@ -16,13 +19,27 @@ import Slider from '@material-ui/core/Slider';
 const JobOfferForm = (props) => {
     const dispatch = useDispatch()
     console.log(props.content)
+
+    const [selectValue, setSelectValue] = useState(undefined)
+    const [positionName, setPositionName] = useState('')
+    const [experienceLevel, setExperienceLevel] = useState(undefined)
+    const [showAddressInput, setShowAddressInput] = useState(true)
+    const [cityInput, setCityInput] = useState('')
+    const [streetInput, setStreetInput] = useState('')
+    const [sliderValue, setSliderValue] = useState(0)
+    const [contractType, setContractType] = useState(undefined)
+    const [minSalary, setMinSalary] = useState('')
+    const [maxSalary, setMaxSalary] = useState('')
+
+    let text = ''
+    let selectChildern = []
+
     switch (props.content.fields.Role.stringValue) {
         case '0':
 
-            const [selectValue, setSelectValue] = useState(undefined)
 
-            let text = props.content.fields.text.stringValue
-            let selectChildern = props.content.fields.Select_input_childrens.listValue.values
+            text = props.content.fields.text.stringValue
+            selectChildern = props.content.fields.Select_input_childrens.listValue.values
             console.log(selectChildern)
 
             const submitSelectForm = (event) => {
@@ -47,9 +64,6 @@ const JobOfferForm = (props) => {
                 </div>
             )
         case '1':
-
-            const [positionName, setPositionName] = useState('')
-            const [experienceLevel, setExperienceLevel] = useState(undefined)
 
             text = props.content.fields.text.stringValue
             selectChildern = props.content.fields.Select_input_childrens.listValue.values
@@ -78,9 +92,6 @@ const JobOfferForm = (props) => {
                 </div>
             )
         case "2":
-            const [showAddressInput, setShowAddressInput] = useState(true)
-            const [cityInput, setCityInput] = useState('')
-            const [streetInput, setStreetInput] = useState('')
 
             text = props.content.fields.text.stringValue
 
@@ -111,7 +122,6 @@ const JobOfferForm = (props) => {
                     </div>
             )
         case "3":
-            const [sliderValue, setSliderValue] = useState(0)
 
             text = props.content.fields.text.stringValue;
             const marks = [
@@ -155,6 +165,48 @@ const JobOfferForm = (props) => {
                     />
                     <button onClick={submitSliderForm}>Submit</button>
                 </div>
+            )
+        case "4":
+
+            text = props.content.fields.text.stringValue;
+            selectChildern = props.content.fields.Select_input_childrens.listValue.values
+
+            const submitSalaryForm = (event) => {
+                event.preventDefault()
+
+                dispatch(saveContractType(contractType))
+                dispatch(saveMinSalary(minSalary))
+                dispatch(saveMaxSalary(maxSalary))
+
+                props.submitJobForm()
+
+            }
+
+            return (
+                <div>
+                    <p>{text}</p>
+                    <form>
+                        <select value={contractType} onChange={(event) => setContractType(event.target.value)}>
+                            <option />
+                            {selectChildern.map((child, index) => {
+                                return <option key={index} value={child.stringValue.toLowerCase()}>{child.stringValue}</option>
+                            })}
+                        </select>
+
+                        <input value={minSalary} onChange={(e) => { setMinSalary(e.target.value) }} /> -
+                        <input value={maxSalary} onChange={(e) => { setMaxSalary(e.target.value) }} />
+                    </form>
+                    <button onClick={submitSalaryForm}>Submit</button>
+                </div>
+            )
+        case "5":
+
+            text = props.content.fields.text.stringValue;
+            return (
+                <div>
+                    <p>{text}</p>
+                </div>
+
             )
         default:
             console.log('default')

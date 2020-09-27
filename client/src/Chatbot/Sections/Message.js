@@ -1,9 +1,10 @@
 import React from 'react'
-import { List, Icon, Avatar } from 'antd';
+import { List, Avatar } from 'antd';
+import { SmileOutlined, RobotOutlined } from '@ant-design/icons';
 
 function Message(props) {
 
-    const AvatarSrc = props.who === 'Arnold' ? <Icon type="robot" /> : <Icon type="smile" />
+    const AvatarSrc = props.who === 'Arnold' ? <RobotOutlined /> : <SmileOutlined />
     const who = props.who === 'Arnold' ? 'bot-message' : 'user-message'
     return (
         <List.Item style={{ padding: '1rem' }}>

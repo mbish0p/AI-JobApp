@@ -5,9 +5,9 @@ import { saveMessage, deleteMessage } from '../_actions/message_actions'
 import Message from './Sections/Message'
 import SuggeestAnswer from './Sections/SuggestAnswer'
 import JobOfferForm from './Sections/JobOfferForm'
-import { List, Icon, Avatar, Typography } from 'antd';
+import { List, Avatar, Typography } from 'antd';
 import { v4 as uuidv4 } from 'uuid'
-import { MinusOutlined, UpOutlined } from '@ant-design/icons';
+import { MinusOutlined, UpOutlined, SmileOutlined, RobotOutlined } from '@ant-design/icons';
 import { CSSTransition } from 'react-transition-group';
 
 
@@ -158,7 +158,7 @@ const Chatbot = () => {
             )
         } else if (message.content && message.content.payload.fields && message.content.payload.fields.quick_replies) {
 
-            const AvatarSrc = message.who === 'bot' ? <Icon type="robot" /> : <Icon type="smile" />
+            const AvatarSrc = message.who === 'bot' ? <RobotOutlined /> : <SmileOutlined />
 
             return <div key={i}>
                 <List.Item style={{ padding: '1rem' }}>
@@ -171,7 +171,7 @@ const Chatbot = () => {
             </div>
         } else if (message.content && message.content.payload.fields && message.content.payload.fields.create_job_form) {
 
-            const AvatarSrc = message.who === 'bot' ? <Icon type="robot" /> : <Icon type="smile" />
+            const AvatarSrc = message.who === 'bot' ? <RobotOutlined /> : <SmileOutlined />
 
             console.log('Job offer', message.content.payload.fields.create_job_form.listValue.values[0].structValue)
             return <div key={i}>
@@ -212,7 +212,7 @@ const Chatbot = () => {
                 <div>
                     <div>
                         <div className='chat--header' >
-                            <Title level={2} style={{ margin: '4px 12px' }}><Icon type="robot" />  Arnold &nbsp;</Title>
+                            <Title level={2} style={{ margin: '4px 12px' }}><RobotOutlined />  Arnold &nbsp;</Title>
                             <button className='chat--minimize-button' onClick={minimizeChatTamplate}><MinusOutlined /></button>
                         </div>
                         <div style={{ height: '650px', width: 500, border: 'solid 3px black', borderRadius: '0px 0px 7px 7px', margin: 0 }}>
@@ -233,7 +233,7 @@ const Chatbot = () => {
             :
             <div className='chat--minimize'>
                 <div className='chat--header-minimize' >
-                    <Title level={2} style={{ margin: '4px 12px' }}><Icon type="robot" />  Arnold &nbsp;</Title>
+                    <Title level={2} style={{ margin: '4px 12px' }}><RobotOutlined />  Arnold &nbsp;</Title>
                     <button className='chat--minimize-button' onClick={minimizeChatTamplate}><UpOutlined /></button>
                 </div>
                 <div ref={messagesEndRef} />
