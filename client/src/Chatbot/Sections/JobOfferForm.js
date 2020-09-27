@@ -9,7 +9,9 @@ import {
     saveRemoteWork,
     saveContractType,
     saveMinSalary,
-    saveMaxSalary
+    saveMaxSalary,
+    saveDescription,
+    saveRecruitmentType
 } from '../../_actions/jobOffer_action'
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
@@ -30,6 +32,8 @@ const JobOfferForm = (props) => {
     const [contractType, setContractType] = useState(undefined)
     const [minSalary, setMinSalary] = useState('')
     const [maxSalary, setMaxSalary] = useState('')
+    const [descriptionValue, setDescriptionValue] = useState('')
+    const [onlineRecruitment, setOnlineRecruitment] = useState(false)
 
     let text = ''
     let selectChildern = []
@@ -202,11 +206,37 @@ const JobOfferForm = (props) => {
         case "5":
 
             text = props.content.fields.text.stringValue;
+
+            const submitDescriptionForm = (event) => {
+                event.preventDefault()
+
+                dispatch(saveDescription(descriptionValue))
+                dispatch(saveRecruitmentType(onlineRecruitment))
+
+                props.submitJobForm()
+            }
+
+            return (
+                <div>
+                    <p>{text}</p>
+                    <form>
+                        <textarea value={descriptionValue} onChange={(event) => { setDescriptionValue(event.target.value) }} />
+                        <p>Online interview</p>
+                        <input type='checkbox' value={onlineRecruitment} onClick={() => { setOnlineRecruitment(!onlineRecruitment) }} />
+                    </form>
+                    <button onClick={submitDescriptionForm}>Submit</button>
+                </div>
+
+            )
+
+        case "6":
+
+            text = props.content.fields.text.stringValue;
+
             return (
                 <div>
                     <p>{text}</p>
                 </div>
-
             )
         default:
             console.log('default')

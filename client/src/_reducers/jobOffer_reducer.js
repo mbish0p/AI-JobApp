@@ -8,7 +8,8 @@ import {
     SAVE_MIN_SALARY,
     SAVE_REMOTE_WORK,
     SAVE_STREET_ADDRESS,
-    SAVE_DESCRIPTION
+    SAVE_DESCRIPTION,
+    SAVE_RECRUITMENT_TYPE
 }
     from '../_actions/types'
 
@@ -22,7 +23,8 @@ const initialState = {
     contract_type: undefined,
     min_salary: undefined,
     max_salary: undefined,
-    description: undefined
+    description: undefined,
+    recruitmentOnline: undefined
 }
 
 
@@ -77,6 +79,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 description: action.payload
+            }
+        case SAVE_RECRUITMENT_TYPE:
+            return {
+                ...state,
+                recruitmentOnline: action.payload
             }
         default:
             return state
