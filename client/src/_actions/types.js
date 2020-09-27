@@ -16,3 +16,5 @@ export const SAVE_MAX_SALARY = 'save_max_salary'
 
 export const SAVE_DESCRIPTION = 'save_description'
 export const SAVE_RECRUITMENT_TYPE = 'save_recruitment_type'
+
+export const SAVE_TECHNOLOGIES = 'save_technologies'

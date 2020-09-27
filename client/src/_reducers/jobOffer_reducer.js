@@ -9,7 +9,8 @@ import {
     SAVE_REMOTE_WORK,
     SAVE_STREET_ADDRESS,
     SAVE_DESCRIPTION,
-    SAVE_RECRUITMENT_TYPE
+    SAVE_RECRUITMENT_TYPE,
+    SAVE_TECHNOLOGIES
 }
     from '../_actions/types'
 
@@ -24,7 +25,8 @@ const initialState = {
     min_salary: undefined,
     max_salary: undefined,
     description: undefined,
-    recruitmentOnline: undefined
+    recruitmentOnline: undefined,
+    technologies: []
 }
 
 
@@ -84,6 +86,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 recruitmentOnline: action.payload
+            }
+        case SAVE_TECHNOLOGIES:
+            return {
+                ...state,
+                technologies: state.technologies.concat(action.payload)
             }
         default:
             return state

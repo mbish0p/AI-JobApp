@@ -11,7 +11,8 @@ import {
     saveMinSalary,
     saveMaxSalary,
     saveDescription,
-    saveRecruitmentType
+    saveRecruitmentType,
+    saveTechnologies
 } from '../../_actions/jobOffer_action'
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
@@ -34,6 +35,7 @@ const JobOfferForm = (props) => {
     const [maxSalary, setMaxSalary] = useState('')
     const [descriptionValue, setDescriptionValue] = useState('')
     const [onlineRecruitment, setOnlineRecruitment] = useState(false)
+    const [technologiesList, setTechnologiesList] = useState([{ technology: '', experience: undefined, primaryTechnology: false }])
 
     let text = ''
     let selectChildern = []
@@ -232,10 +234,63 @@ const JobOfferForm = (props) => {
         case "6":
 
             text = props.content.fields.text.stringValue;
+            selectChildern = props.content.fields.Select_input_childrens.listValue.values
+
+            const handleTechnologyInput = (event, index, key) => {
+                const { value } = event.target
+
+                console.log(value)
+                const list = [...technologiesList]
+                key === 'technology' ? list[index]['technology'] = value : list[index]['experience'] = value
+                setTechnologiesList(list)
+            }
+
+            const handlePrimaryTech = (index) => {
+                const list = [...technologiesList]
+
+                list[index]["primaryTechnology"] = !list[index]["primaryTechnology"]
+                setTechnologiesList(list)
+            }
+
+            const handleRemoveClick = (index) => {
+                const list = [...technologiesList];
+
+                list.splice(index, 1);
+                setTechnologiesList(list);
+            };
+
+            const handleAddClick = () => {
+                setTechnologiesList([...technologiesList, { technology: '', experience: undefined, primaryTechnology: false }]);
+            };
+
+            const sumbitTechnologiesForm = (event) => {
+                event.preventDefault()
+
+                dispatch(saveTechnologies(technologiesList))
+                props.submitJobForm()
+            }
 
             return (
                 <div>
                     <p>{text}</p>
+                    {technologiesList.map((technology, index) => {
+                        return (
+                            <form key={index}>
+                                <input value={technology.technology} onChange={(event) => handleTechnologyInput(event, index, 'technology')} />
+                                <select value={technology.experience} onChange={(event) => handleTechnologyInput(event, index, "experience")}>
+                                    <option />
+                                    {selectChildern.map((child, index) => {
+                                        return <option key={index} value={child.stringValue.toLowerCase()}>{child.stringValue}</option>
+                                    })}
+                                </select>
+                                <input type='checkbox' value={technology.primaryTechnology} onClick={() => { handlePrimaryTech(index) }} />
+                                <button onClick={() => handleRemoveClick(index)}>X</button>
+                            </form>
+                        )
+                    })}
+                    <button onClick={handleAddClick}>+</button>
+
+                    <button onClick={sumbitTechnologiesForm}>Submit</button>
                 </div>
             )
         default:

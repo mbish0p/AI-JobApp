@@ -9,7 +9,8 @@ import {
     SAVE_MAX_SALARY,
     SAVE_DESCRIPTION,
     SAVE_CONTRACT_TYPE,
-    SAVE_RECRUITMENT_TYPE
+    SAVE_RECRUITMENT_TYPE,
+    SAVE_TECHNOLOGIES
 }
     from './types'
 
@@ -88,5 +89,12 @@ export function saveRecruitmentType(recruitmentOnline) {
     return {
         type: SAVE_RECRUITMENT_TYPE,
         payload: recruitmentOnline
+    }
+}
+
+export function saveTechnologies(technologies) {
+    return {
+        type: SAVE_TECHNOLOGIES,
+        payload: technologies
     }
 }
