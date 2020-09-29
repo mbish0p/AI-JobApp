@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { saveMessage, deleteMessage } from '../_actions/message_actions'
+import { saveMessage } from '../_actions/message_actions'
 import Message from './Sections/Message'
 import SuggeestAnswer from './Sections/SuggestAnswer'
 import JobOfferForm from './Sections/JobOfferForm'
@@ -33,14 +33,28 @@ const Chatbot = () => {
         scrollToBottom()
     })
 
-    const textQuery = async (text) => {
+    const textQuery = async (text, isBot) => {
 
-        let converstaion = {
-            id: uuidv4(),
-            who: 'User',
-            content: {
-                text: {
-                    text
+        let converstaion = {}
+
+        if (isBot === undefined) {
+            converstaion = {
+                id: uuidv4(),
+                who: 'User',
+                content: {
+                    text: {
+                        text
+                    }
+                }
+            }
+        } else {
+            converstaion = {
+                id: uuidv4(),
+                who: 'Arnold',
+                content: {
+                    text: {
+                        text
+                    }
                 }
             }
         }
@@ -132,6 +146,34 @@ const Chatbot = () => {
         textQuery(buttonTitle)
     }
 
+    const submitPartOfJobOffer = (role) => {
+        switch (role) {
+            case "0":
+                textQuery("Information about position name was added", true)
+                break;
+            case "1":
+                textQuery("Position name and needed experience was saved", true)
+                break;
+            case "2":
+                textQuery("I added information about location :)", true)
+                break;
+            case "3":
+                textQuery("I understand, amount of remote work was saved", true)
+                break;
+            case "4":
+                textQuery("Contract type and salary amount was added to your offer", true)
+                break;
+            case "5":
+                textQuery("I saved all information related to description", true)
+                break;
+            case "6":
+                textQuery("Thank you for all this information, technologies and needed experience is already in my database", true)
+                break;
+            default:
+                textQuery("Some kind of error was happend, please refresh page", true)
+        }
+    }
+
     const renderSuggestedAnswer = (values, id) => {
         return values.map((value, i) => {
             return <SuggeestAnswer key={i} values={value.structValue} choosenOption={choosenOption} id={id} />
@@ -139,7 +181,7 @@ const Chatbot = () => {
     }
 
     const renderJobOfferForm = (content) => {
-        return <JobOfferForm content={content} submitJobForm={() => textQuery("Submitted")} />
+        return <JobOfferForm content={content} submitJobForm={(role) => submitPartOfJobOffer(role)} />
     }
 
     const minimizeChatTamplate = () => {
@@ -157,7 +199,7 @@ const Chatbot = () => {
             )
         } else if (message.content && message.content.payload.fields && message.content.payload.fields.quick_replies) {
 
-            const AvatarSrc = message.who === 'bot' ? <RobotOutlined /> : <SmileOutlined />
+            const AvatarSrc = message.who === 'Arnold' ? <RobotOutlined /> : <SmileOutlined />
 
             return <div key={i}>
                 <List.Item style={{ padding: '1rem' }}>
@@ -170,7 +212,7 @@ const Chatbot = () => {
             </div>
         } else if (message.content && message.content.payload.fields && message.content.payload.fields.create_job_form) {
 
-            const AvatarSrc = message.who === 'bot' ? <RobotOutlined /> : <SmileOutlined />
+            const AvatarSrc = message.who === 'Arnold' ? <RobotOutlined /> : <SmileOutlined />
 
             console.log('Job offer', message.content.payload.fields.create_job_form.listValue.values[0].structValue)
             return <div key={i}>
@@ -214,7 +256,7 @@ const Chatbot = () => {
                             <Title level={2} style={{ margin: '4px 12px' }}><RobotOutlined />  Arnold &nbsp;</Title>
                             <button className='chat--minimize-button' onClick={minimizeChatTamplate}><MinusOutlined /></button>
                         </div>
-                        <div style={{ height: '650px', width: 500, border: 'solid 3px black', borderRadius: '0px 0px 7px 7px', margin: 0 }}>
+                        <div style={{ height: '650px', width: 450, border: 'solid 3px black', borderRadius: '0px 0px 7px 7px', margin: 0 }}>
 
                             <div style={{ height: '599px', width: '100%', overflow: 'auto' }}>
                                 {renderMessages(messagesFromRedux)}

@@ -4,7 +4,7 @@ import './App.css'
 
 function App() {
     return (
-        <div>
+        <div className='App--container'>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Chatbot_v2 />
             </div>

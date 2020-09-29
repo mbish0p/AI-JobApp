@@ -51,7 +51,7 @@ const JobOfferForm = (props) => {
                 event.preventDefault()
 
                 dispatch(saveJobCategory(selectValue))
-                props.submitJobForm()
+                props.submitJobForm(props.content.fields.Role.stringValue)
             }
             return (
                 <div>
@@ -79,7 +79,7 @@ const JobOfferForm = (props) => {
                 dispatch(saveExperienceLvl(experienceLevel))
                 dispatch(savePositionName(positionName))
 
-                props.submitJobForm()
+                props.submitJobForm(props.content.fields.Role.stringValue)
             }
             return (
                 <div>
@@ -107,7 +107,7 @@ const JobOfferForm = (props) => {
                 dispatch(saveStreetAddress(streetInput))
                 dispatch(saveCityAddress(cityInput))
 
-                props.submitJobForm()
+                props.submitJobForm(props.content.fields.Role.stringValue)
             }
 
             return (
@@ -156,7 +156,7 @@ const JobOfferForm = (props) => {
                 e.preventDefault()
 
                 dispatch(saveRemoteWork(sliderValue))
-                props.submitJobForm()
+                props.submitJobForm(props.content.fields.Role.stringValue)
             }
 
             return (
@@ -189,7 +189,7 @@ const JobOfferForm = (props) => {
                 dispatch(saveMinSalary(minSalary))
                 dispatch(saveMaxSalary(maxSalary))
 
-                props.submitJobForm()
+                props.submitJobForm(props.content.fields.Role.stringValue)
 
             }
 
@@ -221,7 +221,7 @@ const JobOfferForm = (props) => {
                 dispatch(saveDescription(descriptionValue))
                 dispatch(saveRecruitmentType(onlineRecruitment))
 
-                props.submitJobForm()
+                props.submitJobForm(props.content.fields.Role.stringValue)
             }
 
             return (
@@ -278,7 +278,7 @@ const JobOfferForm = (props) => {
                 event.preventDefault()
 
                 dispatch(saveTechnologies(technologiesList))
-                props.submitJobForm()
+                props.submitJobForm(props.content.fields.Role.stringValue)
             }
 
             return (
