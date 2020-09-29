@@ -14,8 +14,8 @@ import {
     saveRecruitmentType,
     saveTechnologies
 } from '../../_actions/jobOffer_action'
-import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
+import './JobOfferForm.css'
 
 
 const JobOfferForm = (props) => {
@@ -196,18 +196,19 @@ const JobOfferForm = (props) => {
             return (
                 <div>
                     <p>{text}</p>
-                    <form>
-                        <select value={contractType} onChange={(event) => setContractType(event.target.value)}>
+                    <form className='JO--form'>
+                        <p className='JO--title'>Contract type and salary</p>
+                        <select className='JO--select' value={contractType} onChange={(event) => setContractType(event.target.value)}>
                             <option />
                             {selectChildern.map((child, index) => {
                                 return <option key={index} value={child.stringValue.toLowerCase()}>{child.stringValue}</option>
                             })}
                         </select>
 
-                        <input value={minSalary} onChange={(e) => { setMinSalary(e.target.value) }} /> -
-                        <input value={maxSalary} onChange={(e) => { setMaxSalary(e.target.value) }} />
+                        <input placeholder='Min salary' className='JO--input JO--salary-input' value={minSalary} onChange={(e) => { setMinSalary(e.target.value) }} /> -
+                        <input placeholder='Max salary' className='JO--input JO--salary-input JO--max-salary-input' value={maxSalary} onChange={(e) => { setMaxSalary(e.target.value) }} />
                     </form>
-                    <button onClick={submitSalaryForm}>Submit</button>
+                    <button className='JO--submit-button' onClick={submitSalaryForm}>Submit</button>
                 </div>
             )
         case "5":
@@ -226,12 +227,15 @@ const JobOfferForm = (props) => {
             return (
                 <div>
                     <p>{text}</p>
-                    <form>
-                        <textarea value={descriptionValue} onChange={(event) => { setDescriptionValue(event.target.value) }} />
-                        <p>Online interview</p>
-                        <input type='checkbox' value={onlineRecruitment} onClick={() => { setOnlineRecruitment(!onlineRecruitment) }} />
+                    <form className='JO--form'>
+                        <p className='JO--title'>Description</p>
+                        <textarea className='JO--textarea' placeholder='Description' value={descriptionValue} onChange={(event) => { setDescriptionValue(event.target.value) }} />
+                        <div className='JO--chcekbox-container'>
+                            <input className='JO--checkbox' type='checkbox' value={onlineRecruitment} onClick={() => { setOnlineRecruitment(!onlineRecruitment) }} />
+                            <p className='JO--checkbox-title'>Online interview</p>
+                        </div>
                     </form>
-                    <button onClick={submitDescriptionForm}>Submit</button>
+                    <button className='JO--submit-button' onClick={submitDescriptionForm}>Submit</button>
                 </div>
 
             )
@@ -257,14 +261,16 @@ const JobOfferForm = (props) => {
                 setTechnologiesList(list)
             }
 
-            const handleRemoveClick = (index) => {
+            const handleRemoveClick = (event, index) => {
+                event.preventDefault()
                 const list = [...technologiesList];
 
                 list.splice(index, 1);
                 setTechnologiesList(list);
             };
 
-            const handleAddClick = () => {
+            const handleAddClick = (event) => {
+                event.preventDefault()
                 setTechnologiesList([...technologiesList, { technology: '', experience: undefined, primaryTechnology: false }]);
             };
 
@@ -278,24 +284,30 @@ const JobOfferForm = (props) => {
             return (
                 <div>
                     <p>{text}</p>
-                    {technologiesList.map((technology, index) => {
-                        return (
-                            <form key={index}>
-                                <input value={technology.technology} onChange={(event) => handleTechnologyInput(event, index, 'technology')} />
-                                <select value={technology.experience} onChange={(event) => handleTechnologyInput(event, index, "experience")}>
-                                    <option />
-                                    {selectChildern.map((child, index) => {
-                                        return <option key={index} value={child.stringValue.toLowerCase()}>{child.stringValue}</option>
-                                    })}
-                                </select>
-                                <input type='checkbox' value={technology.primaryTechnology} onClick={() => { handlePrimaryTech(index) }} />
-                                <button onClick={() => handleRemoveClick(index)}>X</button>
-                            </form>
-                        )
-                    })}
-                    <button onClick={handleAddClick}>+</button>
+                    <form className='JO--form'>
+                        <p className='JO--title'>Tech skills</p>
+                        {technologiesList.map((technology, index) => {
+                            return (
+                                <div key={index} >
+                                    <input placeholder='Technology' className='JO--input JO--input--tech' value={technology.technology} onChange={(event) => handleTechnologyInput(event, index, 'technology')} />
+                                    <select className='JO--select JO--select--tech' value={technology.experience} onChange={(event) => handleTechnologyInput(event, index, "experience")}>
+                                        <option />
+                                        {selectChildern.map((child, index) => {
+                                            return <option key={index} value={child.stringValue.toLowerCase()}>{child.stringValue}</option>
+                                        })}
+                                    </select>
+                                    <div className='JO--chcekbox-container'>
+                                        <input className='JO--checkbox JO--checkbox--tech' type='checkbox' value={technology.primaryTechnology} onClick={() => { handlePrimaryTech(index) }} />
+                                        <p className='JO--checkbox-title JO--checkbox-title--tech'>Main technology</p>
+                                        <button className='JO--remove-button' onClick={(event) => handleRemoveClick(event, index)}>X</button>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                        <button className='JO--remove-button JO--add-button' onClick={handleAddClick}>+</button>
 
-                    <button onClick={sumbitTechnologiesForm}>Submit</button>
+                    </form>
+                    <button className='JO--submit-button' onClick={sumbitTechnologiesForm}>Submit</button>
                 </div>
             )
         default:
