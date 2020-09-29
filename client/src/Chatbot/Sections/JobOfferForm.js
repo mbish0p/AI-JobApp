@@ -18,7 +18,6 @@ import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 
 
-
 const JobOfferForm = (props) => {
     const dispatch = useDispatch()
     console.log(props.content)
@@ -57,16 +56,16 @@ const JobOfferForm = (props) => {
             return (
                 <div>
                     <p>{text}</p>
-                    <form>
-                        <p>Job kategory - please choose one role</p>
-                        <select value={selectValue} onChange={(event) => setSelectValue(event.target.value)}>
+                    <form className='JO--form'>
+                        <p className='JO--title'>Position name</p>
+                        <select className='JO--select' value={selectValue} onChange={(event) => setSelectValue(event.target.value)}>
                             <option />
                             {selectChildern.map((child, index) => {
                                 return <option key={index} value={child.stringValue.toLowerCase()}>{child.stringValue}</option>
                             })}
                         </select>
                     </form>
-                    <button onClick={submitSelectForm}>Submit</button>
+                    <button className='JO--submit-button' onClick={submitSelectForm}>Submit</button>
                 </div>
             )
         case '1':
@@ -85,16 +84,17 @@ const JobOfferForm = (props) => {
             return (
                 <div>
                     <p>{text}</p>
-                    <form>
-                        <input value={positionName} onChange={(event) => setPositionName(event.target.value)} />
-                        <select value={experienceLevel} onChange={(event) => setExperienceLevel(event.target.value)}>
+                    <form className='JO--form'>
+                        <p className='JO--title'>Basic information</p>
+                        <input placeholder='Position name' className='JO--input' value={positionName} onChange={(event) => setPositionName(event.target.value)} />
+                        <select className='JO--select' value={experienceLevel} onChange={(event) => setExperienceLevel(event.target.value)}>
                             <option />
                             {selectChildern.map((child, index) => {
                                 return <option key={index} value={child.stringValue.toLowerCase()}>{child.stringValue}</option>
                             })}
                         </select>
                     </form>
-                    <button onClick={submitSecondForm}>Submit</button>
+                    <button className='JO--submit-button' onClick={submitSecondForm}>Submit</button>
                 </div>
             )
         case "2":
@@ -114,17 +114,21 @@ const JobOfferForm = (props) => {
                 showAddressInput ?
                     <div>
                         <p>{text}</p>
-                        <form>
-                            <input value={cityInput} onChange={(e) => { setCityInput(e.target.value) }} />
-                            <input value={streetInput} onChange={(e) => { setStreetInput(e.target.value) }} />
-                            <button onClick={() => { setShowAddressInput(false) }}>X</button>
+                        <form className='JO--form'>
+                            <p className='JO--title'>Location</p>
+                            <input placeholder='City' className='JO--input JO--input-city' value={cityInput} onChange={(e) => { setCityInput(e.target.value) }} />
+                            <button className='JO--remove-button' onClick={() => { setShowAddressInput(false) }}>X</button>
+                            <input placeholder='Street' className='JO--input' value={streetInput} onChange={(e) => { setStreetInput(e.target.value) }} />
                         </form>
-                        <button onClick={submitAddressForm}>Submit</button>
+                        <button className='JO--submit-button' onClick={submitAddressForm}>Submit</button>
                     </div> :
                     <div>
                         <p>{text}</p>
-                        <button onClick={() => { setShowAddressInput(true) }}>+</button>
-                        <button onClick={submitAddressForm}>Submit</button>
+                        <form className='JO--form'>
+                            <p className='JO--title'>Location</p>
+                            <button className='JO--remove-button JO--add-button' onClick={() => { setShowAddressInput(true) }}>+</button>
+                        </form>
+                        <button className='JO--submit-button' onClick={submitAddressForm}>Submit</button>
                     </div>
             )
         case "3":
@@ -158,18 +162,19 @@ const JobOfferForm = (props) => {
             return (
                 <div>
                     <p>{text}</p>
-                    <Typography id="discrete-slider-custom" gutterBottom>
-                        Remote work
-                    </Typography>
-                    <Slider
-                        defaultValue={0}
-                        getAriaValueText={valuetext}
-                        aria-labelledby="discrete-slider-custom"
-                        step={10}
-                        valueLabelDisplay="auto"
-                        marks={marks}
-                    />
-                    <button onClick={submitSliderForm}>Submit</button>
+                    <form className='JO--form'>
+                        <p className='JO--title' >Remote work</p>
+                        <Slider
+                            className='JO--slider'
+                            defaultValue={0}
+                            getAriaValueText={valuetext}
+                            aria-labelledby="discrete-slider-custom"
+                            step={10}
+                            valueLabelDisplay="auto"
+                            marks={marks}
+                        />
+                    </form>
+                    <button className='JO--submit-button' onClick={submitSliderForm}>Submit</button>
                 </div>
             )
         case "4":

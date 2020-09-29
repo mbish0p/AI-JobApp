@@ -128,8 +128,7 @@ const Chatbot = () => {
         }
     }
 
-    const choosenOption = (buttonTitle, id) => {
-        dispatch(deleteMessage(id))
+    const choosenOption = (buttonTitle) => {
         textQuery(buttonTitle)
     }
 
