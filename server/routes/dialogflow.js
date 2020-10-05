@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const dialogflow = require('dialogflow')
-const structJSON = require('./structjson')
 const serviceAccount = require('../config/arnoldbot-crte-cc8074304beb.json')
 
 const config = require('../config/dev')
