@@ -3,11 +3,11 @@ const bodyParser = require("body-parser");
 const app = express();
 
 
-const Employeer = require('./server/models/Employeer')
-Employeer.sync().then(() => {
-    console.log('Succesful synchronized Employeer table')
+const JobOffer = require('./server/models/JobOffer')
+JobOffer.sync().then(() => {
+    console.log('Succesful synchronized JobOffer table')
 }).catch((error) => {
-    console.log('Something went wrong with synchronized Employeer table', error)
+    console.log('Something went wrong with synchronized JobOffer table', error)
 })
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,13 +17,15 @@ app.use('/api/dialogflow', require('./server/routes/dialogflow'));
 
 app.get('/', async (req, res) => {
     try {
-        const employeer = await Employeer.create({
-            user_id: 1,
-            company_name: 'Panasonic Poland',
-            nip: 124321321
+        const jobOffer = await JobOffer.create({
+            employeer_id: 1,
+            position_name: 'Backend dev',
+            description: "asdsadasdasd asdasdasdasdasd asdasdasd asdasdasdasd sadasdasdasdasd adsasdasdasdasdasdasd",
+            start_date: "2008-10-29 14:56:59",
+            end_date: '2011-10-29 14:56:59'
         })
-        await employeer.save()
-        res.send(employeer);
+        await jobOffer.save()
+        res.send(jobOffer);
     } catch (error) {
         res.send('Unable to connect to the database:', error);
     }
