@@ -3,11 +3,11 @@ const bodyParser = require("body-parser");
 const app = express();
 
 
-const JobOfferTechnologies = require('./server/models/JobOfferTechnologies')
-JobOfferTechnologies.sync({ force: true }).then(() => {
-    console.log('Succesful synchronized JobOfferTechnologies table')
+const EmployeeSkill = require('./server/models/EmployeeSkill')
+EmployeeSkill.sync().then(() => {
+    console.log('Succesful synchronized EmployeeSkill table')
 }).catch((error) => {
-    console.log('Something went wrong with synchronized JobOfferTechnologies table', error)
+    console.log('Something went wrong with synchronized EmployeeSkill table', error)
 })
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,14 +17,13 @@ app.use('/api/dialogflow', require('./server/routes/dialogflow'));
 
 app.get('/', async (req, res) => {
     try {
-        const jobOfferTechnologies = await JobOfferTechnologies.create({
-            jobOffer_id: 2,
+        const employeeSkill = await EmployeeSkill.create({
+            employee_id: 3,
             name: 'Java',
             experience: 12,
-            main_technology: true
         })
-        await jobOfferTechnologies.save()
-        res.send(jobOfferTechnologies);
+        await employeeSkill.save()
+        res.send(employeeSkill);
     } catch (error) {
         res.send('Unable to connect to the database:', error);
     }
