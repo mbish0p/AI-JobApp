@@ -60,7 +60,7 @@ const JobOffer = sequelize.define('job_offer', {
         allowNull: true
     },
     experience: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: true
     },
     education: {
