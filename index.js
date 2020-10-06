@@ -1,14 +1,13 @@
 const express = require("express");
-const path = require("path");
 const bodyParser = require("body-parser");
 const app = express();
-const sequelize = require('./server/db/sequelize')
 
-const User = require('./server/models/User')
-User.sync().then(() => {
-    console.log('Succesful synchronized user table')
+
+const Employee = require('./server/models/Employee')
+Employee.sync().then(() => {
+    console.log('Succesful synchronized Employee table')
 }).catch((error) => {
-    console.log('Something went wrong with synchronized user table', error)
+    console.log('Something went wrong with synchronized Employee table', error)
 })
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,14 +17,11 @@ app.use('/api/dialogflow', require('./server/routes/dialogflow'));
 
 app.get('/', async (req, res) => {
     try {
-        const user = await User.create({
-            name: "Dawid",
-            surname: "Duda",
-            password: 'haslo',
-            email: 'dupa@dupa.dupa',
+        const employee = await Employee.create({
+            user_id: 1,
         })
-        await user.save()
-        res.send(user);
+        await employee.save()
+        res.send(employee);
     } catch (error) {
         res.send('Unable to connect to the database:', error);
     }
