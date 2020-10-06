@@ -3,11 +3,11 @@ const bodyParser = require("body-parser");
 const app = express();
 
 
-const EmployeeEducation = require('./server/models/EmployeeEducation')
-EmployeeEducation.sync().then(() => {
-    console.log('Succesful synchronized EmployeeEducation table')
+const EmployeeLanguage = require('./server/models/EmployeeLanguage')
+EmployeeLanguage.sync().then(() => {
+    console.log('Succesful synchronized EmployeeLanguage table')
 }).catch((error) => {
-    console.log('Something went wrong with synchronized EmployeeEducation table', error)
+    console.log('Something went wrong with synchronized EmployeeLanguage table', error)
 })
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,13 +17,13 @@ app.use('/api/dialogflow', require('./server/routes/dialogflow'));
 
 app.get('/', async (req, res) => {
     try {
-        const employeeEducation = await EmployeeEducation.create({
+        const employeeLanguage = await EmployeeLanguage.create({
             employee_id: 3,
-            school_name: 'Akademia Górniczo Hutnicza',
-            field_of_studies: 'IS',
+            name: 'French',
+            experience: 12,
         })
-        await employeeEducation.save()
-        res.send(employeeEducation);
+        await employeeLanguage.save()
+        res.send(employeeLanguage);
     } catch (error) {
         res.send('Unable to connect to the database:', error);
     }
