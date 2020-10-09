@@ -27,13 +27,13 @@ const Employee = sequelize.define('employee', {
     }
 })
 
-Employee.hasMany(JobOffer, {
-    through: Candidates
-})
 
-Employee.hasMany(EmployeeEducation)
-Employee.hasMany(EmployeeExperience)
-Employee.hasMany(EmployeeSkill)
-Employee.hasMany(EmployeeLanguage)
+Employee.hasMany(Candidates, { foreignKey: 'employeeId', onDelete: 'cascade' })
+
+
+Employee.hasMany(EmployeeEducation, { foreignKey: 'employeeId', onDelete: 'cascade' })
+Employee.hasMany(EmployeeExperience, { foreignKey: 'employeeId', onDelete: 'cascade' })
+Employee.hasMany(EmployeeSkill, { foreignKey: 'employeeId', onDelete: 'cascade' })
+Employee.hasMany(EmployeeLanguage, { foreignKey: 'employeeId', onDelete: 'cascade' })
 
 module.exports = Employee

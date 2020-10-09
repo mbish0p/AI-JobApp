@@ -1,7 +1,7 @@
 const User = require('./User');
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db/sequelize');
-const JobOffer = require('./JobOffer')
+const JobOffer = require('./JobOffer');
 
 const Employeer = sequelize.define('employeer', {
     id: {
@@ -25,8 +25,8 @@ const Employeer = sequelize.define('employeer', {
     }
 })
 
-Employeer.belongsTo(User)
-Employeer.hasMany(JobOffer)
+Employeer.belongsTo(User, { foreignKey: 'employeerId', onDelete: 'cascade' })
+Employeer.hasMany(JobOffer, { foreignKey: 'employeerId', onDelete: 'cascade' })
 
 
 module.exports = Employeer

@@ -67,10 +67,8 @@ const JobOffer = sequelize.define('job_offer', {
         allowNull: true
     }
 })
+JobOffer.hasMany(JobOfferTechnologies, { foreignKey: 'jobOfferId', onDelete: 'cascade' })
+JobOffer.hasMany(Candidates, { foreignKey: 'jobOfferId', onDelete: 'cascade' })
 
-JobOffer.hasMany(JobOfferTechnologies)
-JobOffer.hasMany(Employee, {
-    through: Candidates
-})
 
 module.exports = JobOffer

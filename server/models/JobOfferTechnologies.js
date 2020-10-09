@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../db/sequelize')
+const sequelize = require('../db/sequelize');
+const JobOffer = require('./JobOffer');
 
 
 const JobOfferTechnologies = sequelize.define('job_offer_technologies', {

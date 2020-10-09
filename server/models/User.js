@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../db/sequelize')
 const Employee = require('./Employee')
 
+
 const User = sequelize.define('User', {
     id: {
         type: DataTypes.INTEGER,
@@ -18,19 +19,18 @@ const User = sequelize.define('User', {
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
     email: {
         type: DataTypes.STRING,
         unique: true,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            isEmail: true
+        }
     }
 })
 
-User.hasOne(Employee, {
-    foreignKey: {
-        allowNull: false
-    }
-})
+User.Employee = User.hasOne(Employee, { foreignKey: 'userId', onDelete: 'cascade' })
 
 module.exports = User
