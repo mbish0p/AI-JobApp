@@ -1,4 +1,9 @@
-const User = require('./User');
+const JobOffer = require('./JobOffer');
+const EmployeeEducation = require('./EmployeeEducation');
+const EmployeeExperience = require('./EmployeeExperience');
+const EmployeeLanguage = require('./EmployeeLanguage');
+const EmployeeSkill = require('./EmployeeSkill');
+const Candidates = require('./Candidates')
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db/sequelize')
 
@@ -7,13 +12,6 @@ const Employee = sequelize.define('employee', {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
-    },
-    user_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: User,
-            key: 'id',
-        }
     },
     CV: {
         type: DataTypes.STRING,
@@ -28,5 +26,14 @@ const Employee = sequelize.define('employee', {
         allowNull: true
     }
 })
+
+Employee.hasMany(JobOffer, {
+    through: Candidates
+})
+
+Employee.hasMany(EmployeeEducation)
+Employee.hasMany(EmployeeExperience)
+Employee.hasMany(EmployeeSkill)
+Employee.hasMany(EmployeeLanguage)
 
 module.exports = Employee

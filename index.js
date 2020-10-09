@@ -1,10 +1,16 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const sequelize = require('./server/db/sequelize')
+
 const app = express();
-
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+
+(async () => {
+    await sequelize.sync({ force: true });
+    console.log("The table for the User model was just (re)created!");
+})()
 
 app.use('/api/dialogflow', require('./server/routes/dialogflow'));
 

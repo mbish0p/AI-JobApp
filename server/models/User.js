@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db/sequelize')
+const Employee = require('./Employee')
 
 const User = sequelize.define('User', {
     id: {
@@ -22,6 +23,12 @@ const User = sequelize.define('User', {
     email: {
         type: DataTypes.STRING,
         unique: true,
+        allowNull: false
+    }
+})
+
+User.hasOne(Employee, {
+    foreignKey: {
         allowNull: false
     }
 })
