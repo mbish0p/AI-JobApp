@@ -22,6 +22,7 @@ router.post('/', async (req, res) => {
         res.status(201).send(user)
     } catch (error) {
         console.log(error)
+        res.send(error)
     }
 })
 
@@ -36,6 +37,7 @@ router.get('/:id', async (req, res) => {
         }
     } catch (error) {
         console.log(error)
+        res.send(error)
     }
 })
 
@@ -68,6 +70,21 @@ router.patch('/:id', async (req, res) => {
         }
     } catch (error) {
         console.log(error)
+        res.send(error)
+    }
+})
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const user = User.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+        res.send(`User with id ${req.params.id} was deleted succesfully`)
+    } catch (error) {
+        console.log(error)
+        res.send(error)
     }
 })
 
