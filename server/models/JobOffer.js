@@ -1,19 +1,14 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db/sequelize')
-const Employeer = require('./Employeer')
+const Employee = require('./Employee')
+const JobOfferTechnologies = require('./JobOfferTechnologies')
+const Candidates = require('./Candidates')
 
 const JobOffer = sequelize.define('job_offer', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
-    },
-    employeer_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Employeer,
-            key: 'id'
-        },
     },
     position_name: {
         type: DataTypes.STRING,
@@ -72,5 +67,8 @@ const JobOffer = sequelize.define('job_offer', {
         allowNull: true
     }
 })
+JobOffer.hasMany(JobOfferTechnologies, { foreignKey: 'jobOfferId', onDelete: 'cascade' })
+JobOffer.hasMany(Candidates, { foreignKey: 'jobOfferId', onDelete: 'cascade' })
+
 
 module.exports = JobOffer
