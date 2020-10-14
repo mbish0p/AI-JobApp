@@ -27,8 +27,38 @@ router.post('/:id', upload.array('files', 3), async (req, res) => {
         res.status(201).send('Docs added')
     } catch (error) {
         console.log(error)
+        res.send(error)
     }
 })
+
+router.get('/:id', async (req, res) => {
+    try {
+        const employee = await Employee.findByPk(req.params.id)
+        const userDocs = {
+            CV: employee.dataValues.CV,
+            doc1: employee.dataValues.doc1,
+            doc2: employee.dataValues.doc2
+        }
+        res.send(userDocs)
+    } catch (error) {
+        console.log(error)
+        res.send(error)
+    }
+})
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const employee = await Employee.findByPk(req.params.id)
+        const deletedEmployee = await employee.destroy()
+
+        res.send(deletedEmployee)
+    } catch (error) {
+        console.log(error)
+        res.send(error)
+    }
+})
+
+
 
 router.get('/', (req, res) => {
     res.send('hi there')
