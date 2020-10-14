@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const sequalize = require('./server/db/sequelize');
+
+//const sequalize = require('./server/db/sequelize');
 
 // (async () => {
 //     try {
@@ -11,15 +12,19 @@ const sequalize = require('./server/db/sequelize');
 //     }
 // })()
 
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/api/dialogflow', require('./server/routes/dialogflow'));
 app.use('/users', require('./server/routes/user'))
+app.use('/employee', require('./server/routes/employee'))
 
 
 const port = process.env.PORT || 5000;
+
+
 
 app.listen(port, () => {
     console.log(`Server Running at ${port}`)
