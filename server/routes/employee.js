@@ -46,6 +46,51 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+router.patch('/:id/CV', upload.single('CV'), async (req, res) => {
+    try {
+        const employee = await Employee.findByPk(req.params.id)
+        const url = await uploadFile(req.file)
+        const updateEmployee = await employee.update({
+            CV: url
+        })
+
+        res.send(updateEmployee)
+    } catch (error) {
+        console.log(error)
+        res.send(error)
+    }
+})
+
+router.patch('/:id/doc1', upload.single('doc1'), async (req, res) => {
+    try {
+        const employee = await Employee.findByPk(req.params.id)
+        const url = await uploadFile(req.file)
+        const updateEmployee = await employee.update({
+            doc1: url
+        })
+
+        res.send(updateEmployee)
+    } catch (error) {
+        console.log(error)
+        res.send(error)
+    }
+})
+
+router.patch('/:id/doc2', upload.single('doc2'), async (req, res) => {
+    try {
+        const employee = await Employee.findByPk(req.params.id)
+        const url = await uploadFile(req.file)
+        const updateEmployee = await employee.update({
+            doc2: url
+        })
+
+        res.send(updateEmployee)
+    } catch (error) {
+        console.log(error)
+        res.send(error)
+    }
+})
+
 router.delete('/:id', async (req, res) => {
     try {
         const employee = await Employee.findByPk(req.params.id)
@@ -58,11 +103,6 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-
-
-router.get('/', (req, res) => {
-    res.send('hi there')
-})
 
 
 
