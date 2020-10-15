@@ -3,7 +3,17 @@ const { uploadFile } = require('../db/blob')
 const Employee = require('../models/Employee')
 const multer = require('multer')
 
-const upload = multer()
+const upload = multer({
+    limits: {
+        fileSize: 4000000
+    },
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(doc|docx|pdf)$/)) {
+            return cb(new Error('Please upload file with extension pdf, doc or docx'))
+        }
+        cb(undefined, true)
+    }
+})
 
 const router = express.Router()
 
@@ -16,6 +26,10 @@ router.post('/:id', upload.array('files', 3), async (req, res) => {
                 userId: req.params.id
             }
         })
+
+        if (!employee) {
+            throw new Error(`No employee with this id: ${req.params.id}`)
+        }
 
         const blobURLs = []
         for (const file of files) {
@@ -31,7 +45,7 @@ router.post('/:id', upload.array('files', 3), async (req, res) => {
         res.status(201).send('Docs added')
     } catch (error) {
         console.log(error)
-        res.send(error)
+        res.send(error.toString())
     }
 })
 
@@ -42,6 +56,10 @@ router.get('/:id', async (req, res) => {
                 userId: req.params.id
             }
         })
+
+        if (!employee) {
+            throw new Error(`No employee with this id: ${req.params.id}`)
+        }
         const userDocs = {
             CV: employee.dataValues.CV,
             doc1: employee.dataValues.doc1,
@@ -50,7 +68,7 @@ router.get('/:id', async (req, res) => {
         res.send(userDocs)
     } catch (error) {
         console.log(error)
-        res.send(error)
+        res.send(error.toString())
     }
 })
 
@@ -63,6 +81,9 @@ router.patch('/:id/CV', upload.single('CV'), async (req, res) => {
                 userId: req.params.id
             }
         })
+        if (!employee) {
+            throw new Error(`No employee with this id: ${req.params.id}`)
+        }
         const url = await uploadFile(req.file)
         const updateEmployee = await employee.update({
             CV: url
@@ -71,7 +92,7 @@ router.patch('/:id/CV', upload.single('CV'), async (req, res) => {
         res.send(updateEmployee)
     } catch (error) {
         console.log(error)
-        res.send(error)
+        res.send(error.toString())
     }
 })
 
@@ -82,6 +103,10 @@ router.patch('/:id/doc1', upload.single('doc1'), async (req, res) => {
                 userId: req.params.id
             }
         })
+
+        if (!employee) {
+            throw new Error(`No employee with this id: ${req.params.id}`)
+        }
         const url = await uploadFile(req.file)
         const updateEmployee = await employee.update({
             doc1: url
@@ -90,7 +115,7 @@ router.patch('/:id/doc1', upload.single('doc1'), async (req, res) => {
         res.send(updateEmployee)
     } catch (error) {
         console.log(error)
-        res.send(error)
+        res.send(error.toString())
     }
 })
 
@@ -101,6 +126,9 @@ router.patch('/:id/doc2', upload.single('doc2'), async (req, res) => {
                 userId: req.params.id
             }
         })
+        if (!employee) {
+            throw new Error(`No employee with this id: ${req.params.id}`)
+        }
         const url = await uploadFile(req.file)
         const updateEmployee = await employee.update({
             doc2: url
@@ -109,7 +137,7 @@ router.patch('/:id/doc2', upload.single('doc2'), async (req, res) => {
         res.send(updateEmployee)
     } catch (error) {
         console.log(error)
-        res.send(error)
+        res.send(error.toString())
     }
 })
 
@@ -120,12 +148,15 @@ router.delete('/:id', async (req, res) => {
                 userId: req.params.id
             }
         })
+        if (!employee) {
+            throw new Error(`No employee with this id: ${req.params.id}`)
+        }
         const deletedEmployee = await employee.destroy()
 
         res.send(deletedEmployee)
     } catch (error) {
         console.log(error)
-        res.send(error)
+        res.send(error.toString())
     }
 })
 

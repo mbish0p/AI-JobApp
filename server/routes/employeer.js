@@ -6,7 +6,17 @@ const Employeer = require('../models/Employeer')
 const { uploadFile } = require('../db/blob')
 
 const router = express.Router()
-const upload = multer()
+const upload = multer({
+    limits: {
+        fileSize: 2000000
+    },
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(JPG|PNG|JPEG|jpg|png|jpeg)$/)) {
+            return cb(new Error('Please upload file with extension pdf, doc or docx'))
+        }
+        cb(undefined, true)
+    }
+})
 
 router.post('/:id', async (req, res) => {
     try {
@@ -61,6 +71,38 @@ router.post('/:id/company-logo', upload.single('logo'), async (req, res) => {
             url
         }
         res.status(201).send(responseMessage)
+    } catch (error) {
+        console.log(error)
+        res.send(error.toString())
+    }
+})
+
+router.patch('/:id', upload.single('logo'), async (req, res) => {
+    try {
+        const { company_name, phone_number } = req.body
+        const logo = req.file
+
+        const employeer = await Employeer.findOne({
+            where: {
+                userId: req.params.id
+            }
+        })
+        if (!employeer) {
+            throw new Error(`No employeer with this id: ${req.params.id}`)
+        }
+
+        let url = undefined
+        if (logo) {
+            url = await uploadFile(logo)
+        }
+
+        await employeer.update({
+            company_name: company_name || employeer.dataValues.company_name,
+            phone_number: phone_number || employeer.dataValues.phone_number,
+            company_logo: url || employeer.dataValues.company_logo
+        })
+
+        res.send({})
     } catch (error) {
         console.log(error)
         res.send(error.toString())
