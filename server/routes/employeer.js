@@ -3,7 +3,7 @@ const multer = require('multer')
 
 const Employee = require('../models/Employee')
 const Employeer = require('../models/Employeer')
-const { uploadFile } = require('../db/blob')
+const { uploadFile, deleteFile } = require('../db/blob')
 
 const router = express.Router()
 const upload = multer({
@@ -120,6 +120,8 @@ router.get('/:id', async (req, res) => {
         if (!employeer) {
             throw new Error(`No employeer with this id: ${req.params.id}`)
         }
+
+        await deleteFile(employeer.dataValues.company_logo)
 
         res.send(employeer)
     } catch (error) {

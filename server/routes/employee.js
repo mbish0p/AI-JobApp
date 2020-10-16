@@ -1,5 +1,5 @@
 const express = require('express')
-const { uploadFile } = require('../db/blob')
+const { uploadFile, deleteFile, deleteFile_v2 } = require('../db/blob')
 const Employee = require('../models/Employee')
 const multer = require('multer')
 
@@ -84,6 +84,15 @@ router.patch('/:id/CV', upload.single('CV'), async (req, res) => {
         if (!employee) {
             throw new Error(`No employee with this id: ${req.params.id}`)
         }
+
+        const deleteOldBlob = await deleteFile(employee.dataValues.CV)
+
+        console.log(deleteOldBlob)
+
+        if (!deleteOldBlob.success) {
+            throw new Error(`Blob do not exist in db`)
+        }
+
         const url = await uploadFile(req.file)
         const updateEmployee = await employee.update({
             CV: url
@@ -107,6 +116,15 @@ router.patch('/:id/doc1', upload.single('doc1'), async (req, res) => {
         if (!employee) {
             throw new Error(`No employee with this id: ${req.params.id}`)
         }
+
+        const deleteOldBlob = await deleteFile(employee.dataValues.doc1)
+
+        console.log(deleteOldBlob)
+
+        if (!deleteOldBlob.success) {
+            throw new Error(`Blob do not exist in db`)
+        }
+
         const url = await uploadFile(req.file)
         const updateEmployee = await employee.update({
             doc1: url
@@ -129,6 +147,15 @@ router.patch('/:id/doc2', upload.single('doc2'), async (req, res) => {
         if (!employee) {
             throw new Error(`No employee with this id: ${req.params.id}`)
         }
+
+        const deleteOldBlob = await deleteFile(employee.dataValues.doc2)
+
+        console.log(deleteOldBlob)
+
+        if (!deleteOldBlob.success) {
+            throw new Error(`Blob do not exist in db`)
+        }
+
         const url = await uploadFile(req.file)
         const updateEmployee = await employee.update({
             doc2: url
@@ -151,6 +178,19 @@ router.delete('/:id', async (req, res) => {
         if (!employee) {
             throw new Error(`No employee with this id: ${req.params.id}`)
         }
+
+        const urls = []
+        urls.push(employee.dataValues.CV)
+        urls.push(employee.dataValues.doc1)
+        urls.push(employee.dataValues.doc2)
+
+        for (let i = 0; i < urls.length; i++) {
+            const deletedBlob = await deleteFile(urls[i])
+            if (!deletedBlob.success) {
+                throw new Error(`Blob do not exist in db`)
+            }
+        }
+
         const deletedEmployee = await employee.destroy()
 
         res.send(deletedEmployee)
