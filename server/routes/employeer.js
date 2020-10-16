@@ -35,6 +35,21 @@ router.post('/:id', async (req, res) => {
                 userId: req.params.id
             })
 
+            if (employee.dataValues.CV || employee.dataValues.doc1 || employee.dataValues.doc2) {
+                const urls = []
+                urls.push(employee.dataValues.CV)
+                urls.push(employee.dataValues.doc1)
+                urls.push(employee.dataValues.doc2)
+
+                for (let i = 0; i < urls.length; i++) {
+                    if (urls[i]) {
+                        const deletedBlob = await deleteFile(urls[i])
+                        if (!deletedBlob.success) {
+                            throw new Error(`Blob do not exist in db`)
+                        }
+                    }
+                }
+            }
             await employee.destroy()
             res.send(employeer)
         } else {
@@ -92,7 +107,19 @@ router.patch('/:id', upload.single('logo'), async (req, res) => {
         }
 
         let url = undefined
-        if (logo) {
+        if (employeer.dataValues.company_logo) {
+            if (logo) {
+                const deleteOldBlob = await deleteFile(employeer.dataValues.company_logo)
+
+                console.log(deleteOldBlob)
+
+                if (!deleteOldBlob.success) {
+                    throw new Error(`Blob do not exist in db`)
+                }
+
+                url = await uploadFile(logo)
+            }
+        } else {
             url = await uploadFile(logo)
         }
 
@@ -141,6 +168,15 @@ router.delete('/:id', async (req, res) => {
         if (!employeer) {
             throw new Error(`No employeer with this id: ${req.params.id}`)
         }
+
+        if (employeer.dataValues.company_logo) {
+            const deleteOldBlob = await deleteFile(employeer.dataValues.company_logo)
+
+            if (!deleteOldBlob.success) {
+                throw new Error(`Blob do not exist in db`)
+            }
+        }
+
         res.send(employeer)
     } catch (error) {
         console.log(error)

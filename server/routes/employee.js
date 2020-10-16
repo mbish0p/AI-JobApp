@@ -1,5 +1,5 @@
 const express = require('express')
-const { uploadFile, deleteFile, deleteFile_v2 } = require('../db/blob')
+const { uploadFile, deleteFile } = require('../db/blob')
 const Employee = require('../models/Employee')
 const multer = require('multer')
 
@@ -87,8 +87,6 @@ router.patch('/:id/CV', upload.single('CV'), async (req, res) => {
 
         const deleteOldBlob = await deleteFile(employee.dataValues.CV)
 
-        console.log(deleteOldBlob)
-
         if (!deleteOldBlob.success) {
             throw new Error(`Blob do not exist in db`)
         }
@@ -119,8 +117,6 @@ router.patch('/:id/doc1', upload.single('doc1'), async (req, res) => {
 
         const deleteOldBlob = await deleteFile(employee.dataValues.doc1)
 
-        console.log(deleteOldBlob)
-
         if (!deleteOldBlob.success) {
             throw new Error(`Blob do not exist in db`)
         }
@@ -149,8 +145,6 @@ router.patch('/:id/doc2', upload.single('doc2'), async (req, res) => {
         }
 
         const deleteOldBlob = await deleteFile(employee.dataValues.doc2)
-
-        console.log(deleteOldBlob)
 
         if (!deleteOldBlob.success) {
             throw new Error(`Blob do not exist in db`)

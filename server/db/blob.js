@@ -12,7 +12,6 @@ const containerName = 'container'
 
 const uploadFile = async (file) => {
 
-    console.log(file)
     const fileName = crypto.randomBytes(6).toString('hex') + "_" + file.originalname
     const blobServiceClient = new BlobServiceClient(`https://${STORAGE_ACCOUNT_NAME}.blob.core.windows.net${SAS}`);
     const containerClient = await blobServiceClient.getContainerClient(containerName);
@@ -20,25 +19,6 @@ const uploadFile = async (file) => {
     await blockBlobClient.upload(file.buffer, file.buffer.byteLength)
 
     return blockBlobClient.url
-}
-
-const deleteFile_v2 = async (url) => {
-    try {
-        const blobServiceClient = new BlobServiceClient(`https://${STORAGE_ACCOUNT_NAME}.blob.core.windows.net${SAS}`);
-        const blobBatchClient = blobServiceClient.getBlobBatchClient()
-        const storageSharedKeyCredential = new StorageSharedKeyCredential(STORAGE_ACCOUNT_NAME, ACCOUNT_ACCESS_KEY)
-        const response = blobBatchClient.deleteBlobs([url], storageSharedKeyCredential)
-
-        return response
-
-    } catch (error) {
-        const responseMessage = {
-            succes: fail,
-            message: `Unsuccessful deleted blob`,
-            error
-        }
-        return responseMessage
-    }
 }
 
 const deleteFile = async (url) => {
@@ -80,6 +60,5 @@ const deleteFile = async (url) => {
 
 module.exports = {
     uploadFile,
-    deleteFile,
-    deleteFile_v2
+    deleteFile
 }
