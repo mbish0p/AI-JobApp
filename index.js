@@ -23,6 +23,7 @@ app.use('/employee', require('./server/routes/employee'))
 app.use('/employeer', require('./server/routes/employeer'))
 app.use('/skills', require('./server/routes/employee_skills'))
 app.use('/education', require('./server/routes/employee_education'))
+app.use('/experience', require('./server/routes/employee_experience'))
 
 
 const port = process.env.PORT || 5000;
