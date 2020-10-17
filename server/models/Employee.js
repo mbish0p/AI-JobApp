@@ -36,7 +36,7 @@ const Employee = sequelize.define('employee', {
         type: DataTypes.INTEGER,
         allowNull: true
     },
-    max_salary: {
+    preffered_salary: {
         type: DataTypes.INTEGER,
         allowNull: true
     },

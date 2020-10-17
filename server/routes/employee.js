@@ -17,10 +17,17 @@ const upload = multer({
 
 const router = express.Router()
 
-
 router.post('/:id', upload.array('files', 3), async (req, res) => {
     try {
         const files = req.files
+        const { phone_number,
+            city,
+            preffered_contract_type,
+            preffered_position,
+            experience_lvl,
+            min_salary,
+            preffered_salary
+        } = req.body
         const employee = await Employee.findOne({
             where: {
                 userId: req.params.id
@@ -37,12 +44,19 @@ router.post('/:id', upload.array('files', 3), async (req, res) => {
             blobURLs.push(url)
         }
         await employee.update({
+            phone_number,
+            city,
+            preffered_contract_type,
+            preffered_position,
+            experience_lvl,
+            min_salary,
+            preffered_salary,
             CV: blobURLs[0],
             doc1: blobURLs[1],
             doc2: blobURLs[2]
         })
 
-        res.status(201).send('Docs added')
+        res.status(201).send(employee)
     } catch (error) {
         console.log(error)
         res.send(error.toString())
@@ -60,12 +74,7 @@ router.get('/:id', async (req, res) => {
         if (!employee) {
             throw new Error(`No employee with this id: ${req.params.id}`)
         }
-        const userDocs = {
-            CV: employee.dataValues.CV,
-            doc1: employee.dataValues.doc1,
-            doc2: employee.dataValues.doc2
-        }
-        res.send(userDocs)
+        res.send(employee)
     } catch (error) {
         console.log(error)
         res.send(error.toString())
