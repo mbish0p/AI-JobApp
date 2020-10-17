@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-// const sequalize = require('./server/db/sequelize');
+//const sequalize = require('./server/db/sequelize');
 
 // (async () => {
 //     try {

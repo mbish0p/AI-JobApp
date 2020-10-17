@@ -16,8 +16,7 @@ const Employeer = sequelize.define('employeer', {
     },
     phone_number: {
         type: DataTypes.BIGINT,
-        allowNull: false,
-        unique: true
+        allowNull: false
     },
     company_logo: {
         type: DataTypes.STRING,
