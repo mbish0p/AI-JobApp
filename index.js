@@ -21,6 +21,7 @@ app.use('/api/dialogflow', require('./server/routes/dialogflow'));
 app.use('/users', require('./server/routes/user'))
 app.use('/employee', require('./server/routes/employee'))
 app.use('/employeer', require('./server/routes/employeer'))
+app.use('/skills', require('./server/routes/employee_skills'))
 
 
 const port = process.env.PORT || 5000;
