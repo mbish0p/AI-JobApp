@@ -56,5 +56,51 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+router.patch('/:id', async (req, res) => {
+    try {
+        const { name, experience } = req.body
+
+        const skill = await EmployeeSkill.findOne({
+            where: {
+                id: req.params.id
+            }
+        })
+        if (!skill) throw new Error(`No skill with this id: ${req.params.id}`)
+
+        await skill.update({
+            name: name || skill.dataValues.name,
+            experience: experience || skill.dataValues.experience
+        })
+
+        res.send(skill)
+    } catch (error) {
+        console.log(error)
+        res.send(error.toString())
+    }
+})
+
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const skill = await EmployeeSkill.findOne({
+            where: {
+                id: req.params.id
+            }
+        })
+        if (!skill) throw new Error(`No skill with this id: ${req.params.id}`)
+
+        await skill.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+
+        res.send(skill)
+    } catch (error) {
+        console.log(error)
+        res.send(error.toString())
+    }
+})
+
 
 module.exports = router
