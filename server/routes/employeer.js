@@ -53,7 +53,7 @@ router.post('/:id', async (req, res) => {
             await employee.destroy()
             res.send(employeer)
         } else {
-            throw new Error(`No employeer with this id: ${req.params.id}`)
+            throw new Error(`No employee with this id: ${req.params.id}`)
         }
 
     } catch (error) {

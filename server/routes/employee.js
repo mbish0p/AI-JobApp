@@ -1,7 +1,11 @@
 const express = require('express')
+const multer = require('multer')
+
 const { uploadFile, deleteFile } = require('../db/blob')
 const Employee = require('../models/Employee')
-const multer = require('multer')
+const EmployeeEducation = require('../models/EmployeeEducation')
+const EmployeeExperience = require('../models/EmployeeExperience')
+const EmployeeSkill = require('../models/EmployeeSkill')
 
 const upload = multer({
     limits: {
@@ -74,7 +78,33 @@ router.get('/:id', async (req, res) => {
         if (!employee) {
             throw new Error(`No employee with this id: ${req.params.id}`)
         }
-        res.send(employee)
+
+        const skills = await EmployeeSkill.findAll({
+            where: {
+                employeeId: employee.dataValues.id
+            }
+        })
+
+        const education = await EmployeeEducation.findAll({
+            where: {
+                employeeId: employee.dataValues.id
+            }
+        })
+
+        const experience = await EmployeeExperience.findAll({
+            where: {
+                employeeId: employee.dataValues.id
+            }
+        })
+
+        const responseMessage = {
+            employee,
+            skills,
+            education,
+            experience
+        }
+
+        res.send(responseMessage)
     } catch (error) {
         console.log(error)
         res.send(error.toString())
