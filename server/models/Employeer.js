@@ -14,10 +14,9 @@ const Employeer = sequelize.define('employeer', {
         allowNull: false,
         unique: true
     },
-    nip: {
+    phone_number: {
         type: DataTypes.BIGINT,
-        allowNull: false,
-        unique: true
+        allowNull: false
     },
     company_logo: {
         type: DataTypes.STRING,
@@ -25,7 +24,7 @@ const Employeer = sequelize.define('employeer', {
     }
 })
 
-Employeer.belongsTo(User, { foreignKey: 'employeerId', onDelete: 'cascade' })
+Employeer.belongsTo(User, { foreignKey: 'userId', onDelete: 'cascade' })
 Employeer.hasMany(JobOffer, { foreignKey: 'employeerId', onDelete: 'cascade' })
 
 
