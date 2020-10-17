@@ -3,6 +3,7 @@ const multer = require('multer')
 
 const { uploadFile, deleteFile } = require('../db/blob')
 const Employee = require('../models/Employee')
+const EmployeeEducation = require('../models/EmployeeEducation')
 const EmployeeSkill = require('../models/EmployeeSkill')
 
 const upload = multer({
@@ -83,9 +84,16 @@ router.get('/:id', async (req, res) => {
             }
         })
 
+        const education = await EmployeeEducation.findAll({
+            where: {
+                employeeId: employee.dataValues.id
+            }
+        })
+
         const responseMessage = {
             employee,
-            skills
+            skills,
+            education
         }
 
         res.send(responseMessage)
