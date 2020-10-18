@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 
+const auth = require('../middleware/auth')
 const { deleteFile } = require('../db/blob')
 const keys = require('../config/dev')
 
@@ -49,7 +50,7 @@ router.post('/login', async (req, res) => {
         }
 
         const accessTokenPayload = {
-            name: user.dataValues.name,
+            email: user.dataValues.email,
             role: 'ACCESS_TOKEN'
         }
         const accessToken = jwt.sign(accessTokenPayload, keys.ACCESS_TOKEN_SECRET, {
@@ -57,7 +58,7 @@ router.post('/login', async (req, res) => {
             expiresIn: `${keys.ACCESS_TOKEN_LIFE}s`
         })
         const refreshTokenPayload = {
-            name: user.dataValues.name,
+            email: user.dataValues.email,
             role: 'REFRESH_TOKEN'
         }
         const refreshToken = jwt.sign(refreshTokenPayload, keys.REFRESH_TOKEN_SECRET, {
@@ -81,10 +82,10 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', auth, async (req, res) => {
     try {
-        const user = await User.findByPk(req.params.id)
-        if (!user) throw new Error(`No user with id : ${req.params.id}`)
+        const user = req.user
+        if (!user) throw new Error(`No user`)
 
         res.send(user.toJSON())
     } catch (error) {
