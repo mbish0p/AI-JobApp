@@ -3,8 +3,11 @@ const User = require('../models/User')
 const Employee = require('../models/Employee')
 const Employeer = require('../models/Employeer')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
 
 const { deleteFile } = require('../db/blob')
+const keys = require('../config/dev')
 
 const router = express.Router()
 
@@ -21,6 +24,55 @@ router.post('/', async (req, res) => {
         })
         const employee = await Employee.create({
             userId: user.dataValues.id
+        })
+        res.status(201).send(user)
+    } catch (error) {
+        console.log(error)
+        res.send(error.toString())
+    }
+})
+
+router.post('/login', async (req, res) => {
+    try {
+        const { email, password } = req.body
+        if (!email || !password) {
+            res.status(401).send({ message: 'No crudentials' })
+        }
+
+        const user = await User.findOne({
+            where: {
+                email
+            }
+        })
+        if (!user || !await bcrypt.compare(password, user.dataValues.password)) {
+            res.status(401).send({ message: 'No user with this crudentials' })
+        }
+
+        const accessTokenPayload = {
+            name: user.dataValues.name,
+            role: 'ACCESS_TOKEN'
+        }
+        const accessToken = jwt.sign(accessTokenPayload, keys.ACCESS_TOKEN_SECRET, {
+            algorithm: "HS256",
+            expiresIn: `${keys.ACCESS_TOKEN_LIFE}s`
+        })
+        const refreshTokenPayload = {
+            name: user.dataValues.name,
+            role: 'REFRESH_TOKEN'
+        }
+        const refreshToken = jwt.sign(refreshTokenPayload, keys.REFRESH_TOKEN_SECRET, {
+            algorithm: "HS256",
+            expiresIn: `${keys.REFRESH_TOKEN_LIFE}s`
+        })
+
+        await user.update({
+            refresh_tokens: refreshToken
+        })
+        res.cookie('jwt_accessToken', {
+            accessToken
+        })
+        res.cookie('jwt_refreshToken', {
+            refreshToken
         })
         res.status(201).send(user)
     } catch (error) {

@@ -13,3 +13,4 @@ yarn-error.log*
 dev.js
 ./server/config/dev.js
 server/config/arnoldbot-crte-cc8074304beb.json
+server/.env

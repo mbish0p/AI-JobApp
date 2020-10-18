@@ -28,6 +28,10 @@ const User = sequelize.define('User', {
         validate: {
             isEmail: true
         }
+    },
+    refresh_tokens: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 })
 
