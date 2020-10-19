@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken')
 const auth = require('../middleware/auth')
 const { deleteFile } = require('../db/blob')
 const keys = require('../config/dev')
+const { verify } = require('crypto')
 
 const router = express.Router()
 
@@ -25,6 +26,62 @@ router.post('/', async (req, res) => {
         })
         const employee = await Employee.create({
             userId: user.dataValues.id
+        })
+        res.status(201).send(user)
+    } catch (error) {
+        console.log(error)
+        res.send(error.toString())
+    }
+})
+
+router.post('/refresh', async (req, res) => {
+    try {
+        const oldRefreshToken = req.cookies.jwt_refreshToken
+
+        if (!oldRefreshToken) {
+            throw new Error('Refresh token wasn`t sended')
+        }
+
+        console.log(oldRefreshToken)
+        const decode = jwt.verify(oldRefreshToken.refreshToken, keys.REFRESH_TOKEN_SECRET)
+
+        const user = await User.findOne({
+            where: {
+                email: decode.email
+            }
+        })
+
+        if (oldRefreshToken.refreshToken !== user.dataValues.refresh_tokens) {
+            console.log('Refresh token from cookie ', oldRefreshToken.refreshToken)
+            console.log('Refresh token from db ', user.dataValues.refresh_tokens)
+            throw new Error('Refresh tokens are different, check something goes wrong')
+        }
+        const accessTokenPayload = {
+            email: user.dataValues.email,
+            role: 'ACCESS_TOKEN'
+        }
+        const accessToken = jwt.sign(accessTokenPayload, keys.ACCESS_TOKEN_SECRET, {
+            algorithm: "HS256",
+            expiresIn: `${keys.ACCESS_TOKEN_LIFE}s`
+        })
+        const refreshTokenPayload = {
+            email: user.dataValues.email,
+            role: 'REFRESH_TOKEN'
+        }
+        const refreshToken = jwt.sign(refreshTokenPayload, keys.REFRESH_TOKEN_SECRET, {
+            algorithm: "HS256",
+            expiresIn: `${keys.REFRESH_TOKEN_LIFE}s`
+        })
+
+        await user.update({
+            refresh_tokens: refreshToken
+        })
+
+        res.cookie('jwt_accessToken', {
+            accessToken
+        })
+        res.cookie('jwt_refreshToken', {
+            refreshToken
         })
         res.status(201).send(user)
     } catch (error) {

@@ -12,7 +12,6 @@ const auth = async (req, res, next) => {
 
     try {
         const decode = jwt.verify(accessToken.accessToken, keys.ACCESS_TOKEN_SECRET)
-        console.log(decode)
         const user = await User.findOne({
             where: {
                 email: decode.email
@@ -20,7 +19,6 @@ const auth = async (req, res, next) => {
         })
 
         req.user = user
-        req.message = 'dupaaaaa'
 
         next()
     } catch (error) {
