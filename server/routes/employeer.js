@@ -13,7 +13,7 @@ const upload = multer({
     },
     fileFilter(req, file, cb) {
         if (!file.originalname.match(/\.(JPG|PNG|JPEG|jpg|png|jpeg)$/)) {
-            return cb(new Error('Please upload file with extension pdf, doc or docx'))
+            return cb(new Error('Please upload file with extension, jpg, pdf, doc or docx'))
         }
         cb(undefined, true)
     }
