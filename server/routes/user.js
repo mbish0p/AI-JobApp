@@ -9,7 +9,6 @@ const jwt = require('jsonwebtoken')
 const auth = require('../middleware/auth')
 const { deleteFile } = require('../db/blob')
 const keys = require('../config/dev')
-const { verify } = require('crypto')
 
 const router = express.Router()
 
@@ -139,7 +138,26 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.get('/:id', auth, async (req, res) => {
+router.post('/logout', auth, async (req, res) => {
+    try {
+        const user = req.user
+
+        await User.update({
+            refresh_tokens: ""
+        }, {
+            where: {
+                id: user.id
+            }
+        })
+
+        res.send({ message: `Successfull logout ${user.name}` })
+    } catch (error) {
+        console.log(error)
+        res.send(error.toString())
+    }
+})
+
+router.get('/', auth, async (req, res) => {
     try {
         const user = req.user
         if (!user) throw new Error(`No user`)
@@ -151,14 +169,16 @@ router.get('/:id', auth, async (req, res) => {
     }
 })
 
-router.patch('/:id', async (req, res) => {
+router.patch('/', auth, async (req, res) => {
     try {
-        const user = await User.findByPk(req.params.id)
+        const user = req.user
         const { email, password, surname, name } = req.body
         const salt = 10
         let hashedPassword
 
-        if (!user) throw new Error(`No user with id : ${req.params.id}`)
+        console.log(user.id)
+
+        if (!user) throw new Error(`No user`)
 
         password ? hashedPassword = await bcrypt.hash(password, salt) : hashedPassword = undefined
 
@@ -170,15 +190,16 @@ router.patch('/:id', async (req, res) => {
                 email: email || user.email
             }
 
-            const newUser = await User.update(newUserData, {
+            await User.update(newUserData, {
                 where: {
-                    id: req.params.id
+                    id: user.id
                 }
             })
-            res.status(201).send(newUser)
+
+            res.status(201).send({ message: 'Succesful updated user profile' })
         }
         else {
-            throw new Error('No User with this id')
+            throw new Error('No user')
         }
     } catch (error) {
         console.log(error)
@@ -186,27 +207,21 @@ router.patch('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/', auth, async (req, res) => {
     try {
-        const user = await User.findOne({
-            where: {
-                id: req.params.id
-            }
-        })
+        const user = req.user
 
-        if (!user) {
-            throw new Error(`No user with id : ${req.params.id}`)
-        }
+        console.log(user)
 
         const employee = await Employee.findOne({
             where: {
-                userId: req.params.id
+                userId: user.id
             }
         })
 
         const employeer = await Employeer.findOne({
             where: {
-                userId: req.params.id
+                userId: user.id
             }
         })
 
@@ -236,7 +251,7 @@ router.delete('/:id', async (req, res) => {
 
         await user.destroy()
 
-        res.send(`User with id ${req.params.id} was deleted succesfully`)
+        res.send(`User with id ${user.id} was deleted succesfully`)
     } catch (error) {
         console.log(error)
         res.send(error.toString())

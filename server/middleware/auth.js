@@ -1,5 +1,5 @@
-const { compareSync } = require('bcrypt')
 const jwt = require('jsonwebtoken')
+
 const keys = require('../config/dev')
 const User = require('../models/User')
 
@@ -17,6 +17,10 @@ const auth = async (req, res, next) => {
                 email: decode.email
             }
         })
+
+        if (!user.refresh_tokens) {
+            res.status(403).send({ error: 'Request is unauthorized ' })
+        }
 
         req.user = user
 
