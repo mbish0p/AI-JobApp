@@ -4,6 +4,7 @@ const multer = require('multer')
 const Employee = require('../models/Employee')
 const Employeer = require('../models/Employeer')
 const { uploadFile, deleteFile } = require('../db/blob')
+const auth = require('../middleware/auth')
 
 const router = express.Router()
 const upload = multer({
@@ -18,13 +19,13 @@ const upload = multer({
     }
 })
 
-router.post('/:id', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
         const { company_name, phone_number } = req.body
 
         const employee = await Employee.findOne({
             where: {
-                userId: req.params.id
+                userId: req.user.id
             }
         })
 
@@ -32,7 +33,7 @@ router.post('/:id', async (req, res) => {
             const employeer = await Employeer.create({
                 company_name,
                 phone_number,
-                userId: req.params.id
+                userId: req.user.id
             })
 
             if (employee.dataValues.CV || employee.dataValues.doc1 || employee.dataValues.doc2) {
@@ -53,27 +54,26 @@ router.post('/:id', async (req, res) => {
             await employee.destroy()
             res.send(employeer)
         } else {
-            throw new Error(`No employee with this id: ${req.params.id}`)
+            throw new Error(`No employee with this userId: ${req.user.id}`)
         }
-
     } catch (error) {
         console.log(error)
         res.send(error.toString())
     }
 })
 
-router.post('/:id/company-logo', upload.single('logo'), async (req, res) => {
+router.post('/company-logo', auth, upload.single('logo'), async (req, res) => {
     try {
         const logo = req.file
 
         const employeer = await Employeer.findOne({
             where: {
-                userId: req.params.id
+                userId: req.user.id
             }
         })
 
         if (!employeer) {
-            throw new Error(`No employeer with this id: ${req.params.id}`)
+            throw new Error(`No employeer with this userId: ${req.user.id}`)
         }
 
         const url = await uploadFile(logo)
@@ -92,23 +92,25 @@ router.post('/:id/company-logo', upload.single('logo'), async (req, res) => {
     }
 })
 
-router.patch('/:id', upload.single('logo'), async (req, res) => {
+router.patch('/', auth, upload.single('logo'), async (req, res) => {
     try {
         const { company_name, phone_number } = req.body
         const logo = req.file
 
         const employeer = await Employeer.findOne({
             where: {
-                userId: req.params.id
+                userId: req.user.id
             }
         })
         if (!employeer) {
-            throw new Error(`No employeer with this id: ${req.params.id}`)
+            throw new Error(`No employeer with this userId: ${req.user.id}`)
         }
 
         let url = undefined
         if (employeer.dataValues.company_logo) {
             if (logo) {
+                console.log(employeer.dataValues.company_logo)
+
                 const deleteOldBlob = await deleteFile(employeer.dataValues.company_logo)
 
                 console.log(deleteOldBlob)
@@ -129,23 +131,23 @@ router.patch('/:id', upload.single('logo'), async (req, res) => {
             company_logo: url || employeer.dataValues.company_logo
         })
 
-        res.send({})
+        res.send(employeer)
     } catch (error) {
         console.log(error)
         res.send(error.toString())
     }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         const employeer = await Employeer.findOne({
             where: {
-                userId: req.params.id
+                userId: req.user.id
             }
         })
 
         if (!employeer) {
-            throw new Error(`No employeer with this id: ${req.params.id}`)
+            throw new Error(`No employeer with this userId: ${req.user.id}`)
         }
 
         await deleteFile(employeer.dataValues.company_logo)
@@ -157,16 +159,15 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/', auth, async (req, res) => {
     try {
-        console.log(typeof parseInt(req.params.id))
         const employeer = await Employeer.findOne({
             where: {
-                userId: req.params.id
+                userId: req.user.id
             }
         })
         if (!employeer) {
-            throw new Error(`No employeer with this id: ${req.params.id}`)
+            throw new Error(`No employeer with this userId: ${req.user.id}`)
         }
 
         if (employeer.dataValues.company_logo) {
@@ -176,6 +177,8 @@ router.delete('/:id', async (req, res) => {
                 throw new Error(`Blob do not exist in db`)
             }
         }
+
+        await employeer.destroy()
 
         res.send(employeer)
     } catch (error) {

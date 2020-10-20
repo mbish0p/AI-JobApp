@@ -6,6 +6,7 @@ const Employee = require('../models/Employee')
 const EmployeeEducation = require('../models/EmployeeEducation')
 const EmployeeExperience = require('../models/EmployeeExperience')
 const EmployeeSkill = require('../models/EmployeeSkill')
+const auth = require('../middleware/auth')
 
 const upload = multer({
     limits: {
@@ -21,7 +22,7 @@ const upload = multer({
 
 const router = express.Router()
 
-router.post('/:id', upload.array('files', 3), async (req, res) => {
+router.post('/', auth, upload.array('files', 3), async (req, res) => {
     try {
         const files = req.files
         const { phone_number,
@@ -34,7 +35,7 @@ router.post('/:id', upload.array('files', 3), async (req, res) => {
         } = req.body
         const employee = await Employee.findOne({
             where: {
-                userId: req.params.id
+                userId: req.user.id
             }
         })
 
@@ -67,16 +68,16 @@ router.post('/:id', upload.array('files', 3), async (req, res) => {
     }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         const employee = await Employee.findOne({
             where: {
-                userId: req.params.id
+                userId: req.user.id
             }
         })
 
         if (!employee) {
-            throw new Error(`No employee with this id: ${req.params.id}`)
+            throw new Error(`No employee with this userId: ${req.user.id}`)
         }
 
         const skills = await EmployeeSkill.findAll({
@@ -113,21 +114,24 @@ router.get('/:id', async (req, res) => {
 
 //TODO: add 1 update for multiple files, after chceking how to set describe in fronted request
 
-router.patch('/:id/CV', upload.single('CV'), async (req, res) => {
+router.patch('/CV', auth, upload.single('CV'), async (req, res) => {
     try {
         const employee = await Employee.findOne({
             where: {
-                userId: req.params.id
+                userId: req.user.id
             }
         })
         if (!employee) {
-            throw new Error(`No employee with this id: ${req.params.id}`)
+            throw new Error(`No employee with this userId: ${req.user.id}`)
         }
 
-        const deleteOldBlob = await deleteFile(employee.dataValues.CV)
+        if (employee.dataValues.CV) {
 
-        if (!deleteOldBlob.success) {
-            throw new Error(`Blob do not exist in db`)
+            const deleteOldBlob = await deleteFile(employee.dataValues.CV)
+
+            if (!deleteOldBlob.success) {
+                throw new Error(`Blob do not exist in db`)
+            }
         }
 
         const url = await uploadFile(req.file)
@@ -142,22 +146,24 @@ router.patch('/:id/CV', upload.single('CV'), async (req, res) => {
     }
 })
 
-router.patch('/:id/doc1', upload.single('doc1'), async (req, res) => {
+router.patch('/doc1', auth, upload.single('doc1'), async (req, res) => {
     try {
         const employee = await Employee.findOne({
             where: {
-                userId: req.params.id
+                userId: req.user.id
             }
         })
 
         if (!employee) {
-            throw new Error(`No employee with this id: ${req.params.id}`)
+            throw new Error(`No employee with this userId: ${req.user.id}`)
         }
 
-        const deleteOldBlob = await deleteFile(employee.dataValues.doc1)
+        if (employee.dataValues.doc1) {
+            const deleteOldBlob = await deleteFile(employee.dataValues.doc1)
 
-        if (!deleteOldBlob.success) {
-            throw new Error(`Blob do not exist in db`)
+            if (!deleteOldBlob.success) {
+                throw new Error(`Blob do not exist in db`)
+            }
         }
 
         const url = await uploadFile(req.file)
@@ -172,21 +178,23 @@ router.patch('/:id/doc1', upload.single('doc1'), async (req, res) => {
     }
 })
 
-router.patch('/:id/doc2', upload.single('doc2'), async (req, res) => {
+router.patch('/doc2', auth, upload.single('doc2'), async (req, res) => {
     try {
         const employee = await Employee.findOne({
             where: {
-                userId: req.params.id
+                userId: req.user.id
             }
         })
         if (!employee) {
-            throw new Error(`No employee with this id: ${req.params.id}`)
+            throw new Error(`No employee with this userId: ${req.user.id}`)
         }
 
-        const deleteOldBlob = await deleteFile(employee.dataValues.doc2)
+        if (employee.dataValues.doc2) {
+            const deleteOldBlob = await deleteFile(employee.dataValues.doc2)
 
-        if (!deleteOldBlob.success) {
-            throw new Error(`Blob do not exist in db`)
+            if (!deleteOldBlob.success) {
+                throw new Error(`Blob do not exist in db`)
+            }
         }
 
         const url = await uploadFile(req.file)
@@ -201,15 +209,15 @@ router.patch('/:id/doc2', upload.single('doc2'), async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/', auth, async (req, res) => {
     try {
         const employee = await Employee.findOne({
             where: {
-                userId: req.params.id
+                userId: req.user.id
             }
         })
         if (!employee) {
-            throw new Error(`No employee with this id: ${req.params.id}`)
+            throw new Error(`No employee with this userId: ${req.user.id}`)
         }
 
         const urls = []
