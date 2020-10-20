@@ -2,18 +2,20 @@ const express = require('express')
 
 const EmployeeEducation = require('../models/EmployeeEducation')
 const Employee = require('../models/Employee')
+const auth = require('../middleware/auth')
+
 const router = express.Router()
 
-router.post('/:id', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
         const { school_name, field_of_studies } = req.body
         const employee = await Employee.findOne({
             where: {
-                userId: req.params.id
+                userId: req.user.id
             }
         })
 
-        if (!employee) throw new Error(`No employee with this id: ${req.params.id}`)
+        if (!employee) throw new Error(`No employee with this userId: ${req.user.id}`)
 
         const employeeEducation = await EmployeeEducation.create({
             employeeId: employee.dataValues.id,
@@ -33,15 +35,15 @@ router.post('/:id', async (req, res) => {
     }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         const employee = await Employee.findOne({
             where: {
-                userId: req.params.id
+                userId: req.user.id
             }
         })
 
-        if (!employee) throw new Error(`No employee with this id: ${req.params.id}`)
+        if (!employee) throw new Error(`No employee with this userId: ${req.user.id}`)
 
         const educations = await EmployeeEducation.findAll({
             where: {
@@ -56,7 +58,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', auth, async (req, res) => {
     try {
         const { school_name, field_of_studies } = req.body
         const employeeEducation = await EmployeeEducation.findOne({
@@ -79,7 +81,7 @@ router.patch('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
     try {
         const employeeEducation = await EmployeeEducation.findOne({
             where: {

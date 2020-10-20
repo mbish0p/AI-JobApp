@@ -241,6 +241,8 @@ router.delete('/', auth, async (req, res) => {
             }
         }
 
+        console.log(employeer)
+
         if (employeer && employeer.dataValues.company_logo) {
             const deleteOldBlob = await deleteFile(employeer.dataValues.company_logo)
 

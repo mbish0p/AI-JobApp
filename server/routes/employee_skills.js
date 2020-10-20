@@ -1,20 +1,21 @@
 const express = require('express')
 
+const auth = require('../middleware/auth')
 const Employee = require('../models/Employee')
 const EmployeeSkill = require('../models/EmployeeSkill')
 
 const router = express.Router()
 
-router.post('/:id', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
         const { name, experience } = req.body
         const employee = await Employee.findOne({
             where: {
-                userId: req.params.id
+                userId: req.user.id
             }
         })
 
-        if (!employee) throw new Error(`No employee with this id: ${req.params.id}`)
+        if (!employee) throw new Error(`No employee with this userId: ${req.user.id}`)
 
         const skill = await EmployeeSkill.create({
             employeeId: employee.dataValues.id,
@@ -33,15 +34,15 @@ router.post('/:id', async (req, res) => {
     }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         const employee = await Employee.findOne({
             where: {
-                userId: req.params.id
+                userId: req.user.id
             }
         })
 
-        if (!employee) throw new Error(`No employee with this id: ${req.params.id}`)
+        if (!employee) throw new Error(`No employee with this userId: ${req.user.id}`)
 
         const skills = await EmployeeSkill.findAll({
             where: {
@@ -56,7 +57,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', auth, async (req, res) => {
     try {
         const { name, experience } = req.body
 
@@ -80,7 +81,7 @@ router.patch('/:id', async (req, res) => {
 })
 
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
     try {
         const skill = await EmployeeSkill.findOne({
             where: {
