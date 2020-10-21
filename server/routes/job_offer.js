@@ -4,6 +4,8 @@ const JobOffer = require('../models/JobOffer')
 const Employeer = require('../models/Employeer')
 const auth = require('../middleware/auth')
 const JobOfferTechnologies = require('../models/JobOfferTechnologies')
+const Candidates = require('../models/Candidates')
+const Employee = require('../models/Employee')
 
 const router = express.Router()
 
@@ -120,6 +122,36 @@ router.get('/', auth, async (req, res) => {
         }
 
         res.send(newJobOffersArray)
+    } catch (error) {
+        console.log(error)
+        res.send(error.toString())
+    }
+})
+
+router.get('/:id/candidates/employees', auth, async (req, res) => {
+    try {
+        const candidates = await Candidates.findAll({
+            where: {
+                jobOfferId: req.params.id
+            }
+        })
+
+        if (!candidates) throw new Error(`No candidates for this job offer, with this id ${req.params.id}`)
+
+        const employees = []
+        for (let i = 0; i < candidates.length; i++) {
+            const candidate = candidates[i].dataValues
+
+            const employee = await Employee.findOne({
+                where: {
+                    id: candidate.employeeId
+                }
+            })
+
+            employees.push(employee)
+        }
+
+        res.send(employees)
     } catch (error) {
         console.log(error)
         res.send(error.toString())

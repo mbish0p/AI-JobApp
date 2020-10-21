@@ -90,12 +90,64 @@ router.post('/apply/:id', auth, async (req, res) => {
             throw new Error(`No employee with this id: ${req.params.id}`)
         }
 
+        const isAlreadyApplied = await Candidates.findOne({
+            where: {
+                employeeId: employee.dataValues.id,
+                jobOfferId: jobOffer.dataValues.id
+            }
+        })
+
+        if (isAlreadyApplied) throw new Error(`Employee with this id ${employee.dataValues.id},
+            already applied for job offer with id ${jobOffer.dataValues.id}`)
+
         const candidates = await Candidates.create({
             employeeId: employee.dataValues.id,
             jobOfferId: jobOffer.dataValues.id
         })
 
         res.send(candidates)
+    } catch (error) {
+        console.log(error)
+        res.send(error.toString())
+    }
+})
+
+router.get('/candidates/job-offers', auth, async (req, res) => {
+    try {
+        const user = req.user
+
+        const employee = await Employee.findOne({
+            where: {
+                userId: user.id
+            }
+        })
+        if (!employee) {
+            throw new Error(`No employee with this id: ${req.params.id}`)
+        }
+
+        const candidates = await Candidates.findAll({
+            where: {
+                employeeId: employee.dataValues.id
+            }
+        })
+
+        const offers = []
+
+        for (let i = 0; i < candidates.length; i++) {
+            const candidate = candidates[i].dataValues
+
+            const jobOffer = await JobOffer.findOne({
+                where: {
+                    id: candidate.jobOfferId
+                }
+            })
+
+            offers.push(jobOffer)
+        }
+
+        //console.log(offers)
+
+        res.send(offers)
     } catch (error) {
         console.log(error)
         res.send(error.toString())
