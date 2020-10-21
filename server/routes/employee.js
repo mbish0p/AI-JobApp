@@ -7,6 +7,8 @@ const EmployeeEducation = require('../models/EmployeeEducation')
 const EmployeeExperience = require('../models/EmployeeExperience')
 const EmployeeSkill = require('../models/EmployeeSkill')
 const auth = require('../middleware/auth')
+const JobOffer = require('../models/JobOffer')
+const Candidates = require('../models/Candidates')
 
 const upload = multer({
     limits: {
@@ -62,6 +64,38 @@ router.post('/', auth, upload.array('files', 3), async (req, res) => {
         })
 
         res.status(201).send(employee)
+    } catch (error) {
+        console.log(error)
+        res.send(error.toString())
+    }
+})
+
+router.post('/apply/:id', auth, async (req, res) => {
+    try {
+        const user = req.user
+
+        const employee = await Employee.findOne({
+            where: {
+                userId: user.id
+            }
+        })
+        const jobOffer = await JobOffer.findOne({
+            where: {
+                id: req.params.id
+            }
+        })
+
+        if (!jobOffer) throw new Error(`No offer with this id ${req.params.id}`)
+        if (!employee) {
+            throw new Error(`No employee with this id: ${req.params.id}`)
+        }
+
+        const candidates = await Candidates.create({
+            employeeId: employee.dataValues.id,
+            jobOfferId: jobOffer.dataValues.id
+        })
+
+        res.send(candidates)
     } catch (error) {
         console.log(error)
         res.send(error.toString())

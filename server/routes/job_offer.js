@@ -3,6 +3,7 @@ const express = require('express')
 const JobOffer = require('../models/JobOffer')
 const Employeer = require('../models/Employeer')
 const auth = require('../middleware/auth')
+const JobOfferTechnologies = require('../models/JobOfferTechnologies')
 
 const router = express.Router()
 
@@ -61,7 +62,24 @@ router.post('/', auth, async (req, res) => {
 router.get('/all', async (req, res) => {
     try {
         const offers = await JobOffer.findAll()
-        res.send(offers)
+
+        const newJobOffersArray = []
+
+        for (let i = 0; i < offers.length; i++) {
+            const offer = offers[i].dataValues
+
+            const technology = await JobOfferTechnologies.findAll({
+                where: {
+                    jobOfferId: offer.id
+                }
+            })
+            newJobOffersArray.push({
+                offer,
+                technology
+            })
+        }
+
+        res.send(newJobOffersArray)
     } catch (error) {
         console.log(error)
         res.send(error.toString())
@@ -85,7 +103,23 @@ router.get('/', auth, async (req, res) => {
             }
         })
 
-        res.send(jobOffers)
+        const newJobOffersArray = []
+
+        for (let i = 0; i < jobOffers.length; i++) {
+            const offer = jobOffers[i].dataValues
+
+            const technology = await JobOfferTechnologies.findAll({
+                where: {
+                    jobOfferId: offer.id
+                }
+            })
+            newJobOffersArray.push({
+                offer,
+                technology
+            })
+        }
+
+        res.send(newJobOffersArray)
     } catch (error) {
         console.log(error)
         res.send(error.toString())
