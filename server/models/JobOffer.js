@@ -65,6 +65,10 @@ const JobOffer = sequelize.define('job_offer', {
     online_interview: {
         type: DataTypes.BOOLEAN,
         allowNull: true
+    },
+    active: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 })
 JobOffer.hasMany(JobOfferTechnologies, { foreignKey: 'jobOfferId', onDelete: 'cascade' })

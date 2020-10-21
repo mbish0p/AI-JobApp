@@ -29,8 +29,9 @@ app.use('/education', require('./server/routes/employee_education'))
 app.use('/experience', require('./server/routes/employee_experience'))
 app.use('/job-offer', require('./server/routes/job_offer'))
 app.use('/technologies', require('./server/routes/job_offer_technologie'))
+app.use('/files', require('./server/routes/employee_file'))
 
-const port = process.env.PORT || 5000;
+const port = 5000;
 
 
 
