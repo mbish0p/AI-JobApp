@@ -3,7 +3,6 @@ const express = require('express')
 const JobOffer = require('../models/JobOffer')
 const Employeer = require('../models/Employeer')
 const auth = require('../middleware/auth')
-const { findAll } = require('../models/JobOffer')
 
 const router = express.Router()
 
