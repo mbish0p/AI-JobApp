@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db/sequelize')
 const Employee = require('./Employee')
+const Employeer = require('./Employeer')
 
 
 const User = sequelize.define('User', {
@@ -36,5 +37,6 @@ const User = sequelize.define('User', {
 })
 
 User.Employee = User.hasOne(Employee, { foreignKey: 'userId', onDelete: 'cascade' })
+User.Employeer = User.hasOne(Employeer, { foreignKey: 'userId', onDelete: 'cascade' })
 
 module.exports = User

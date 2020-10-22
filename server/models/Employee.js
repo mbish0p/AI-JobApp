@@ -1,10 +1,10 @@
-const JobOffer = require('./JobOffer');
 const EmployeeEducation = require('./EmployeeEducation');
 const EmployeeExperience = require('./EmployeeExperience');
 const EmployeeSkill = require('./EmployeeSkill');
 const Candidates = require('./Candidates')
+const EmployeeDocument = require('./EmployeeDocument')
 const { DataTypes } = require('sequelize');
-const sequelize = require('../db/sequelize')
+const sequelize = require('../db/sequelize');
 
 const Employee = sequelize.define('employee', {
     id: {
@@ -39,18 +39,6 @@ const Employee = sequelize.define('employee', {
     preffered_salary: {
         type: DataTypes.INTEGER,
         allowNull: true
-    },
-    CV: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    doc1: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    doc2: {
-        type: DataTypes.STRING,
-        allowNull: true
     }
 })
 
@@ -58,6 +46,7 @@ const Employee = sequelize.define('employee', {
 Employee.hasMany(Candidates, { foreignKey: 'employeeId', onDelete: 'cascade' })
 
 
+Employee.hasMany(EmployeeDocument, { foreignKey: 'employeeId', onDelete: 'cascade' })
 Employee.hasMany(EmployeeEducation, { foreignKey: 'employeeId', onDelete: 'cascade' })
 Employee.hasMany(EmployeeExperience, { foreignKey: 'employeeId', onDelete: 'cascade' })
 Employee.hasMany(EmployeeSkill, { foreignKey: 'employeeId', onDelete: 'cascade' })
