@@ -3,6 +3,11 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser')
 
+const jobOfferStatusScanning = require('./server/db/backgroundJob')
+jobOfferStatusScanning()
+
+console.log(new Date())
+
 // const sequalize = require('./server/db/sequelize');
 
 // (async () => {
