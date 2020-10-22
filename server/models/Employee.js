@@ -5,7 +5,6 @@ const Candidates = require('./Candidates')
 const EmployeeDocument = require('./EmployeeDocument')
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db/sequelize');
-const Employeer = require('./Employeer');
 
 const Employee = sequelize.define('employee', {
     id: {

@@ -97,7 +97,7 @@ router.get('/', auth, async (req, res) => {
             }
         })
 
-        if (!employeer) throw new Error('Only user with employeer profile can create job offers')
+        if (!employeer) throw new Error('Only user with employeer profile can list job offers')
 
         const jobOffers = await JobOffer.findAll({
             where: {
@@ -152,6 +152,26 @@ router.get('/:id/candidates/employees', auth, async (req, res) => {
         }
 
         res.send(employees)
+    } catch (error) {
+        console.log(error)
+        res.send(error.toString())
+    }
+})
+
+router.patch('/:id/change-offer-status', auth, async (req, res) => {
+    try {
+        const jobOffer = await JobOffer.findOne({
+            where: {
+                id: req.params.id
+            }
+        })
+        if (!jobOffer) throw new Error(`No offer with this id ${req.params.id}`)
+
+        const updatedJobOffer = await jobOffer.update({
+            active: !jobOffer.dataValues.active
+        })
+
+        res.send(updatedJobOffer)
     } catch (error) {
         console.log(error)
         res.send(error.toString())
