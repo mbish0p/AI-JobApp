@@ -2,11 +2,11 @@ require('dotenv').config()
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 
 const jobOfferStatusScanning = require('./server/db/backgroundJob')
 jobOfferStatusScanning()
 
-console.log(new Date())
 
 // const sequalize = require('./server/db/sequelize');
 
@@ -25,6 +25,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser())
+app.use(cors())
 app.use('/api/dialogflow', require('./server/routes/dialogflow'));
 app.use('/users', require('./server/routes/user'))
 app.use('/employee', require('./server/routes/employee'))
