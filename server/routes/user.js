@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
         res.status(201).send(user)
     } catch (error) {
         console.log(error)
-        res.send(error.toString())
+        res.status(404).send(error.toString())
     }
 })
 
