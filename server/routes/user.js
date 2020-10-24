@@ -29,7 +29,10 @@ router.post('/', async (req, res) => {
         res.status(201).send(user)
     } catch (error) {
         console.log(error)
-        res.status(404).send(error.toString())
+        res.send({
+            error: true,
+            message: error
+        })
     }
 })
 
@@ -85,7 +88,7 @@ router.post('/refresh', async (req, res) => {
         res.status(201).send(user)
     } catch (error) {
         console.log(error)
-        res.send(error.toString())
+        res.send({ message: error.toString() })
     }
 })
 

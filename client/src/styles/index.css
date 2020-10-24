@@ -4,15 +4,6 @@
   word-wrap: break-word;
 }
 
-html,
-body {
-  max-height: 800px;
-}
-
-#root{
-    margin: 2rem 0
-}
-
 body {
   margin: 0;
   padding: 0;
