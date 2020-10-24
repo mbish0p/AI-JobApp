@@ -58,10 +58,6 @@ background: linear-gradient(29deg, rgba(255,255,201,1) 0%, rgba(220,250,247,0.94
 }
 
 
-.registration--repeat{
-    margin-bottom: 4rem;
-}
-
 .input--error:focus,
 .registration--input:focus{
     outline: none;
@@ -75,9 +71,6 @@ background: linear-gradient(29deg, rgba(255,255,201,1) 0%, rgba(220,250,247,0.94
     color: rgb(141, 1, 1);
 }
 
-.registration--error-message-l{
-    margin-bottom: 4rem;
-}
 
 .registration--submit{
     border-radius: 0.5rem;
@@ -97,4 +90,10 @@ background: linear-gradient(29deg, rgba(255,255,201,1) 0%, rgba(220,250,247,0.94
 .registration--submit:hover{
     cursor: pointer;
     background: rgba(31, 201, 31, 0.562);
+}
+
+.transition{
+    margin: 0 2rem 2rem auto;
+    color: black;
+    text-decoration: underline;
 }

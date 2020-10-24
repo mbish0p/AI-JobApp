@@ -71,7 +71,6 @@ const Registration = () => {
                         values,
                         touched,
                         errors,
-                        isSubmitting,
                         handleChange,
                         handleBlur,
                         handleSubmit
@@ -148,7 +147,7 @@ const Registration = () => {
                                     </div>
                                 }
 
-                                <Link>Already have account, login</Link>
+                                <Link className='transition' to='/login'>If you already have account, login</Link>
                             </form>
                             <button type="submit" className='registration--submit' onClick={handleSubmit} >Registry</button>
                         </div>
