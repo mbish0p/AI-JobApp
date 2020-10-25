@@ -3,12 +3,14 @@ import axios from 'axios'
 import { Formik } from 'formik'
 import * as EmailValidator from 'email-validator'
 import { Link } from 'react-router-dom'
+import { useAlert } from "react-alert";
 
 import '../styles/register.css'
 
 const Registration = () => {
 
     const emailsAlreadyInUse = [];
+    const alert = useAlert();
     return (
         <Formik
             initialValues={{ name: "", surname: "", email: "", password: "", repeatedPassword: "" }}
@@ -29,7 +31,11 @@ const Registration = () => {
                         if (response.data.message.errors[0].message === "email must be unique") {
                             setFieldError('email', 'Email is already used')
                             emailsAlreadyInUse.push(response.data.message.errors[0].value);
+                            alert.error("You just broke something :), try once again")
                         }
+                    } else {
+                        console.log('Submitted')
+                        alert.success('Account succesful created')
                     }
 
                 }).catch((error) => {

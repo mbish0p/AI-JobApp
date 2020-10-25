@@ -2,35 +2,29 @@ import React from 'react'
 import axios from 'axios'
 import { Formik } from 'formik'
 import { Link } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 import '../styles/register.css'
 
 const Login = () => {
 
-    const emailsAlreadyInUse = [];
     return (
         <Formik
             initialValues={{ email: "", password: "" }}
-            onSubmit={(values, { setSubmitting, setFieldError }) => {
+            onSubmit={(values, { setSubmitting }) => {
                 axios({
                     method: 'POST',
-                    url: 'http://localhost:5000/users',
+                    withCredentials: true,
+                    url: 'http://localhost:5000/users/login',
                     data: {
-                        name: values.name,
-                        surname: values.surname,
                         email: values.email,
                         password: values.password
                     }
                 }).then((response) => {
                     console.log(response)
-                    console.log('Submitted')
-                    if (response.data.error) {
-                        if (response.data.message.errors[0].message === "email must be unique") {
-                            setFieldError('email', 'Email is already used')
-                            emailsAlreadyInUse.push(response.data.message.errors[0].value);
-                        }
-                    }
-
+                    const cookie = Cookies.get("jwt_accessToken")
+                    const cookie2 = Cookies.get("jwt_refreshToken")
+                    console.log(cookie, cookie2)
                 }).catch((error) => {
                     console.log(error)
                 }).finally(() => {
@@ -63,6 +57,7 @@ const Login = () => {
                                 <p className='registration--title'>Login</p>
                                 <input placeholder="Email"
                                     name="email"
+                                    type='email'
                                     value={values.email}
                                     onChange={handleChange}
                                     onBlur={handleBlur}

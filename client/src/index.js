@@ -12,8 +12,17 @@ import ReduxThunk from 'redux-thunk';
 
 
 import AppRouter from './routing/AppRouter'
-
+import { transitions, positions, Provider as AlertProvider } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
 import * as serviceWorker from "./serviceWorker";
+
+const options = {
+    position: positions.TOP_RIGHT,
+    timeout: 5000,
+    offset: '30px',
+    transition: transitions.FADE
+}
+
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk)(createStore);
 
 ReactDOM.render(
@@ -24,7 +33,9 @@ ReactDOM.render(
             window.__REDUX_DEVTOOLS_EXTENSION__()
         )}
     >
-        <AppRouter />
+        <AlertProvider template={AlertTemplate} {...options}>
+            <AppRouter />
+        </AlertProvider>
     </Provider>
 
     ,

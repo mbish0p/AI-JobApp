@@ -2,7 +2,7 @@ html,body{
     margin: 0;
     padding: 0;
     background: rgb(255,255,201);
-background: linear-gradient(29deg, rgba(255,255,201,1) 0%, rgba(220,250,247,0.9475140397956058) 100%);
+    background: linear-gradient(29deg, rgba(255,255,201,1) 0%, rgba(220,250,247,0.9475140397956058) 100%);
 }
 
 #root{
@@ -16,7 +16,7 @@ background: linear-gradient(29deg, rgba(255,255,201,1) 0%, rgba(220,250,247,0.94
     height: 70%;
     margin-left: 25%;
     margin-right: 25%;
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 .registration--form{
