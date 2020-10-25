@@ -29,7 +29,10 @@ router.post('/', async (req, res) => {
         res.status(201).send(user)
     } catch (error) {
         console.log(error)
-        res.send(error.toString())
+        res.send({
+            error: true,
+            message: error
+        })
     }
 })
 
@@ -75,6 +78,8 @@ router.post('/refresh', async (req, res) => {
         await user.update({
             refresh_tokens: refreshToken
         })
+        //res.set('Access-Control-Allow-Origin', 'http://localhost:3000/*')
+        //res.set('Access-Control-Allow-Credentials', 'true')
 
         res.cookie('jwt_accessToken', {
             accessToken
@@ -85,7 +90,7 @@ router.post('/refresh', async (req, res) => {
         res.status(201).send(user)
     } catch (error) {
         console.log(error)
-        res.send(error.toString())
+        res.send({ message: error.toString() })
     }
 })
 
@@ -101,8 +106,12 @@ router.post('/login', async (req, res) => {
                 email
             }
         })
+        console.log('d0000psko')
+        // const salt = 10
+        // const hashedPassword = await bcrypt.hash(password, salt)
+        //console.log(user.dataValues.password, '   ', hashedPassword)
         if (!user || !await bcrypt.compare(password, user.dataValues.password)) {
-            res.status(401).send({ message: 'No user with this crudentials' })
+            res.status(404).send({ message: 'No user with this crudentials' })
         }
 
         const accessTokenPayload = {

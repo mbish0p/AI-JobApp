@@ -4,15 +4,6 @@
   word-wrap: break-word;
 }
 
-html,
-body {
-  max-height: 800px;
-}
-
-#root{
-    margin: 2rem 0
-}
-
 body {
   margin: 0;
   padding: 0;
@@ -85,6 +76,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: white;
+    border-radius: 7px 7px 0px 0px;
+    border: solid 3px black;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
 }
 
 .chat--header-minimize button{
@@ -92,15 +89,6 @@ body {
     padding: 0;
 }
 
-.chat--minimize{
-    border: solid 3px black;
-    border-radius: 7px 7px 0px 0px;
-    width: 350px;
-    height: 50px;
-    position: fixed;
-    bottom: 16px;
-    right: 16px;
-}
 
 .chat--minimize-button:hover{
     cursor: pointer;
