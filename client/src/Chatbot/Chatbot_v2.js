@@ -18,7 +18,7 @@ const Chatbot = () => {
     const dispatch = useDispatch()
     const messagesFromRedux = useSelector(state => state.message.messages)
     const messagesEndRef = useRef(null)
-    const [minimizeChat, setMinimizeChat] = useState(true)
+    const [minimizeChat, setMinimizeChat] = useState(false)
 
 
     const scrollToBottom = () => {
@@ -250,24 +250,22 @@ const Chatbot = () => {
                 classNames='fade'
                 appear={true}
             >
-                <div>
-                    <div>
-                        <div className='chat--header' >
-                            <Title level={2} style={{ margin: '4px 12px' }}><RobotOutlined />  Arnold &nbsp;</Title>
-                            <button className='chat--minimize-button' onClick={minimizeChatTamplate}><MinusOutlined /></button>
-                        </div>
-                        <div style={{ height: '650px', width: 450, border: 'solid 3px black', borderRadius: '0px 0px 7px 7px', margin: 0 }}>
+                <div className="chat-container">
+                    <div className='chat--header' >
+                        <Title level={2} style={{ margin: '4px 12px' }}><RobotOutlined />  Arnold &nbsp;</Title>
+                        <button className='chat--minimize-button' onClick={minimizeChatTamplate}><MinusOutlined /></button>
+                    </div>
+                    <div style={{ height: '650px', width: 450, border: 'solid 3px black', borderRadius: '0px 0px 7px 7px', margin: 0 }}>
 
-                            <div style={{ height: '599px', width: '100%', overflow: 'auto' }}>
-                                {renderMessages(messagesFromRedux)}
-                                <div ref={messagesEndRef} />
-                            </div>
-                            <input className='mmm' style={{ width: '100%', height: '45px', borderRadius: '4px', margin: 0, padding: '5px', fontSize: '1rem' }}
-                                placeholder='Send a message'
-                                onKeyPress={sumbitHandler}
-                                type='text'
-                            />
+                        <div style={{ height: '599px', width: '100%', overflow: 'auto' }}>
+                            {renderMessages(messagesFromRedux)}
+                            <div ref={messagesEndRef} />
                         </div>
+                        <input className='mmm' style={{ width: '100%', height: '45px', borderRadius: '4px', margin: 0, padding: '5px', fontSize: '1rem' }}
+                            placeholder='Send a message'
+                            onKeyPress={sumbitHandler}
+                            type='text'
+                        />
                     </div>
                 </div>
             </CSSTransition>

@@ -6,8 +6,10 @@ const User = require('../models/User')
 const auth = async (req, res, next) => {
     const accessToken = req.cookies.jwt_accessToken
 
+    console.log('d00psko', accessToken)
     if (!accessToken) {
         res.status(403).send({ error: 'Request is unauthorized ' })
+        return
     }
 
     try {
@@ -20,13 +22,15 @@ const auth = async (req, res, next) => {
 
         if (!user.refresh_tokens) {
             res.status(403).send({ error: 'Request is unauthorized ' })
+            return
         }
 
         req.user = user
 
         next()
     } catch (error) {
-        res.status(401).send({ error: 'Please authenticate ' })
+        console.log(error)
+        res.status(401).send({ message: 'Please authenticate ', error })
     }
 }
 
