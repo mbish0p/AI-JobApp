@@ -2,9 +2,9 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import About from '../Components/About'
 import User from '../Components/User'
-import App from '../Components/App'
 import Registry from '../Components/Registration'
 import Login from '../Components/Login'
+import Dashboard from '../Components/Dashboard';
 
 const AppRouter = () => {
     return (
@@ -14,7 +14,7 @@ const AppRouter = () => {
                 <Route exact={true} path='/login' component={Login} />
                 <Route exact={true} path="/about" component={About} />
                 <Route exact={true} path="/user" component={User} />
-                <Route exact={true} path="/dashboard" component={App} />
+                <Route exact={true} path="/dashboard" component={Dashboard} />
             </Switch>
         </BrowserRouter>
     )
