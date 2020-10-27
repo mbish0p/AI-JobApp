@@ -57,6 +57,7 @@ router.post('/refresh', async (req, res) => {
             console.log('Refresh token from cookie ', oldRefreshToken.refreshToken)
             console.log('Refresh token from db ', user.dataValues.refresh_tokens)
             throw new Error('Refresh tokens are different, check something goes wrong')
+
         }
         const accessTokenPayload = {
             email: user.dataValues.email,
@@ -90,7 +91,7 @@ router.post('/refresh', async (req, res) => {
         res.status(201).send(user)
     } catch (error) {
         console.log(error)
-        res.send({ message: error.toString() })
+        res.status(400).send({ message: error.toString() })
     }
 })
 

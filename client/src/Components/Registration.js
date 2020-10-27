@@ -43,6 +43,7 @@ const Registration = () => {
                     })
                 }
                 console.log(error.response)
+                setLoading(false)
             })
         }
         else {
