@@ -184,6 +184,34 @@ router.get('/', auth, async (req, res) => {
     }
 })
 
+router.get('/image', auth, async (req, res) => {
+    try {
+        const employee = await Employee.findOne({
+            where: {
+                userId: req.user.id
+            }
+        })
+
+        if (!employee) {
+            throw new Error(`No employee with this userId: ${req.user.id}`)
+        }
+
+        const file = await EmployeeDocument.findOne({
+            where: {
+                employeeId: employee.dataValues.id,
+                name: 'employee image'
+            }
+        })
+        if (!employee) {
+            throw new Error(`No employee image for this user: ${req.user.id}`)
+        }
+
+        res.send(file)
+    } catch (error) {
+        res.status(404).send({ message: 'No employee profile pic' })
+    }
+})
+
 
 router.delete('/', auth, async (req, res) => {
     try {
