@@ -1,14 +1,19 @@
 import React from 'react'
 import Chatbot from './App'
 import Header from './Header'
+import Sidebar from './SideBar'
+import MainDashboard from './MainDashboard'
+
+import '../styles/Dashboard.css'
 
 
 const Dashboard = () => {
     return (
-        <div>
+        <div className='dashboard--container'>
             <Chatbot />
+            <Sidebar />
             <Header />
-            <p>Dashboard</p>
+            <MainDashboard />
         </div>
     )
 }

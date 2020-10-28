@@ -4,10 +4,21 @@ import axios from 'axios'
 import { ReactComponent as Icon } from '../img/iconfinder_icons_exit2_1564506.svg'
 import { useHistory } from 'react-router-dom'
 
+import refreshToken from '../_helper/refreshToken'
+
 const Header = () => {
     const history = useHistory()
 
     const handleLogout = () => {
+        const responseFunction = () => {
+            console.log('Successful logout')
+            history.push('/')
+        }
+        const responseObject = {
+            method: 'POST',
+            url: 'http://localhost:5000/users/logout',
+            withCredentials: true
+        }
         axios({
             method: 'POST',
             url: 'http://localhost:5000/users/logout',
@@ -17,33 +28,7 @@ const Header = () => {
             console.log(response)
             history.push('/')
         }).catch((error) => {
-            if (error.response.data.error.message === 'jwt expired') {
-                console.log('jwt expired')
-                axios({
-                    method: 'POST',
-                    withCredentials: true,
-                    url: 'http://localhost:5000/users/refresh'
-                }).then((response) => {
-                    console.log(response)
-                    axios({
-                        method: 'POST',
-                        url: 'http://localhost:5000/users/logout',
-                        withCredentials: true
-                    }).then((response) => {
-                        console.log('Access token valid')
-                        console.log(response)
-                        history.push('/')
-                    }).catch((error) => {
-                        console.log('Error when send second request after validation token')
-                        console.log(error.response)
-                    })
-                }).catch((error) => {
-                    console.log('Error when refresing token')
-                    console.log(error.response)
-                    history.push('/')
-                })
-            }
-            console.log(error.response)
+            refreshToken(error, history, responseFunction, responseObject)
         })
     }
 
