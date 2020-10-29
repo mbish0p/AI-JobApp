@@ -1,0 +1,32 @@
+.avatar-container{
+    opacity: 0;
+}
+
+.user--photo{
+    width: 60%;
+    padding-top: 60%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+}
+
+.user--photo:hover{
+    cursor: pointer;
+}
+
+.user--photo img{
+    border-radius: 50%;
+    border: solid black 2px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0
+}
+
+.userlogo--container div{
+    display: flex;
+    justify-content: center;
+}
+

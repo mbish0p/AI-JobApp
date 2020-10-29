@@ -57,8 +57,58 @@ const deleteFile = async (url) => {
     }
 }
 
+async function streamToBuffer(readableStream) {
+    return new Promise((resolve, reject) => {
+        const chunks = [];
+        readableStream.on("data", (data) => {
+            chunks.push(data instanceof Buffer ? data : Buffer.from(data));
+        });
+        readableStream.on("end", () => {
+            resolve(Buffer.concat(chunks));
+        });
+        readableStream.on("error", reject);
+    });
+}
+
+
+const downloadFile = async (url) => {
+    console.log('trakasdasdasdasdas', url)
+    let _blobName = url.replace("https://jobappdocsstorage.blob.core.windows.net/container/", '')
+    let _blobName2 = _blobName.replace("%", " ")
+    const index = _blobName2.indexOf('_')
+    const blobID = _blobName2.substring(0, index)
+
+    try {
+        const blobServiceClient = new BlobServiceClient(`https://${STORAGE_ACCOUNT_NAME}.blob.core.windows.net${SAS}`);
+        const containerClient = await blobServiceClient.getContainerClient(containerName);
+        let trueBlobName = undefined
+        console.log('doopa')
+        for await (const blob of containerClient.listBlobsFlat()) {
+            if (blob.name.includes(blobID))
+                trueBlobName = blob.name
+        }
+        const blobClient = containerClient.getBlobClient(trueBlobName)
+        console.log('doopa')
+        const downloadBlockBlobResponse = await blobClient.download();
+        const downloaded = await streamToBuffer(downloadBlockBlobResponse.readableStreamBody);
+        //console.log("Downloaded blob content:", downloaded.toString());
+
+        return downloaded.toString()
+    } catch (error) {
+        const responseMessage = {
+            succes: fail,
+            message: `Unsuccessful deleted blob`,
+            error
+        }
+        return responseMessage
+    }
+}
+
+
+
 
 module.exports = {
     uploadFile,
-    deleteFile
+    deleteFile,
+    downloadFile
 }

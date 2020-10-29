@@ -9,6 +9,8 @@ const JobOffer = require('../models/JobOffer')
 const Candidates = require('../models/Candidates')
 const EmployeeDocument = require('../models/EmployeeDocument')
 
+const { downloadFile } = require('../db/blob')
+
 const router = express.Router()
 
 router.post('/', auth, async (req, res) => {
@@ -186,6 +188,7 @@ router.get('/', auth, async (req, res) => {
 
 router.get('/image', auth, async (req, res) => {
     try {
+
         const employee = await Employee.findOne({
             where: {
                 userId: req.user.id
@@ -202,13 +205,13 @@ router.get('/image', auth, async (req, res) => {
                 name: 'employee image'
             }
         })
-        if (!employee) {
+        if (!file) {
             throw new Error(`No employee image for this user: ${req.user.id}`)
         }
 
         res.send(file)
     } catch (error) {
-        res.status(404).send({ message: 'No employee profile pic' })
+        res.status(404).send({ message: 'No employee profile pic', error })
     }
 })
 

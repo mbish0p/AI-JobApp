@@ -3,7 +3,6 @@ import axios from 'axios'
 import { Formik } from 'formik'
 import { Link, useHistory } from 'react-router-dom'
 import Cookies from 'js-cookie'
-import refreshToken from '../_helper/refreshToken'
 
 import '../styles/register.css'
 

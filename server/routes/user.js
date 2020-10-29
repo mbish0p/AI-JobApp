@@ -39,7 +39,6 @@ router.post('/', async (req, res) => {
 router.post('/refresh', async (req, res) => {
     try {
         const oldRefreshToken = req.cookies.jwt_refreshToken
-
         if (!oldRefreshToken) {
             throw new Error('Refresh token wasn`t sended')
         }
@@ -107,7 +106,6 @@ router.post('/login', async (req, res) => {
                 email
             }
         })
-        console.log('d0000psko')
         // const salt = 10
         // const hashedPassword = await bcrypt.hash(password, salt)
         //console.log(user.dataValues.password, '   ', hashedPassword)

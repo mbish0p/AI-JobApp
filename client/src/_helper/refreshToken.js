@@ -13,7 +13,7 @@ const refreshToken = (error, history, responseFunction, responseObject, errorFun
             axios(responseObject).then((response) => {
                 console.log('Access token valid')
                 console.log(response)
-                responseFunction()
+                responseFunction(response)
             }).catch((error) => {
                 console.log('Error when send second request, after validation token')
                 console.log(error.response)
