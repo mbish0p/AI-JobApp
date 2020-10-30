@@ -53,7 +53,7 @@ class Sidebar extends React.Component {
                 }
             */}
 
-                <div className='userlogo--container'>
+                <div>
                     <UserLogo />
                 </div>
             </div>

@@ -35,6 +35,28 @@ router.post("/", auth, upload.single('file'), async (req, res) => {
             throw new Error(`No employee with this id: ${req.params.id}`)
         }
 
+        const existingFile = await EmployeeDocument.findOne({
+            where: {
+                name,
+                employeeId: employee.dataValues.id
+            }
+        })
+
+        console.log(existingFile)
+
+        if (existingFile) {
+            const fileUrl = existingFile.dataValues.file
+
+            const deleteOldBlob = await deleteFile(fileUrl)
+
+            if (!deleteOldBlob.success) {
+                throw new Error(`Blob do not exist in db`)
+            }
+            console.log(existingFile)
+
+            await existingFile.destroy()
+        }
+
         const url = await uploadFile(file)
         const employeeFile = await EmployeeDocument.create({
             employeeId: employee.dataValues.id,

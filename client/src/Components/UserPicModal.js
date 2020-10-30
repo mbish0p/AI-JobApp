@@ -1,6 +1,7 @@
 import { Modal } from 'antd';
 import React from 'react'
 import Avatar from 'react-avatar-edit'
+import axios from 'axios'
 
 class UserPicModel extends React.Component {
     constructor(props) {
@@ -15,6 +16,8 @@ class UserPicModel extends React.Component {
             src
         }
     }
+
+
     componentDidUpdate(prevProps) {
         if (prevProps.show !== this.props.show) {
             if (this.props.show) {
@@ -22,23 +25,84 @@ class UserPicModel extends React.Component {
             }
         }
     }
+
+    convert64toBlob = () => {
+        const contentType = this.state.preview.slice(5, this.state.preview.indexOf(';base64'))
+        const b64Content = this.state.preview.slice(this.state.preview.indexOf(';base64') + 8)
+
+        const byteCharacters = atob(b64Content);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: contentType });
+        return blob
+    }
+
+    uploadImage = async (image) => {
+
+        let data = new FormData();
+        data.append('file', image, 'user_pic.png');
+        data.append('name', 'employee image')
+
+        try {
+            const uploadImageResponse = await axios.post('http://localhost:5000/files', data, {
+                headers: {
+                    'Content-Type': `multipart/form-data; boundary=${data._boundary}`
+                }, withCredentials: true
+            })
+
+            console.log(uploadImageResponse.data)
+            console.log('Successful upload image')
+            return uploadImageResponse.data.file
+        } catch (error) {
+            console.log(error.response)
+            if (error.response.data.error.message === 'jwt expired')
+                try {
+                    const result = await axios('http://localhost:5000/users/refresh', {
+                        withCredentials: true,
+                        method: 'POST'
+                    })
+
+                    if (result.status === 201) {
+                        const finallResult = await axios.post('http://localhost:5000/files', data, {
+                            headers: {
+                                'Content-Type': `multipart/form-data; boundary=${data._boundary}`
+                            }, withCredentials: true
+                        })
+                        if (finallResult.data.file) {
+                            console.log(finallResult.data)
+                            console.log('Successful upload image')
+                            return finallResult.data.file
+                        }
+                    }
+                } catch (error) {
+                    console.log(error.response)
+                }
+        }
+    }
+
     showModal = () => {
         this.setState({
             visible: true,
         });
     };
 
-    handleOk = () => {
+    handleOk = async () => {
         this.setState({
             confirmLoading: true,
         });
-        setTimeout(() => {
-            this.setState({
-                visible: false,
-                confirmLoading: false,
-            });
-            this.props.closeModal()
-        }, 2000);
+
+        const blob = this.convert64toBlob()
+        const response = await this.uploadImage(blob)
+
+        this.setState({
+            visible: false,
+            confirmLoading: false,
+        });
+        this.props.closeModal()
     };
 
     handleCancel = () => {
@@ -54,7 +118,7 @@ class UserPicModel extends React.Component {
     }
 
     onCrop(preview) {
-        //console.log(preview)
+        console.log(preview)
         this.setState({ preview })
     }
 

@@ -53,7 +53,7 @@ const UserLogo = () => {
 
     const handleChangePicture = () => {
         console.log('Cliked image')
-        setShow(!show)
+        setShow(true)
         console.log('setting to true')
     }
 
@@ -63,8 +63,10 @@ const UserLogo = () => {
     }
 
     return (
-        <div onClick={handleChangePicture}>
-            <Avatar className='user--photo' src={imgUrl || logo} />
+        <div>
+            <div onClick={handleChangePicture} className='userlogo--container'>
+                <Avatar className='user--photo' src={imgUrl || logo} />
+            </div>
             <UserPicModal show={show} closeModal={closeModal} />
         </div>
     )
