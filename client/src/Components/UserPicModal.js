@@ -97,6 +97,7 @@ class UserPicModel extends React.Component {
 
         const blob = this.convert64toBlob()
         const response = await this.uploadImage(blob)
+        console.log(response)
 
         this.setState({
             visible: false,
@@ -123,7 +124,7 @@ class UserPicModel extends React.Component {
     }
 
     onBeforeFileLoad(elem) {
-        if (elem.target.files[0].size > 71680) {
+        if (elem.target.files[0].size > 1000000) {
             alert("File is too big!");
             elem.target.value = "";
         };

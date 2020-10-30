@@ -5,12 +5,15 @@ import * as EmailValidator from 'email-validator'
 import { Link, useHistory } from 'react-router-dom'
 import { useAlert } from "react-alert";
 import Cookies from 'js-cookie'
+import { useDispatch } from 'react-redux'
+import { saveUserData } from '../_actions/userEmployee'
 
 import '../styles/register.css'
 
 const Registration = () => {
 
     const history = useHistory();
+    const dispatch = useDispatch()
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -26,9 +29,16 @@ const Registration = () => {
                 url: 'http://localhost:5000/users'
             }).then((response) => {
                 console.log(response)
+                dispatch(saveUserData({
+                    userId: response.data.id,
+                    name: response.data.name,
+                    surname: response.data.surname,
+                    email: response.data.email
+                }))
                 history.push('dashboard')
             }).catch((error) => {
-                if (error.response.data.error.message === 'jwt expired') {
+                console.log(error)
+                if (error.response && error.response.data.error.message === 'jwt expired') {
                     console.log('jwt expired')
                     axios({
                         method: 'POST',
@@ -36,6 +46,12 @@ const Registration = () => {
                         url: 'http://localhost:5000/users/refresh'
                     }).then((response) => {
                         console.log(response)
+                        dispatch(saveUserData({
+                            userId: response.data.id,
+                            name: response.data.name,
+                            surname: response.data.surname,
+                            email: response.data.email
+                        }))
                         history.push('dashboard')
                     }).catch((error) => {
                         console.log(error.response)

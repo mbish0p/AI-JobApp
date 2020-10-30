@@ -9,10 +9,6 @@ import UserPicModal from './UserPicModal'
 const UserLogo = () => {
     const history = useHistory()
     const [imgUrl, setImgUrl] = useState('')
-    const [image, setImage] = useState({})
-    const [visible, setVisable] = useState(false)
-    const [confirmLoading, setConfirmLoading] = useState(false)
-    const [ModalText, setModalText] = useState('Content of the modal')
     const [show, setShow] = useState(false)
 
     useEffect(() => {
