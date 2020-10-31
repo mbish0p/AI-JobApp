@@ -11,7 +11,7 @@ const upload = multer({
         fileSize: 4000000
     },
     fileFilter(req, file, cb) {
-        if (!file.originalname.match(/\.(doc|docx|pdf)$/)) {
+        if (!file.originalname.match(/\.(doc|docx|pdf|JPG|PNG|JPEG|jpg|png|jpeg)$/)) {
             return cb(new Error('Please upload file with extension pdf, doc or docx'))
         }
         cb(undefined, true)
@@ -33,6 +33,28 @@ router.post("/", auth, upload.single('file'), async (req, res) => {
 
         if (!employee) {
             throw new Error(`No employee with this id: ${req.params.id}`)
+        }
+
+        const existingFile = await EmployeeDocument.findOne({
+            where: {
+                name,
+                employeeId: employee.dataValues.id
+            }
+        })
+
+        console.log(existingFile)
+
+        if (existingFile) {
+            const fileUrl = existingFile.dataValues.file
+
+            const deleteOldBlob = await deleteFile(fileUrl)
+
+            if (!deleteOldBlob.success) {
+                throw new Error(`Blob do not exist in db`)
+            }
+            console.log(existingFile)
+
+            await existingFile.destroy()
         }
 
         const url = await uploadFile(file)

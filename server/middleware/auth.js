@@ -6,7 +6,6 @@ const User = require('../models/User')
 const auth = async (req, res, next) => {
     const accessToken = req.cookies.jwt_accessToken
 
-    console.log('d00psko', accessToken)
     if (!accessToken) {
         res.status(403).send({ error: 'Request is unauthorized ' })
         return

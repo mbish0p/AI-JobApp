@@ -3,7 +3,7 @@
     height: 4rem;
 }
 .logo-container{
-    margin-left: 25%;
+    margin-left: 2rem;
     margin-bottom: 0.7rem;
     margin-top: 0.7rem;
 }
@@ -55,9 +55,14 @@
     background: white;
     border: 2px solid #4e4e4e;
     border-radius: 0.5rem;
+    outline: none;
 }
 
 .header-container:hover{
     cursor: pointer;
 }
 
+avatar_container-5dce-0d52-bdbb{
+    max-height: 100%;
+    max-width: 100%;
+}

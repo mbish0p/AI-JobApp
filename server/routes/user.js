@@ -39,7 +39,6 @@ router.post('/', async (req, res) => {
 router.post('/refresh', async (req, res) => {
     try {
         const oldRefreshToken = req.cookies.jwt_refreshToken
-
         if (!oldRefreshToken) {
             throw new Error('Refresh token wasn`t sended')
         }
@@ -57,6 +56,7 @@ router.post('/refresh', async (req, res) => {
             console.log('Refresh token from cookie ', oldRefreshToken.refreshToken)
             console.log('Refresh token from db ', user.dataValues.refresh_tokens)
             throw new Error('Refresh tokens are different, check something goes wrong')
+
         }
         const accessTokenPayload = {
             email: user.dataValues.email,
@@ -90,7 +90,7 @@ router.post('/refresh', async (req, res) => {
         res.status(201).send(user)
     } catch (error) {
         console.log(error)
-        res.send({ message: error.toString() })
+        res.status(400).send({ message: error.toString() })
     }
 })
 
@@ -106,7 +106,6 @@ router.post('/login', async (req, res) => {
                 email
             }
         })
-        console.log('d0000psko')
         // const salt = 10
         // const hashedPassword = await bcrypt.hash(password, salt)
         //console.log(user.dataValues.password, '   ', hashedPassword)
