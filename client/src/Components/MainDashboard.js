@@ -64,11 +64,11 @@ const MainDashboard = () => {
                 offers ?
                     <div>
                         {offers.map((offer, index) => {
-                            if (index >= (currentPage - 1) * 5 && index < currentPage * 5) {
+                            if (index >= (currentPage - 1) * 4 && index < currentPage * 4) {
                                 return <JobOffer key={offer.offer.id} offer={offer} />
                             }
                         })}
-                        <Pagination defaultCurrent={1} total={offers.length} defaultPageSize={5} onChange={(page) => handleChangePage(page)} />
+                        <Pagination defaultCurrent={1} total={offers.length} defaultPageSize={4} onChange={(page) => handleChangePage(page)} />
                     </div>
                     : <p></p>
             }
