@@ -3,12 +3,14 @@
 }
 
 .user--photo{
-    width: 60%;
-    padding-top: 60%;
+    width: 50%;
+    padding-top: 50%;
     position: relative;
     margin-left: auto;
     margin-right: auto;
     margin-top: 1rem;
+    min-width: 130px;
+    min-height: 130px;
 }
 
 .user--photo:hover{
@@ -30,3 +32,21 @@
     justify-content: center;
 }
 
+.employee--info{
+    margin-top: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.employee--name{
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+}
+
+.employee--surname{
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+}

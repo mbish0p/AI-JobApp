@@ -97,7 +97,7 @@ class UserPicModel extends React.Component {
 
         const blob = this.convert64toBlob()
         const response = await this.uploadImage(blob)
-        console.log(response)
+        this.props.setNewImage(response)
 
         this.setState({
             visible: false,
