@@ -1,0 +1,109 @@
+.offers--container{
+    margin-top: 3rem;
+}
+
+.page-changer{
+    margin-top: auto;
+    margin-left: 1rem;
+}
+
+.main_dashboard--title{
+    display: inline-block;
+    padding: 0 1rem;
+    margin: 0;
+    margin-top: 1rem;
+    margin-left: 2rem;
+    font-weight: 700;
+    font-size: 2rem;
+    border-bottom: 7px solid #9350D3;
+    border-radius: 0 0 1.5rem 0;
+}
+
+.joboffer--company-logo{
+    width: 100px;
+    height: 100px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.joboffer--tamplate{
+    margin: 1rem;
+    border: solid 1px #4e4e4e;
+    border-radius: 1rem;
+    box-shadow: 2px 2px 16px 1px rgb(126, 125, 126);
+    display: flex;
+    height: 120px;
+    border-left: 5px solid #9350D3;
+    margin-left: 5%;
+    margin-right: 10%;
+    transition: border 0.3s;
+}
+
+.joboffer--online-recruiment{
+    font-size: 0.9rem;
+    color: red;
+    margin: 0;
+    margin-left: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.joboffer--header{
+    display: flex;
+    flex-direction: row;
+    margin-left: 2rem;
+
+}
+.joboffer--technologies{
+    display: flex;
+    flex-direction: row;
+    margin-left: 4rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.joboffer--footer{
+    display: flex;
+    flex-direction: row;
+    margin-left: 2rem;
+    align-items: center;
+}
+
+.joboffer--city{
+    margin-left: 1rem;
+}
+
+.joboffer--salary{
+    margin-left: 1rem;
+}
+
+.joboffer--title{
+    font-weight: 700;
+    font-size: 1.4rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.joboffer--technology{
+    margin-left: 1rem;
+    border: solid 1px  #4e4e4e;
+    padding: 2px 8px;
+}
+
+.joboffer--remote-icon{
+    height: 16px;
+    width: 16px;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+.joboffer--location-icon{
+    height: 16px;
+    width: 16px;
+}
+
+.joboffer--tamplate:hover{
+    cursor: pointer;
+    border-left: 9px solid #9350D3;
+}

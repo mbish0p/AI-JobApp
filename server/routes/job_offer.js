@@ -18,6 +18,7 @@ router.post('/', auth, async (req, res) => {
             end_date,
             experience_lvl,
             city,
+            title,
             street,
             remote_work,
             contract_type,
@@ -25,7 +26,8 @@ router.post('/', auth, async (req, res) => {
             max_salary,
             experience,
             education,
-            online_interview
+            online_interview,
+            active
         } = req.body
 
         const employeer = await Employeer.findOne({
@@ -37,8 +39,10 @@ router.post('/', auth, async (req, res) => {
 
         const jobOffer = await JobOffer.create({
             employeerId: employeer.dataValues.id,
+            active,
             position_name,
             start_date,
+            title,
             description,
             end_date,
             experience_lvl,

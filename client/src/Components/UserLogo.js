@@ -26,7 +26,7 @@ const UserLogo = () => {
                     setImgUrl(result.data.file)
                 } catch (error) {
                     console.log(error.response)
-                    if (error.response.data.error.message === 'jwt expired')
+                    if (error.response && error.response.data.error.message === 'jwt expired')
                         try {
                             const result = await axios('http://localhost:5000/users/refresh', {
                                 withCredentials: true,
