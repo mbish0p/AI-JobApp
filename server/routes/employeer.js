@@ -138,6 +138,25 @@ router.patch('/', auth, upload.single('logo'), async (req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    try {
+        const employeer = await Employeer.findOne({
+            where: {
+                id: req.params.id
+            }
+        })
+
+        if (!employeer) {
+            throw new Error(`No employeer with this userId: ${req.params.id}`)
+        }
+
+        res.send(employeer)
+    } catch (error) {
+        console.log(error)
+        res.send(error.toString())
+    }
+})
+
 router.get('/', auth, async (req, res) => {
     try {
         const employeer = await Employeer.findOne({
@@ -149,8 +168,6 @@ router.get('/', auth, async (req, res) => {
         if (!employeer) {
             throw new Error(`No employeer with this userId: ${req.user.id}`)
         }
-
-        await deleteFile(employeer.dataValues.company_logo)
 
         res.send(employeer)
     } catch (error) {

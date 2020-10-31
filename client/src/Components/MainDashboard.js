@@ -65,7 +65,6 @@ const MainDashboard = () => {
                     <div>
                         {offers.map((offer, index) => {
                             if (index >= (currentPage - 1) * 5 && index < currentPage * 5) {
-                                console.log(index)
                                 return <JobOffer key={offer.offer.id} offer={offer} />
                             }
                         })}
