@@ -10,6 +10,10 @@ const JobOffer = sequelize.define('job_offer', {
         primaryKey: true,
         autoIncrement: true
     },
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     position_name: {
         type: DataTypes.STRING,
         allowNull: false
