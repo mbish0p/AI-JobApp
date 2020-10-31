@@ -50,3 +50,21 @@
     font-weight: 800;
     color: white;
 }
+
+.employee--menu{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3.5rem;
+}
+
+.employee--menu-item{
+    margin-top: 1.2rem;
+    font-weight: 700;
+    color: white;
+}
+
+.employee--menu-item:hover{
+    cursor: pointer;
+    color: #b91bc7;
+}

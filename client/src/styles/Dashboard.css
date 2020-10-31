@@ -14,12 +14,13 @@
 .header-container{
     grid-column: 2/3;
     grid-row: 1;
+    position: relative;
 }
 
 @media (min-width: 1200px){
     .dashboard--container{
         display: grid;
-        grid-template-columns: 2fr 9fr;
+        grid-template-columns: 2fr 8fr;
         grid-template-rows: 1fr 9fr;
         min-height: 100%;
     }

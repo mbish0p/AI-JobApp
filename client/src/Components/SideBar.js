@@ -1,6 +1,7 @@
 import React from 'react'
 import UserLogo from './UserLogo'
 import EmployeeInfo from './EmployeeInfo'
+import EmployeeMenu from './EmployeeMenu'
 
 import '../styles/Sidebar.css'
 
@@ -10,6 +11,7 @@ const Sidebar = () => {
         <div className='sidebar--container'>
             <UserLogo />
             <EmployeeInfo />
+            <EmployeeMenu />
         </div>
     )
 
