@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { useDispatch } from 'react-redux'
 import { saveUserData } from '../_actions/userEmployee'
+import { saveEmployeerData } from '../_actions/userEmployeer'
 
 import '../styles/register.css'
 
@@ -31,9 +32,22 @@ const Login = () => {
                     userId: response.data.id,
                     name: response.data.name,
                     surname: response.data.surname,
-                    email: response.data.email
+                    email: response.data.email,
+                    isEmployeer: response.data.isEmployeer
                 }))
-                history.push('dashboard')
+                if (response.data.isEmployeer) {
+                    axios.get('http://localhost:5000/employeer', { withCredentials: true }).then((response) => {
+                        dispatch(saveEmployeerData({
+                            company_name: response.data.company_name,
+                            phone_number: response.data.phone_number,
+                            employeerId: response.data.id
+                        }))
+                        history.push(`/employeer/${response.data.company_name}`)
+                    })
+                }
+                else {
+                    history.push('dashboard')
+                }
             }).catch((error) => {
                 console.log(error)
                 if (error.response && error.response.data.error.message === 'jwt expired') {
@@ -50,7 +64,19 @@ const Login = () => {
                             surname: response.data.surname,
                             email: response.data.email
                         }))
-                        history.push('dashboard')
+                        if (response.data.isEmployeer) {
+                            axios.get('http://localhost:5000/employeer', { withCredentials: true }).then((response) => {
+                                dispatch(saveEmployeerData({
+                                    company_name: response.data.company_name,
+                                    phone_number: response.data.phone_number,
+                                    employeerId: response.data.id
+                                }))
+                                history.push(`/employeer/${response.data.company_name}`)
+                            })
+                        }
+                        else {
+                            history.push('dashboard')
+                        }
                     }).catch((error) => {
                         console.log(error.response)
                         setLoading(false)

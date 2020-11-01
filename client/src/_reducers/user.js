@@ -6,7 +6,8 @@ const initialState = {
     userId: undefined,
     name: undefined,
     surname: undefined,
-    email: undefined
+    email: undefined,
+    isEmployeer: undefined
 }
 
 export default function (state = initialState, action) {
@@ -17,7 +18,8 @@ export default function (state = initialState, action) {
                 userId: action.payload.userId,
                 name: action.payload.name,
                 surname: action.payload.surname,
-                email: action.payload.email
+                email: action.payload.email,
+                isEmployeer: action.payload.isEmployeer
             }
         }
         default:

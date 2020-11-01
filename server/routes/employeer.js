@@ -5,6 +5,7 @@ const Employee = require('../models/Employee')
 const Employeer = require('../models/Employeer')
 const { uploadFile, deleteFile } = require('../db/blob')
 const auth = require('../middleware/auth')
+const User = require('../models/User')
 
 const router = express.Router()
 const upload = multer({
@@ -52,6 +53,12 @@ router.post('/', auth, async (req, res) => {
                 }
             }
             await employee.destroy()
+
+            const user = req.user
+            await user.update({
+                isEmployeer: true
+            })
+
             res.status(201).send(employeer)
         } else {
             throw new Error(`No employee with this userId: ${req.user.id}`)

@@ -1,7 +1,7 @@
 import React from 'react'
 import Chatbot from './App'
 import Header from './Header'
-import Sidebar from './SideBar'
+import Sidebar from './EmployeeSideBar'
 import MainDashboard from './MainDashboard'
 
 import '../styles/Dashboard.css'
