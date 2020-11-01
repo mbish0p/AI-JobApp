@@ -52,7 +52,7 @@ router.post('/', auth, async (req, res) => {
                 }
             }
             await employee.destroy()
-            res.send(employeer)
+            res.status(201).send(employeer)
         } else {
             throw new Error(`No employee with this userId: ${req.user.id}`)
         }

@@ -5,7 +5,7 @@ import { saveUserData } from '../_actions/userEmployee'
 
 const EmployeeInfo = () => {
 
-    const userInfo = useSelector(state => state.userEmployee)
+    const userInfo = useSelector(state => state.user)
     const dispatch = useDispatch()
 
     if (!userInfo.userId) {

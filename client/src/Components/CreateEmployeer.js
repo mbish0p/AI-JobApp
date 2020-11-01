@@ -1,14 +1,50 @@
 import React from 'react'
 import axios from 'axios'
 import { Formik } from 'formik'
-import { error } from 'actions-on-google/dist/common'
+import { useDispatch } from 'react-redux'
+import { saveEmployeerData } from '../_actions/userEmployeer'
+import { useHistory } from 'react-router-dom'
 
 const CreateEmployeer = () => {
+    const dispatch = useDispatch()
+    const history = useHistory()
+
+    const createEmployeerProfile = async ({ company_name, phone_number }) => {
+        try {
+            const firstResponse = await axios.post('http://localhost:5000/employeer', { company_name, phone_number }, { withCredentials: true })
+            console.log(firstResponse)
+            dispatch(saveEmployeerData({ company_name, phone_number, employeerId: firstResponse.data.id }))
+            history.push(`/employeer/${company_name}`)
+        } catch (error) {
+            console.log(error.response)
+            if (error.response && error.response.data.error.message === 'jwt expired') {
+                try {
+                    const result = await axios('http://localhost:5000/users/refresh', {
+                        withCredentials: true,
+                        method: 'POST'
+                    })
+                    console.log(result)
+                    if (result.status === 201) {
+                        const finallResult = await axios.post('http://localhost:5000/employeer', { company_name, phone_number }, { withCredentials: true })
+                        console.log(finallResult)
+                        dispatch(saveEmployeerData({ company_name, phone_number, employeerId: finallResult.data.id }))
+                        history.push(`/employeer/${company_name}`)
+                    }
+                } catch (error) {
+                    console.log(error.response)
+                    if (error.response.status === 400) {
+                        history.push('/')
+                    }
+                }
+            }
+        }
+    }
+
     return (
         <Formik
             initialValues={{ company_name: "", phone_number: "", regulamin: false, newsletter: false }}
             onSubmit={(values, { setSubmitting }) => {
-                console.log('dupka')
+                createEmployeerProfile(values)
             }}
             validate={(values) => {
                 const errors = {}
@@ -21,7 +57,6 @@ const CreateEmployeer = () => {
                 if (!values.regulamin) {
                     errors.regulamin = "You need accept regulamin"
                 }
-                console.log(errors)
                 return errors
             }}
         >
