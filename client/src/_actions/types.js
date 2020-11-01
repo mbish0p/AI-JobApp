@@ -22,5 +22,5 @@ export const SAVE_TECHNOLOGIES = 'save_technologies'
 export const SAVE_USER_DATA = 'save_user_data'
 export const SAVE_EMPLOYEE_PHOTO = 'save_employee_photo'
 
-export const SAVE_EMPLOYEER_DATA = 'save_user_data'
-export const SAVE_EMPLOYEER_LOGO = 'save_employee_logo'
+export const SAVE_EMPLOYEER_DATA = 'save_employeer_data'
+export const SAVE_EMPLOYEER_LOGO = 'save_employeer_logo'

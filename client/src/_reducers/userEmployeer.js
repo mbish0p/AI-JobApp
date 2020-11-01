@@ -15,7 +15,7 @@ export default function (state = initialState, action) {
         case SAVE_EMPLOYEER_DATA: {
             return {
                 ...state,
-                employeerId: action.payload.employeerrId,
+                employeerId: action.payload.employeerId,
                 company_name: action.payload.company_name,
                 phone_number: action.payload.phone_number,
             }
