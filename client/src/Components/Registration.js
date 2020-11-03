@@ -42,7 +42,8 @@ const Registration = () => {
                         dispatch(saveEmployeerData({
                             company_name: response.data.company_name,
                             phone_number: response.data.phone_number,
-                            employeerId: response.data.id
+                            employeerId: response.data.id,
+                            company_logo: response.data.company_logo
                         }))
                         history.push(`/employeer/${response.data.company_name}`)
                     })
@@ -72,7 +73,8 @@ const Registration = () => {
                                 dispatch(saveEmployeerData({
                                     company_name: response.data.company_name,
                                     phone_number: response.data.phone_number,
-                                    employeerId: response.data.id
+                                    employeerId: response.data.id,
+                                    company_logo: response.data.company_logo
                                 }))
                                 history.push(`/employeer/${response.data.company_name}`)
                             })
