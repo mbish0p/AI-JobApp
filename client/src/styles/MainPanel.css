@@ -1,0 +1,64 @@
+.main_dashboard--top{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.employeer--profile-tab{
+    margin: 2rem 1rem 2rem 2rem;
+    border: 1px solid rgba(175, 175, 175, 0.459);
+    box-shadow: 1px 1px 10px 1px rgba(150,145,150,1);
+    border-radius: 1rem;
+}
+
+.employeer--offers-tab{
+    margin: 2rem;
+    border: 1px solid rgba(175, 175, 175, 0.459);
+    box-shadow: 1px 1px 10px 1px rgba(150,145,150,1);
+    border-radius: 1rem;
+}
+
+.employeer--profile-tab-title{
+    background: linear-gradient(29deg, rgba(67,36,194,1) 0%, rgba(255,141,141,1) 100%);
+    font-weight: 800;
+    border-radius: 1rem 1rem 0 0;
+    color: white;
+    padding: 1rem;
+    padding-left: 2rem;
+}
+
+.employeer--offers-tab-title{
+    background: linear-gradient(29deg, rgba(3,166,27,1) 0%, rgba(4,4,177,1) 100%);
+    font-weight: 800;
+    border-radius: 1rem 1rem 0 0;
+    color: white;
+    padding: 1rem;
+    padding-left: 2rem;
+}
+
+.employeer--profile-tab-content{
+    font-family: Verdana, Geneva, sans-serif;
+    margin: 2rem 1rem 2rem 1rem;
+}
+
+.employeer--profile-submit{
+    border: none;
+    background: #6fb345;
+    color: white;
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-left: 1rem;
+}
+
+.employeer--profile-submit:focus{
+    outline: none;
+    background: #6fb34580;
+}
+
+.employeer--profile-submit:hover{
+    cursor: pointer;
+    background: #6fb34580;
+}

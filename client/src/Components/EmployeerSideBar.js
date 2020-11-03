@@ -4,6 +4,8 @@ import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { saveEmployeerLogo } from '../_actions/userEmployeer'
+import EmployeerInfo from './EmployeerInfo'
+import EmployeerMenu from './EmployeerMenu'
 
 
 import '../styles/Sidebar.css'
@@ -64,6 +66,8 @@ const Sidebar = () => {
     return (
         <div className="sidebar--container">
             <UserLogo setImgUrl={setNewImage} imgUrl={imgUrl} />
+            <EmployeerInfo />
+            <EmployeerMenu />
         </div>
     )
 
