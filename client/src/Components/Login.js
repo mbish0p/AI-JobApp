@@ -38,12 +38,12 @@ const Login = () => {
                 if (response.data.isEmployeer) {
                     axios.get('http://localhost:5000/employeer', { withCredentials: true }).then((response) => {
                         dispatch(saveEmployeerData({
-                            company_name: response.data.company_name,
-                            phone_number: response.data.phone_number,
-                            employeerId: response.data.id,
-                            company_logo: response.data.company_logo
+                            company_name: response.data.employeer.company_name,
+                            phone_number: response.data.employeer.phone_number,
+                            employeerId: response.data.employeer.id,
+                            company_logo: response.data.employeer.company_logo
                         }))
-                        history.push(`/employeer/${response.data.company_name}`)
+                        history.push(`/employeer/${response.data.employeer.company_name}`)
                     })
                 }
                 else {
@@ -69,12 +69,12 @@ const Login = () => {
                         if (response.data.isEmployeer) {
                             axios.get('http://localhost:5000/employeer', { withCredentials: true }).then((response) => {
                                 dispatch(saveEmployeerData({
-                                    company_name: response.data.company_name,
-                                    phone_number: response.data.phone_number,
-                                    employeerId: response.data.id,
-                                    company_logo: response.data.company_logo
+                                    company_name: response.data.employeer.company_name,
+                                    phone_number: response.data.employeer.phone_number,
+                                    employeerId: response.data.employeer.id,
+                                    company_logo: response.data.employeer.company_logo
                                 }))
-                                history.push(`/employeer/${response.data.company_name}`)
+                                history.push(`/employeer/${response.data.employeer.company_name}`)
                             })
                         }
                         else {

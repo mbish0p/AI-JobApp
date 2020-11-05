@@ -109,7 +109,7 @@ const EmployeerDashboard = () => {
 
     useEffect(() => {
         fetchOffers().then((response) => {
-            console.log(response[0].offer)
+            console.log('sraka', response)
             const activeOffers = []
             for (let i = response.length - 1; i >= 0; i--) {
                 if (response[i].offer.active) {

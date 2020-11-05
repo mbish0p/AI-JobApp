@@ -23,8 +23,8 @@ const Sidebar = () => {
                     const result = await axios.get('http://localhost:5000/employeer', { withCredentials: true })
                     console.log(result.data)
                     console.log('Successful fetch employeer profile')
-                    if (result.data.company_logo) {
-                        setImgUrl(result.data.company_logo)
+                    if (result.data.employeer.company_logo) {
+                        setImgUrl(result.data.employeer.company_logo)
                     }
                 } catch (error) {
                     console.log(error)
@@ -38,9 +38,9 @@ const Sidebar = () => {
                             console.log(result)
                             if (result.status === 201) {
                                 const finallResult = await axios.get('http://localhost:5000/employeer', { withCredentials: true })
-                                if (finallResult.data.file) {
+                                if (finallResult.data.employeer.company_logo) {
                                     console.log('Successful fetch employeer profile')
-                                    setImgUrl(finallResult.data.company_logo)
+                                    setImgUrl(finallResult.data.employeer.company_log)
                                 }
                             }
                         } catch (error) {
