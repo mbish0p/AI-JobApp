@@ -5,7 +5,10 @@ const Employee = require('../models/Employee')
 const Employeer = require('../models/Employeer')
 const { uploadFile, deleteFile } = require('../db/blob')
 const auth = require('../middleware/auth')
-const User = require('../models/User')
+const EmployeerDescription = require('../models/EmployeerDescription')
+const EmployeerDocument = require('../models/EmployeerDocument')
+const EmployeerTechnologies = require('../models/EmployeerTechnologies')
+const EmployeerOffice = require('../models/EmployeerOffice')
 
 const router = express.Router()
 const upload = multer({
@@ -157,7 +160,39 @@ router.get('/:id', async (req, res) => {
             throw new Error(`No employeer with this userId: ${req.params.id}`)
         }
 
-        res.send(employeer)
+        const employeerDescription = await EmployeerDescription.findAll({
+            where: {
+                employeerId: employeer.dataValues.id
+            }
+        })
+
+        const employeerDocument = await EmployeerDocument.findAll({
+            where: {
+                employeerId: employeer.dataValues.id
+            }
+        })
+
+        const employeerTechnologies = await EmployeerTechnologies.findAll({
+            where: {
+                employeerId: employeer.dataValues.id
+            }
+        })
+
+        const employeerOffice = await EmployeerOffice.findAll({
+            where: {
+                employeerId: employeer.dataValues.id
+            }
+        })
+
+        const responseMessage = {
+            employeer,
+            employeerDescription,
+            employeerDocument,
+            employeerOffice,
+            employeerTechnologies
+        }
+
+        res.send(responseMessage)
     } catch (error) {
         console.log(error)
         res.send(error.toString())
@@ -176,7 +211,39 @@ router.get('/', auth, async (req, res) => {
             throw new Error(`No employeer with this userId: ${req.user.id}`)
         }
 
-        res.send(employeer)
+        const employeerDescription = await EmployeerDescription.findAll({
+            where: {
+                employeerId: employeer.dataValues.id
+            }
+        })
+
+        const employeerDocument = await EmployeerDocument.findAll({
+            where: {
+                employeerId: employeer.dataValues.id
+            }
+        })
+
+        const employeerTechnologies = await EmployeerTechnologies.findAll({
+            where: {
+                employeerId: employeer.dataValues.id
+            }
+        })
+
+        const employeerOffice = await EmployeerOffice.findAll({
+            where: {
+                employeerId: employeer.dataValues.id
+            }
+        })
+
+        const responseMessage = {
+            employeer,
+            employeerDescription,
+            employeerDocument,
+            employeerOffice,
+            employeerTechnologies
+        }
+
+        res.send(responseMessage)
     } catch (error) {
         console.log(error)
         res.send(error.toString())

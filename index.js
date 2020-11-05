@@ -43,6 +43,7 @@ app.use('/files', require('./server/routes/employee_file'))
 app.use('/employeer-files', require('./server/routes/employeer_file'))
 app.use('/employeer-technology', require('./server/routes/employeer_technology'))
 app.use('/employeer-office', require('./server/routes/employeer_office'))
+app.use('/employeer-description', require('./server/routes/employeer_description'))
 
 const port = 5000;
 
