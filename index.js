@@ -38,9 +38,10 @@ app.use('/skills', require('./server/routes/employee_skills'))
 app.use('/education', require('./server/routes/employee_education'))
 app.use('/experience', require('./server/routes/employee_experience'))
 app.use('/job-offer', require('./server/routes/job_offer'))
-app.use('/technologies', require('./server/routes/job_offer_technologie'))
+app.use('/technologies', require('./server/routes/job_offer_technology'))
 app.use('/files', require('./server/routes/employee_file'))
 app.use('/employeer-files', require('./server/routes/employeer_file'))
+app.use('/employeer-technology', require('./server/routes/employeer_technology'))
 
 const port = 5000;
 
