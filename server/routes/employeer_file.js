@@ -3,8 +3,8 @@ const multer = require('multer')
 
 const auth = require('../middleware/auth')
 const { uploadFile, deleteFile } = require('../db/blob')
-const EmployeeDocument = require('../models/EmployeeDocument')
-const Employee = require('../models/Employee')
+const EmployeerDocument = require('../models/EmployeerDocument')
+const Employeer = require('../models/Employeer')
 
 const upload = multer({
     limits: {
@@ -23,48 +23,27 @@ const router = express.Router()
 router.post("/", auth, upload.single('file'), async (req, res) => {
     try {
         const file = req.file
-        const { name } = req.body
+        const { name, description } = req.body
 
-        const employee = await Employee.findOne({
+        const employeer = await Employeer.findOne({
             where: {
                 userId: req.user.id
             }
         })
 
-        if (!employee) {
-            throw new Error(`No employee with this id: ${req.params.id}`)
-        }
-
-        const existingFile = await EmployeeDocument.findOne({
-            where: {
-                name,
-                employeeId: employee.dataValues.id
-            }
-        })
-
-        console.log(existingFile)
-
-        if (existingFile) {
-            const fileUrl = existingFile.dataValues.file
-
-            const deleteOldBlob = await deleteFile(fileUrl)
-
-            if (!deleteOldBlob.success) {
-                throw new Error(`Blob do not exist in db`)
-            }
-            console.log(existingFile)
-
-            await existingFile.destroy()
+        if (!employeer) {
+            throw new Error(`No employeer with this id: ${req.params.id}`)
         }
 
         const url = await uploadFile(file)
-        const employeeFile = await EmployeeDocument.create({
-            employeeId: employee.dataValues.id,
+        const employeerFile = await EmployeerDocument.create({
+            employeerId: employeer.dataValues.id,
             file: url,
-            name
+            name,
+            description
         })
 
-        res.status(201).send(employeeFile)
+        res.status(201).send(employeerFile)
     } catch (error) {
         console.log(error)
         res.send(error.toString())
@@ -75,18 +54,18 @@ router.get('/', auth, async (req, res) => {
     try {
         const user = req.user
 
-        const employee = await Employee.findOne({
+        const employeer = await Employeer.findOne({
             where: {
                 userId: user.id
             }
         })
-        if (!employee) {
-            throw new Error(`No employee with this id: ${req.params.id}`)
+        if (!employeer) {
+            throw new Error(`No employeer with this id: ${req.params.id}`)
         }
 
-        const files = await EmployeeDocument.findAll({
+        const files = await EmployeerDocument.findAll({
             where: {
-                employeeId: employee.dataValues.id
+                employeerId: employeer.dataValues.id
             }
         })
 
@@ -101,9 +80,9 @@ router.get('/', auth, async (req, res) => {
 router.patch('/:id', upload.single('file'), auth, async (req, res) => {
     try {
         const file = req.file
-        const { name } = req.body
+        const { name, description } = req.body
 
-        const searchFile = await EmployeeDocument.findOne({
+        const searchFile = await EmployeerDocument.findOne({
             where: {
                 id: req.params.id
             }
@@ -120,13 +99,11 @@ router.patch('/:id', upload.single('file'), auth, async (req, res) => {
 
         const url = await uploadFile(file)
 
-        console.log(url)
-
         const updatedFile = await searchFile.update({
             name: name || searchFile.dataValues.name,
-            file: url || searchFile.dataValues.file
+            file: url || searchFile.dataValues.file,
+            description: description || searchFile.dataValues.description
         })
-
 
         res.send(updatedFile)
     } catch (error) {
@@ -137,7 +114,7 @@ router.patch('/:id', upload.single('file'), auth, async (req, res) => {
 
 router.delete('/:id', auth, async (req, res) => {
     try {
-        const searchFile = await EmployeeDocument.findOne({
+        const searchFile = await EmployeerDocument.findOne({
             where: {
                 id: req.params.id
             }
@@ -152,6 +129,7 @@ router.delete('/:id', auth, async (req, res) => {
         }
 
         await searchFile.destroy()
+
         res.send(searchFile)
     } catch (error) {
         console.log(error)
