@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import EmployeerHeader from './EmployeerHeader'
 import EmployeerSideBar from './EmployeerSideBar'
 import EmployeerMainDashboard from './EmployeerMainDashboard'
@@ -11,6 +11,8 @@ import { saveUserData } from '../_actions/userEmployee'
 const EmployeerDashboard = () => {
     const history = useHistory()
     const dispatch = useDispatch()
+    const [offers, setOffers] = useState([])
+    const [activeOffers, setActiveOffers] = useState([])
 
     useEffect(() => {
         const tryFetchPic = async () => {
@@ -72,11 +74,57 @@ const EmployeerDashboard = () => {
         tryFetchPic()
     }, [])
 
+    const fetchOffers = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/job-offer', { withCredentials: true })
+            console.log(response)
+            setOffers(response.data)
+            return response.data
+        } catch (error) {
+            console.log(error)
+            console.log(error.response)
+            if (error.response && error.response.data.error.message === 'jwt expired') {
+                try {
+                    const result = await axios('http://localhost:5000/users/refresh', {
+                        withCredentials: true,
+                        method: 'POST'
+                    })
+                    console.log(result)
+                    if (result.status === 201) {
+                        const finallResult = await axios.get('http://localhost:5000/job-offer', { withCredentials: true })
+                        console.log('Successful fetch employeer offers')
+                        setOffers(finallResult.data)
+                        return finallResult.data
+                    }
+                } catch (error) {
+                    console.log(error)
+                    console.log(error.response)
+                    if (error.response.status === 400) {
+                        history.push('/')
+                    }
+                }
+            }
+        }
+    }
+
+    useEffect(() => {
+        fetchOffers().then((response) => {
+            console.log(response[0].offer)
+            const activeOffers = []
+            for (let i = response.length - 1; i >= 0; i--) {
+                if (response[i].offer.active) {
+                    activeOffers.push(response[i])
+                }
+            }
+            setActiveOffers(activeOffers)
+        })
+    }, [])
+
     return (
         <div className='dashboard--container'>
             <EmployeerHeader />
             <EmployeerSideBar />
-            <EmployeerMainDashboard />
+            <EmployeerMainDashboard activeOffers={activeOffers} />
         </div>
     )
 }
