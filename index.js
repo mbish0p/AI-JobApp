@@ -42,6 +42,7 @@ app.use('/technologies', require('./server/routes/job_offer_technology'))
 app.use('/files', require('./server/routes/employee_file'))
 app.use('/employeer-files', require('./server/routes/employeer_file'))
 app.use('/employeer-technology', require('./server/routes/employeer_technology'))
+app.use('/employeer-office', require('./server/routes/employeer_office'))
 
 const port = 5000;
 
