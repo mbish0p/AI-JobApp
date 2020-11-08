@@ -3,6 +3,7 @@
     border: solid 1px #a8a8a877;
     box-shadow: 1px 1px 10px 1px rgba(204,204,204,1);
     border-radius: 1rem;
+    padding-bottom: 1.5rem;
 }
 
 .employeer--basic-info--title{
@@ -97,6 +98,83 @@
     cursor: pointer;
 }
 
+.employeer--basic-info--tech-add-button:focus,
 .employeer--basic-info--tech-remove-button:focus{
     outline: none;
+}
+
+.employeer--basic-info--office-container{
+    margin-bottom: 1rem;
+}
+
+.employeer--basic-info--office-top{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+}
+
+.employeer--basic-info--on-input{
+    margin-left: 2rem;
+    width: 45%;
+    border: none;
+    padding: 0.5rem;
+    background-color: rgba(187, 187, 187, 0.486);
+}
+
+.employeer--basic-info--city-input{
+    width: 45%;
+    margin-left: 1rem;
+    border: none;
+    padding: 0.5rem;
+    background-color: rgba(187, 187, 187, 0.486);
+}
+
+.employeer--basic-info--street-input:focus,
+.employeer--basic-info--on-input:focus,
+.employeer--basic-info--city-input:focus{
+    outline: none;
+    border: solid 1px rgb(250, 168, 91);
+    box-shadow: 1px 1px 10px 1px rgba(224,142,0,1)
+}
+
+.employeer--basic-info--office-bottom{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin-top: 1rem;
+}
+
+.employeer--basic-info--street-input{
+    width: 45%;
+    margin-left: 2rem;
+    border: none;
+    padding: 0.5rem;
+    background-color: rgba(187, 187, 187, 0.486);
+}
+
+.employeer--basic-info--addoffice,
+.employeer--basic-info--removeoffice{
+    margin-left: 1rem;
+    border: none;
+    padding: 0.3rem 1.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    background: linear-gradient(79deg, rgba(255,201,134,1) 0%, rgba(255,250,146,1) 100%);
+    border-radius: 0.4rem;
+    text-align: center;
+}
+
+.employeer--basic-info--addoffice:hover,
+.employeer--basic-info--removeoffice:hover{
+    cursor: pointer;
+    box-shadow: 1px 1px 10px 1px rgba(224,142,0,1)
+}
+
+.employeer--basic-info--addoffice:focus,
+.employeer--basic-info--removeoffice:focus{
+    outline: none;
+}
+
+.employeer--basic-info--addoffice-alone{
+    margin-left: 2rem;
 }
