@@ -1,0 +1,102 @@
+.employeer--basic-info--container{
+    margin: 2rem;
+    border: solid 1px #a8a8a877;
+    box-shadow: 1px 1px 10px 1px rgba(204,204,204,1);
+    border-radius: 1rem;
+}
+
+.employeer--basic-info--title{
+    background: linear-gradient(79deg, rgba(0,76,186,1) 0%, rgba(0,148,179,1) 100%);
+    border-radius: 1rem 1rem 0 0;
+    padding: 1.3rem;
+    color: white;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.employeer--basic-info--label{
+    margin-bottom: 0.3rem;
+    margin-left: 2rem;
+    margin-top: 1rem;
+    color: #000;
+}
+
+.employeer--basic-info--input{
+    margin-left: 2rem;
+    width: 80%;
+    padding: 0.5rem;
+    background-color: rgba(187, 187, 187, 0.486);
+    border: none;
+}
+
+.employeer--basic-info--input:focus{
+    outline: none;
+    border: solid 1px rgb(250, 168, 91);
+    box-shadow: 1px 1px 10px 1px rgba(224,142,0,1);
+}
+
+.employeer--basic-info--tech-input{
+    margin-left: 2rem;
+    width: 75%;
+    padding: 0.5rem;
+    background-color: rgba(187, 187, 187, 0.486);
+    border: none;
+}
+
+.employeer--basic-info--tech-input:focus{
+    outline: none;
+    border: solid 1px rgb(250, 168, 91);
+    box-shadow: 1px 1px 10px 1px rgba(224,142,0,1);
+}
+
+.employeer--basic-info--tech-add-button{
+    background-color: rgba(187, 187, 187, 0.486);
+    padding: 0.5rem;
+    width: 5%;
+    min-width: 3rem;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    border: none;
+}
+
+.employeer--basic-info--tech-add-button:hover{
+    border: solid 1px rgb(250, 168, 91);
+    box-shadow: 1px 1px 10px 1px rgba(224,142,0,1);
+    cursor: pointer;
+}
+
+.employeer--basic-info--tech-list{
+    margin-left: 2rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    max-width: 80%;
+}
+
+.employeer--basic-info--tech-container{
+    display: flex;
+    flex-direction: row;
+    margin-right: 1rem;
+    border: 1px solid black;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+}
+
+.employeer--basic-info--tech-remove-button{
+    border: none;
+    background-color: transparent;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+.employeer--basic-info--tech-name{
+    margin: 0;
+    margin-right: 0.5rem;
+}
+
+.employeer--basic-info--tech-remove-button:hover{
+    cursor: pointer;
+}
+
+.employeer--basic-info--tech-remove-button:focus{
+    outline: none;
+}
