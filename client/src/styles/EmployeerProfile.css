@@ -178,3 +178,38 @@
 .employeer--basic-info--addoffice-alone{
     margin-left: 2rem;
 }
+
+.ant-upload-picture-card-wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 150px
+}
+
+.ant-upload-list{
+    display: flex;
+    flex-direction: column;
+}
+
+.ant-modal-body{
+    display: flex;
+    flex-direction: row;
+}
+
+.employeer--photo-description--container{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+}
+
+.employeer--photo-description{
+    height: 104px !important;
+    margin-bottom: 0.5rem;
+    border-color: #d9d9d9;
+    color:black;
+    resize: none;
+    overflow: auto;
+}
+
+.employeer--photo-description{
+    outline: none;
+}
