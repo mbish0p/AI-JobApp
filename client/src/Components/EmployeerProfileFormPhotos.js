@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Modal, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import axios from 'axios'
@@ -8,8 +8,57 @@ const EmployeerProfileFormPhotos = () => {
     const [visible, setVisible] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [fileList, setFileList] = useState([]);
-    const [descriptionList, setDescriptionList] = useState([{ description: '' }])
 
+
+    useEffect(() => {
+        fetchEmployeerPhotos()
+    }, [])
+
+    const fetchEmployeerPhotos = async () => {
+        try {
+            const photosResponse = await axios.get('http://localhost:5000/employeer-files', { withCredentials: true })
+            console.log(photosResponse.data)
+            setFetchFiles(photosResponse.data)
+        } catch (error) {
+            console.log(error.response)
+            if (error.response.data.error.message === 'jwt expired')
+                try {
+                    const result = await axios('http://localhost:5000/users/refresh', {
+                        withCredentials: true,
+                        method: 'POST'
+                    })
+                    if (result.status === 201) {
+                        const photosResponse = await axios.get('http://localhost:5000/employeer-files', { withCredentials: true })
+                        if (photosResponse.data) {
+                            console.log(photosResponse.data)
+                            console.log('Successful fetch image')
+                            setFetchFiles(photosResponse.data)
+                        }
+                    }
+                } catch (error) {
+                    console.log(error.response)
+                }
+        }
+    }
+
+    const setFetchFiles = (fetchedFiles) => {
+        const photoList = [...fileList]
+        for (let i = 0; i < fetchedFiles.length; i++) {
+            const file = fetchedFiles[i]
+            const newFile = {
+                uid: file.id,
+                inDb: true,
+                name: file.name + '.png',
+                status: 'done',
+                url: file.file,
+                originFileObj: {
+                    description: file.description
+                }
+            }
+            photoList.push(newFile)
+        }
+        setFileList(photoList)
+    }
 
     const onChange = ({ fileList: newFileList }) => {
         console.log('newFileList:', newFileList)
@@ -18,10 +67,10 @@ const EmployeerProfileFormPhotos = () => {
 
     const handlePhotoDescription = (event, index) => {
         const { value } = event.target
-        const descList = [...descriptionList]
+        const photoList = [...fileList]
 
-        descList[index].description = value
-        setDescriptionList(descList)
+        photoList[index].originFileObj.description = value
+        setFileList(photoList)
     }
 
     const onPreview = async file => {
@@ -40,8 +89,50 @@ const EmployeerProfileFormPhotos = () => {
         imgWindow.document.write(image.outerHTML);
     };
 
-    const uploadPhotos = () => {
+    const uploadPhotos = async () => {
+        for (let i = 0; i < fileList.length; i++) {
 
+            const file = fileList[i]
+            if (!file.inDb) {
+                const blob = convert64toBlob(file.thumbUrl)
+                let data = new FormData();
+                data.append('file', blob, file.name);
+                data.append('name', file.name)
+                if (file.originFileObj.description) data.append('description', file.originFileObj.description)
+
+                try {
+                    const uploadImage = await axios.post('http://localhost:5000/employeer-files', data, {
+                        headers: {
+                            'Content-Type': `multipart/form-data; boundary=${data._boundary}`
+                        }, withCredentials: true
+                    })
+                    console.log(uploadImage.data)
+                    console.log('Successful upload image')
+                } catch (error) {
+                    console.log(error.response)
+                    if (error.response.data.error.message === 'jwt expired')
+                        try {
+                            const result = await axios('http://localhost:5000/users/refresh', {
+                                withCredentials: true,
+                                method: 'POST'
+                            })
+                            if (result.status === 201) {
+                                const uploadImage = await axios.post('http://localhost:5000/employeer-files', data, {
+                                    headers: {
+                                        'Content-Type': `multipart/form-data; boundary=${data._boundary}`
+                                    }, withCredentials: true
+                                })
+                                if (uploadImage.data.file) {
+                                    console.log(uploadImage.data)
+                                    console.log('Successful upload image')
+                                }
+                            }
+                        } catch (error) {
+                            console.log(error.response)
+                        }
+                }
+            }
+        }
     }
 
     const convert64toBlob = (image) => {
@@ -60,10 +151,8 @@ const EmployeerProfileFormPhotos = () => {
     }
 
     const customRequest = ({ file, onSuccess }) => {
+        file.inDb = false
         setTimeout(() => {
-            const descList = [...descriptionList]
-            descList.push({ description: '' })
-            setDescriptionList(descList)
             onSuccess('ok')
         }, 0)
     }
@@ -81,6 +170,12 @@ const EmployeerProfileFormPhotos = () => {
         setConfirmLoading(false);
     };
 
+    const beforeUpload = (file) => {
+        console.log(file)
+        file.description = 'Tell history behind this picture'
+        return true
+    }
+
     const handleCancel = () => {
         console.log('Clicked cancel button');
         setVisible(false);
@@ -89,7 +184,40 @@ const EmployeerProfileFormPhotos = () => {
     return (
         <div>
             <h2>Company photos</h2>
-            <button onClick={showModal}>Add</button>
+            {
+                (fileList.length > 0) ? (
+                    <div>
+                        <div className='ant-modal-body'>
+                            <ImgCrop rotate>
+                                <Upload
+                                    listType="picture-card"
+                                    fileList={fileList}
+                                    customRequest={customRequest}
+                                    onChange={onChange}
+                                    beforeUpload={beforeUpload}
+                                    onPreview={onPreview}
+                                >
+                                </Upload>
+                            </ImgCrop>
+
+
+                            <div className='employeer--photo-description--container'>
+                                {fileList.map((file, index) => {
+                                    return <textarea
+                                        key={index}
+                                        className='employeer--photo-description'
+                                        placeholder='Tell history behind this picture'
+                                        value={file.originFileObj.description}
+                                        onChange={(event) => handlePhotoDescription(event, index)}
+                                    />
+                                })}
+                            </div>
+                        </div>
+                        <button onClick={showModal}>Add</button>
+                    </div>
+                ) : <button onClick={showModal}>Add</button>
+            }
+
             <Modal
                 title="Title"
                 visible={visible}
@@ -103,6 +231,7 @@ const EmployeerProfileFormPhotos = () => {
                         fileList={fileList}
                         customRequest={customRequest}
                         onChange={onChange}
+                        beforeUpload={beforeUpload}
                         onPreview={onPreview}
                     >
                         {fileList.length < 5 && '+ Upload'}
@@ -115,8 +244,7 @@ const EmployeerProfileFormPhotos = () => {
                         return <textarea
                             key={index}
                             className='employeer--photo-description'
-                            placeholder='Tell history behind this picture'
-                            value={descriptionList[index].description}
+                            value={file.originFileObj.description}
                             onChange={(event) => handlePhotoDescription(event, index)}
                         />
                     })}
