@@ -79,7 +79,6 @@ router.get('/', auth, async (req, res) => {
 
 router.patch('/:id', upload.single('file'), auth, async (req, res) => {
     try {
-        const file = req.file
         const { name, description } = req.body
 
         const searchFile = await EmployeerDocument.findOne({
@@ -91,17 +90,7 @@ router.patch('/:id', upload.single('file'), auth, async (req, res) => {
             throw new Error(`No file with this id ${req.params.id}`)
         }
 
-        const deleteOldBlob = await deleteFile(searchFile.dataValues.file)
-
-        if (!deleteOldBlob.success) {
-            throw new Error(`Blob do not exist in db`)
-        }
-
-        const url = await uploadFile(file)
-
         const updatedFile = await searchFile.update({
-            name: name || searchFile.dataValues.name,
-            file: url || searchFile.dataValues.file,
             description: description || searchFile.dataValues.description
         })
 

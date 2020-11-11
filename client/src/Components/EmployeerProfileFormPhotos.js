@@ -41,6 +41,30 @@ const EmployeerProfileFormPhotos = () => {
         }
     }
 
+    const removePicture = async (file) => {
+        if (file.inDb) {
+            try {
+                const removePicture = await axios.delete(`http://localhost:5000/employeer-files/${file.uid}`, { withCredentials: true })
+                console.log(removePicture.data)
+            } catch (error) {
+                console.log(error.response)
+                if (error.response.data.error.message === 'jwt expired')
+                    try {
+                        const result = await axios('http://localhost:5000/users/refresh', {
+                            withCredentials: true,
+                            method: 'POST'
+                        })
+                        if (result.status === 201) {
+                            const removePicture = await axios.delete(`http://localhost:5000/employeer-files/${file.uid}`, { withCredentials: true })
+                            console.log(removePicture.data)
+                        }
+                    } catch (error) {
+                        console.log(error.response)
+                    }
+            }
+        }
+    }
+
     const setFetchFiles = (fetchedFiles) => {
         const photoList = [...fileList]
         for (let i = 0; i < fetchedFiles.length; i++) {
@@ -53,7 +77,8 @@ const EmployeerProfileFormPhotos = () => {
                 url: file.file,
                 originFileObj: {
                     description: file.description
-                }
+                },
+                isChange: false
             }
             photoList.push(newFile)
         }
@@ -69,7 +94,12 @@ const EmployeerProfileFormPhotos = () => {
         const { value } = event.target
         const photoList = [...fileList]
 
-        photoList[index].originFileObj.description = value
+        if (photoList[index].isChange === false && photoList[index].inDb) {
+            photoList[index].originFileObj.description = value
+            photoList[index].isChange = true
+        } else {
+            photoList[index].originFileObj.description = value
+        }
         setFileList(photoList)
     }
 
@@ -135,6 +165,49 @@ const EmployeerProfileFormPhotos = () => {
         }
     }
 
+    const updatePhotos = async () => {
+        for (let i = 0; i < fileList.length; i++) {
+
+            const file = fileList[i]
+            if (file.inDb && file.isChange) {
+                let data = new FormData();
+                if (file.originFileObj.description) data.append('description', file.originFileObj.description)
+
+                try {
+                    const uploadImage = await axios.patch(`http://localhost:5000/employeer-files/${file.uid}`, data, {
+                        headers: {
+                            'Content-Type': `multipart/form-data; boundary=${data._boundary}`
+                        }, withCredentials: true
+                    })
+                    console.log(uploadImage.data)
+                    fileList[i].isChange = false
+                } catch (error) {
+                    console.log(error.response)
+                    if (error.response.data.error.message === 'jwt expired')
+                        try {
+                            const result = await axios('http://localhost:5000/users/refresh', {
+                                withCredentials: true,
+                                method: 'POST'
+                            })
+                            if (result.status === 201) {
+                                const uploadImage = await axios.patch(`http://localhost:5000/employeer-files/${file.uid}`, data, {
+                                    headers: {
+                                        'Content-Type': `multipart/form-data; boundary=${data._boundary}`
+                                    }, withCredentials: true
+                                })
+                                if (uploadImage.data) {
+                                    console.log(uploadImage.data)
+                                    fileList[i].isChange = false
+                                }
+                            }
+                        } catch (error) {
+                            console.log(error.response)
+                        }
+                }
+            }
+        }
+    }
+
     const convert64toBlob = (image) => {
         const contentType = image.slice(5, image.indexOf(';base64'))
         const b64Content = image.slice(image.indexOf(';base64') + 8)
@@ -153,8 +226,8 @@ const EmployeerProfileFormPhotos = () => {
     const customRequest = ({ file, onSuccess }) => {
         file.inDb = false
         setTimeout(() => {
-            onSuccess('ok')
-        }, 0)
+            onSuccess('done')
+        }, 1000)
     }
 
     const showModal = () => {
@@ -165,6 +238,7 @@ const EmployeerProfileFormPhotos = () => {
         setConfirmLoading(true);
 
         uploadPhotos()
+        updatePhotos()
 
         setVisible(false);
         setConfirmLoading(false);
@@ -196,6 +270,7 @@ const EmployeerProfileFormPhotos = () => {
                                     onChange={onChange}
                                     beforeUpload={beforeUpload}
                                     onPreview={onPreview}
+                                    onRemove={removePicture}
                                 >
                                 </Upload>
                             </ImgCrop>
@@ -233,6 +308,7 @@ const EmployeerProfileFormPhotos = () => {
                         onChange={onChange}
                         beforeUpload={beforeUpload}
                         onPreview={onPreview}
+                        onRemove={removePicture}
                     >
                         {fileList.length < 5 && '+ Upload'}
                     </Upload>
