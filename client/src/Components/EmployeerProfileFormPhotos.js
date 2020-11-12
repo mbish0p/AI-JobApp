@@ -137,6 +137,19 @@ const EmployeerProfileFormPhotos = () => {
                         }, withCredentials: true
                     })
                     console.log(uploadImage.data)
+                    const photoList = [...fileList]
+                    photoList[i] = {
+                        uid: uploadImage.data.id,
+                        inDb: true,
+                        name: uploadImage.data.name + '.png',
+                        status: 'done',
+                        url: uploadImage.data.file,
+                        originFileObj: {
+                            description: uploadImage.data.description
+                        },
+                        isChange: false
+                    }
+                    setFileList(photoList)
                     console.log('Successful upload image')
                 } catch (error) {
                     console.log(error.response)
@@ -154,7 +167,19 @@ const EmployeerProfileFormPhotos = () => {
                                 })
                                 if (uploadImage.data.file) {
                                     console.log(uploadImage.data)
-                                    console.log('Successful upload image')
+                                    const photoList = [...fileList]
+                                    photoList[i] = {
+                                        uid: uploadImage.data.id,
+                                        inDb: true,
+                                        name: uploadImage.data.name + '.png',
+                                        status: 'done',
+                                        url: uploadImage.data.file,
+                                        originFileObj: {
+                                            description: uploadImage.data.description
+                                        },
+                                        isChange: false
+                                    }
+                                    setFileList(photoList)
                                 }
                             }
                         } catch (error) {
@@ -256,8 +281,8 @@ const EmployeerProfileFormPhotos = () => {
     };
 
     return (
-        <div>
-            <h2>Company photos</h2>
+        <div className='employeer--photos--container'>
+            <h2 className='employeer--photos--title'>Company photos</h2>
             {
                 (fileList.length > 0) ? (
                     <div>
@@ -288,9 +313,9 @@ const EmployeerProfileFormPhotos = () => {
                                 })}
                             </div>
                         </div>
-                        <button onClick={showModal}>Add</button>
+                        <button className='employeer--basic-info--addoffice employeer--basic-info--addoffice-alone' onClick={showModal}>Add</button>
                     </div>
-                ) : <button onClick={showModal}>Add</button>
+                ) : <button className='employeer--basic-info--addoffice employeer--basic-info--addoffice-alone' onClick={showModal}>Add</button>
             }
 
             <Modal
