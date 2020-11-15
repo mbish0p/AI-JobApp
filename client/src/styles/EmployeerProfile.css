@@ -232,3 +232,47 @@
     font-weight: 700;
     font-size: 1.3rem;
 }
+
+.employeer--description-container{
+    margin: 2rem;
+    border: solid 1px #a8a8a877;
+    box-shadow: 1px 1px 10px 1px rgba(204,204,204,1);
+    border-radius: 1rem;
+    padding-bottom: 1.5rem;
+}
+
+.employeer--description-container--title{
+    background: linear-gradient(90deg, rgba(253,29,29,1) 0%, rgba(230,165,74,1) 0%, rgba(131,58,180,1) 100%);
+    padding: 1.3rem;
+    border-radius: 1rem 1rem 0 0;
+    color: white;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.employeer--description-container--label{
+    color: black;
+    font-size: 1.3rem;
+    margin-left: 2rem;
+    padding-bottom: 1rem;
+    margin-right: 2rem;
+    border-bottom: solid 2px rgba(168, 168, 168, 0.479);
+}
+
+.employeer--description-container--textarea{
+    overflow: auto;
+    resize: none;
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+    width: 80%;
+    outline: none;
+    min-height: 300px;
+}
+
+.employeer--description-container--textarea:focus{
+    box-shadow: 1px 1px 10px 1px rgba(224,142,0,1)
+}
+
+.employeer--description-container--last-textarea{
+    min-height: 150px;
+}
