@@ -26,3 +26,7 @@ export const SAVE_EMPLOYEER_DATA = 'save_employeer_data'
 export const SAVE_EMPLOYEER_LOGO = 'save_employeer_logo'
 export const SAVE_EMPLOYEER_TECHNOLOGIES = 'save_employeer_technologies'
 export const SAVE_EMPLOYEER_OFFICES = 'save_employeer_offices'
+
+export const SAVE_EMPLOYEER_DESCRIPTION_ONE = 'save_employeer_description_one'
+export const SAVE_EMPLOYEER_DESCRIPTION_TWO = 'save_employeer_description_two'
+export const SAVE_EMPLOYEER_DESCRIPTION_THREE = 'save_employeer_description_three'
