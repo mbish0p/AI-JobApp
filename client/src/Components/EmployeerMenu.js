@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 
 const EmployeerMenu = () => {
     const employeerInfo = useSelector(state => state.userEmployeer)
-    console.log('navigation', employeerInfo)
     return (
         <div className='employee--menu'>
             <NavLink exact to={`/employeer/${employeerInfo.company_name}`} className='employee--menu-item' activeClassName="employee--menu-item-selected">Main panel</NavLink>

@@ -86,36 +86,6 @@ router.post('/company-logo', auth, upload.single('logo'), async (req, res) => {
             throw new Error(`No employeer with this userId: ${req.user.id}`)
         }
 
-        const url = await uploadFile(logo)
-
-        await employeer.update({
-            company_logo: url
-        })
-        const responseMessage = {
-            message: 'Logo was added',
-            url
-        }
-        res.status(201).send(responseMessage)
-    } catch (error) {
-        console.log(error)
-        res.send(error.toString())
-    }
-})
-
-router.patch('/', auth, upload.single('logo'), async (req, res) => {
-    try {
-        const { company_name, phone_number } = req.body
-        const logo = req.file
-
-        const employeer = await Employeer.findOne({
-            where: {
-                userId: req.user.id
-            }
-        })
-        if (!employeer) {
-            throw new Error(`No employeer with this userId: ${req.user.id}`)
-        }
-
         let url = undefined
         if (employeer.dataValues.company_logo) {
             if (logo) {
@@ -136,9 +106,37 @@ router.patch('/', auth, upload.single('logo'), async (req, res) => {
         }
 
         await employeer.update({
+            company_logo: url
+        })
+        const responseMessage = {
+            message: 'Logo was added',
+            url
+        }
+        res.status(201).send(responseMessage)
+    } catch (error) {
+        console.log(error)
+        res.send(error.toString())
+    }
+})
+
+router.patch('/', auth, async (req, res) => {
+    try {
+        const { company_name, phone_number, www, employee_number } = req.body
+
+        const employeer = await Employeer.findOne({
+            where: {
+                userId: req.user.id
+            }
+        })
+        if (!employeer) {
+            throw new Error(`No employeer with this userId: ${req.user.id}`)
+        }
+
+        await employeer.update({
             company_name: company_name || employeer.dataValues.company_name,
             phone_number: phone_number || employeer.dataValues.phone_number,
-            company_logo: url || employeer.dataValues.company_logo
+            www: www || employeer.dataValues.www,
+            employee_number: employee_number || employeer.dataValues.employee_number
         })
 
         res.send(employeer)

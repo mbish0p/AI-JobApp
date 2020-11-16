@@ -2,6 +2,7 @@ import React from 'react'
 import EmployeerProfileFormBasicInfo from './EmployeerProfileFormBasicInfo'
 import EmployeerProfileFormPhotos from './EmployeerProfileFormPhotos'
 import EmployeerProfileTextEditor from './EmployeerProfileTextEditors'
+import EmployeerProfileSave from './EmployeerProfileSave'
 
 const EmployeerProfileForm = () => {
     return (
@@ -15,6 +16,7 @@ const EmployeerProfileForm = () => {
                     <EmployeerProfileFormPhotos />
                 </div>
             </div>
+            <EmployeerProfileSave />
         </div>
     )
 }

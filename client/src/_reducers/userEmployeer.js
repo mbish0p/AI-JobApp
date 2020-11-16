@@ -3,9 +3,14 @@ import {
     SAVE_EMPLOYEER_LOGO,
     SAVE_EMPLOYEER_OFFICES,
     SAVE_EMPLOYEER_TECHNOLOGIES,
+    SAVE_EMPLOYEER_WWW,
+    SAVE_EMPLOYEER_EMPLOYEES_NUMBER,
+    SAVE_EMPLOYEER_COMPANY_NAME,
     SAVE_EMPLOYEER_DESCRIPTION_ONE,
     SAVE_EMPLOYEER_DESCRIPTION_TWO,
-    SAVE_EMPLOYEER_DESCRIPTION_THREE
+    SAVE_EMPLOYEER_DESCRIPTION_THREE,
+    SAVE_EMPLOYEER_FETCHED_TECHNOLOGIES,
+    SAVE_EMPLOYEER_FETCHED_OFFICES
 } from '../_actions/types'
 
 const initialState = {
@@ -17,7 +22,11 @@ const initialState = {
     employee_number: undefined,
     textarea_one: undefined,
     textarea_two: undefined,
-    textarea_three: undefined
+    textarea_three: undefined,
+    offices: [{ officeName: '', city: '', street: '' }],
+    technologies: [],
+    fetched_offices: [],
+    fetched_technologies: []
 }
 
 export default function (state = initialState, action) {
@@ -56,6 +65,48 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 textarea_three: action.payload.description
+            }
+        }
+        case SAVE_EMPLOYEER_COMPANY_NAME: {
+            return {
+                ...state,
+                company_name: action.payload.company_name
+            }
+        }
+        case SAVE_EMPLOYEER_EMPLOYEES_NUMBER: {
+            return {
+                ...state,
+                employee_number: action.payload.employee_number
+            }
+        }
+        case SAVE_EMPLOYEER_WWW: {
+            return {
+                ...state,
+                www: action.payload.www
+            }
+        }
+        case SAVE_EMPLOYEER_TECHNOLOGIES: {
+            return {
+                ...state,
+                technologies: action.payload
+            }
+        }
+        case SAVE_EMPLOYEER_OFFICES: {
+            return {
+                ...state,
+                offices: action.payload
+            }
+        }
+        case SAVE_EMPLOYEER_FETCHED_OFFICES: {
+            return {
+                ...state,
+                fetched_offices: action.payload
+            }
+        }
+        case SAVE_EMPLOYEER_FETCHED_TECHNOLOGIES: {
+            return {
+                ...state,
+                fetched_technologies: action.payload
             }
         }
         default:
