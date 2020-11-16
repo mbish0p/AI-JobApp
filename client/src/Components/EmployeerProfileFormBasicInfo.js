@@ -23,8 +23,6 @@ const EmployeerProfileFormBasicInfo = () => {
     const [companyWWW, setCompanyWWW] = useState('')
     const [employeesNumber, setEmployeesNumber] = useState('')
     const [offices, setOffices] = useState([{ officeName: '', city: '', street: '' }])
-    const [fetchedTechnologies, setFetchedTechnologies] = []
-    const [fetchedOffices, setFetchedOfficess] = []
 
     const fetchEmployeerProfile = async () => {
         try {
@@ -82,7 +80,7 @@ const EmployeerProfileFormBasicInfo = () => {
         const techList = [...technologies]
         fetchTechs.forEach((tech) => {
             const techName = tech.name
-            techList.push({ technology: techName })
+            techList.push({ technology: techName, id: tech.id })
         })
         setTechnologies(techList)
         dispatch(saveEmployeerFetchedTechs(techList))
