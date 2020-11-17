@@ -2,26 +2,26 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../db/sequelize');
 
 
-const JobOfferTechnologies = sequelize.define('job_offer_technologies', {
+const EmployeerOffice = sequelize.define('employeer_offices', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    name: {
+    office_name: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    experience: {
-        type: DataTypes.INTEGER,
+    city: {
+        type: DataTypes.STRING,
         allowNull: false
     },
-    main_technology: {
-        type: DataTypes.BOOLEAN,
+    street: {
+        type: DataTypes.STRING,
         allowNull: false
     }
 }, {
     freezeTableName: true
 })
 
-module.exports = JobOfferTechnologies
+module.exports = EmployeerOffice

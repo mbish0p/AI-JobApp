@@ -6,7 +6,9 @@ import { useHistory } from 'react-router-dom'
 
 import refreshToken from '../_helper/refreshToken'
 
-const Header = () => {
+import '../styles/EmployeerDashboard.css'
+
+const EmployeerHeader = () => {
     const history = useHistory()
 
     const handleLogout = () => {
@@ -32,17 +34,13 @@ const Header = () => {
         })
     }
 
-    const handleEmployeerButton = () => {
-        history.push('/employeer')
-    }
 
     return (
         <div className='header-container'>
             <Logo />
-            <button className='header--employeer-button' onClick={(e) => handleEmployeerButton()}>For employeer</button>
             <button onClick={handleLogout} className='header--employeer-logout'>Logout <Icon className='logout-icon' /></button>
         </div>
     )
 }
 
-export default Header
+export default EmployeerHeader

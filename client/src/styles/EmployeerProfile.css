@@ -1,0 +1,297 @@
+.employeer--basic-info--container{
+    margin: 2rem;
+    border: solid 1px #a8a8a877;
+    box-shadow: 1px 1px 10px 1px rgba(204,204,204,1);
+    border-radius: 1rem;
+    padding-bottom: 1.5rem;
+}
+
+.employeer--basic-info--title{
+    background: linear-gradient(79deg, rgba(0,76,186,1) 0%, rgba(0,148,179,1) 100%);
+    border-radius: 1rem 1rem 0 0;
+    padding: 1.3rem;
+    color: white;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.employeer--basic-info--label{
+    margin-bottom: 0.3rem;
+    margin-left: 2rem;
+    margin-top: 1rem;
+    color: #000;
+}
+
+.employeer--basic-info--input{
+    margin-left: 2rem;
+    width: 80%;
+    padding: 0.5rem;
+    background-color: rgba(187, 187, 187, 0.486);
+    border: none;
+}
+
+.employeer--basic-info--input:focus{
+    outline: none;
+    border: solid 1px rgb(250, 168, 91);
+    box-shadow: 1px 1px 10px 1px rgba(224,142,0,1);
+}
+
+.employeer--basic-info--tech-input{
+    margin-left: 2rem;
+    width: 75%;
+    padding: 0.5rem;
+    background-color: rgba(187, 187, 187, 0.486);
+    border: none;
+}
+
+.employeer--basic-info--tech-input:focus{
+    outline: none;
+    border: solid 1px rgb(250, 168, 91);
+    box-shadow: 1px 1px 10px 1px rgba(224,142,0,1);
+}
+
+.employeer--basic-info--tech-add-button{
+    background-color: rgba(187, 187, 187, 0.486);
+    padding: 0.5rem;
+    width: 5%;
+    min-width: 3rem;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    border: none;
+}
+
+.employeer--basic-info--tech-add-button:hover{
+    border: solid 1px rgb(250, 168, 91);
+    box-shadow: 1px 1px 10px 1px rgba(224,142,0,1);
+    cursor: pointer;
+}
+
+.employeer--basic-info--tech-list{
+    margin-left: 2rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    max-width: 80%;
+}
+
+.employeer--basic-info--tech-container{
+    display: flex;
+    flex-direction: row;
+    margin-right: 1rem;
+    border: 1px solid black;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+}
+
+.employeer--basic-info--tech-remove-button{
+    border: none;
+    background-color: transparent;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+.employeer--basic-info--tech-name{
+    margin: 0;
+    margin-right: 0.5rem;
+}
+
+.employeer--basic-info--tech-remove-button:hover{
+    cursor: pointer;
+}
+
+.employeer--basic-info--tech-add-button:focus,
+.employeer--basic-info--tech-remove-button:focus{
+    outline: none;
+}
+
+.employeer--basic-info--office-container{
+    margin-bottom: 1rem;
+}
+
+.employeer--basic-info--office-top{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+}
+
+.employeer--basic-info--on-input{
+    margin-left: 2rem;
+    width: 45%;
+    border: none;
+    padding: 0.5rem;
+    background-color: rgba(187, 187, 187, 0.486);
+}
+
+.employeer--basic-info--city-input{
+    width: 45%;
+    margin-left: 1rem;
+    border: none;
+    padding: 0.5rem;
+    background-color: rgba(187, 187, 187, 0.486);
+}
+
+.employeer--basic-info--street-input:focus,
+.employeer--basic-info--on-input:focus,
+.employeer--basic-info--city-input:focus{
+    outline: none;
+    border: solid 1px rgb(250, 168, 91);
+    box-shadow: 1px 1px 10px 1px rgba(224,142,0,1)
+}
+
+.employeer--basic-info--office-bottom{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin-top: 1rem;
+}
+
+.employeer--basic-info--street-input{
+    width: 45%;
+    margin-left: 2rem;
+    border: none;
+    padding: 0.5rem;
+    background-color: rgba(187, 187, 187, 0.486);
+}
+
+.employeer--basic-info--addoffice,
+.employeer--basic-info--removeoffice{
+    margin-left: 1rem;
+    border: none;
+    padding: 0.3rem 1.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    background: linear-gradient(79deg, rgba(255,201,134,1) 0%, rgba(255,250,146,1) 100%);
+    border-radius: 0.4rem;
+    text-align: center;
+}
+
+.employeer--basic-info--addoffice:hover,
+.employeer--basic-info--removeoffice:hover{
+    cursor: pointer;
+    box-shadow: 1px 1px 10px 1px rgba(224,142,0,1)
+}
+
+.employeer--basic-info--addoffice:focus,
+.employeer--basic-info--removeoffice:focus{
+    outline: none;
+}
+
+.employeer--basic-info--addoffice-alone{
+    margin-left: 2rem;
+}
+
+.ant-upload-picture-card-wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 150px
+}
+
+.ant-upload-list{
+    display: flex;
+    flex-direction: column;
+}
+
+.ant-modal-body{
+    display: flex;
+    flex-direction: row;
+}
+
+.employeer--photo-description--container{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+}
+
+.employeer--photo-description{
+    height: 104px !important;
+    margin-bottom: 0.5rem;
+    border-color: #d9d9d9;
+    color:black;
+    resize: none;
+    overflow: auto;
+}
+
+.employeer--photo-description{
+    outline: none;
+}
+
+.employeer--photos--container{
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+    border: solid 1px #a8a8a877;
+    box-shadow: 1px 1px 10px 1px rgba(204,204,204,1);
+    border-radius: 1rem;
+    padding-bottom: 1.5rem;
+}
+
+.employeer--photos--title{
+    background: linear-gradient(79deg, rgba(215,0,185,1) 0%, rgba(255,203,139,1) 100%);    border-radius: 1rem 1rem 0 0;
+    padding: 1.3rem;
+    border-radius: 1rem 1rem 0 0;
+    color: white;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.employeer--description-container{
+    margin: 2rem;
+    border: solid 1px #a8a8a877;
+    box-shadow: 1px 1px 10px 1px rgba(204,204,204,1);
+    border-radius: 1rem;
+    padding-bottom: 1.5rem;
+}
+
+.employeer--description-container--title{
+    background: linear-gradient(90deg, rgba(253,29,29,1) 0%, rgba(230,165,74,1) 0%, rgba(131,58,180,1) 100%);
+    padding: 1.3rem;
+    border-radius: 1rem 1rem 0 0;
+    color: white;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.employeer--description-container--label{
+    color: black;
+    font-size: 1.3rem;
+    margin-left: 2rem;
+    padding-bottom: 1rem;
+    margin-right: 2rem;
+    border-bottom: solid 2px rgba(168, 168, 168, 0.479);
+}
+
+.employeer--description-container--textarea{
+    overflow: auto;
+    resize: none;
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+    width: 80%;
+    outline: none;
+    min-height: 300px;
+}
+
+.employeer--description-container--textarea:focus{
+    box-shadow: 1px 1px 10px 1px rgba(224,142,0,1)
+}
+
+.employeer--description-container--last-textarea{
+    min-height: 150px;
+}
+
+.employeer--save--container{
+    position: absolute;
+    z-index: 2;
+    height: 7%;
+    width: 70%;
+    top: 93%;
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.employeer--save--update{
+    margin-left: auto;
+}
+
+.employeer--save--preview{
+    margin-right: auto;
+}

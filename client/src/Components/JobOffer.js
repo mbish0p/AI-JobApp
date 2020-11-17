@@ -12,7 +12,8 @@ const JobOffer = (props) => {
     const fetchEmployeerProfile = async () => {
         try {
             const response = await axios.get(`http://localhost:5000/employeer/${props.offer.offer.employeerId}`)
-            await setEmployeerProfile(response.data)
+            console.log(response)
+            await setEmployeerProfile(response.data.employeer)
         } catch (error) {
             console.log(error.response)
         }

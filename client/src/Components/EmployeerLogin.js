@@ -3,10 +3,11 @@ import Logo from './Logo'
 import axios from 'axios'
 import { ReactComponent as Icon } from '../img/iconfinder_icons_exit2_1564506.svg'
 import { useHistory } from 'react-router-dom'
+import EmployeerLoginPromo from './EmployeerLoginPromo'
 
 import refreshToken from '../_helper/refreshToken'
 
-const Header = () => {
+const EmployeerLogin = () => {
     const history = useHistory()
 
     const handleLogout = () => {
@@ -32,17 +33,20 @@ const Header = () => {
         })
     }
 
-    const handleEmployeerButton = () => {
-        history.push('/employeer')
+    const handleEmployeeButton = () => {
+        history.push('/dashboard')
     }
 
     return (
-        <div className='header-container'>
-            <Logo />
-            <button className='header--employeer-button' onClick={(e) => handleEmployeerButton()}>For employeer</button>
-            <button onClick={handleLogout} className='header--employeer-logout'>Logout <Icon className='logout-icon' /></button>
+        <div className='employeer--main-container'>
+            <div className='header-container'>
+                <Logo />
+                <button className='header--employeer-button' onClick={(e) => handleEmployeeButton()}>Back to employee</button>
+                <button onClick={handleLogout} className='header--employeer-logout'>Logout <Icon className='logout-icon' /></button>
+            </div>
+            <EmployeerLoginPromo />
         </div>
     )
 }
 
-export default Header
+export default EmployeerLogin

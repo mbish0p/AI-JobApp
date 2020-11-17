@@ -33,6 +33,10 @@ const User = sequelize.define('User', {
     refresh_tokens: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    isEmployeer: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 })
 

@@ -1,0 +1,68 @@
+
+.employeer-create{
+    display: flex;
+    flex-direction: row;
+}
+
+.employeer--promo{
+    margin-left: 3rem;
+    margin-top: 2rem;
+    width: 45%;
+}
+
+.employeer--promo-title{
+    font-weight: 700;
+    width: 120%;
+}
+
+
+.employeer--promo-logo{
+    margin-top: 3rem;
+}
+
+
+.company--profile-container{
+   margin-left: 5rem;
+   margin-top:4rem;
+}
+
+.company--label{
+    margin-bottom: 0.3rem;
+}
+
+.company--registration-form{
+    box-shadow: 3px 3px 10px 3px rgba(133,133,133,1);
+    padding: 1rem;
+}
+
+.company--registration-submit{
+    width: auto;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.company--checkbox-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.company--checkbox-p{
+    margin-bottom: 0;
+    margin-left: 0.9rem;
+}
+
+.company--error-message{
+    margin-left: 0;
+}
+
+.company--registration-input{
+    margin-bottom: 1rem;
+    padding: 0.2rem
+}
+
+.company--registration-input:focus{
+    box-shadow: 1px 1px 13px 3px rgba(149,227,116,1);
+    outline: none;
+}

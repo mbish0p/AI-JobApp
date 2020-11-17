@@ -5,6 +5,10 @@ const Employee = require('../models/Employee')
 const Employeer = require('../models/Employeer')
 const { uploadFile, deleteFile } = require('../db/blob')
 const auth = require('../middleware/auth')
+const EmployeerDescription = require('../models/EmployeerDescription')
+const EmployeerDocument = require('../models/EmployeerDocument')
+const EmployeerTechnologies = require('../models/EmployeerTechnologies')
+const EmployeerOffice = require('../models/EmployeerOffice')
 
 const router = express.Router()
 const upload = multer({
@@ -52,7 +56,13 @@ router.post('/', auth, async (req, res) => {
                 }
             }
             await employee.destroy()
-            res.send(employeer)
+
+            const user = req.user
+            await user.update({
+                isEmployeer: true
+            })
+
+            res.status(201).send(employeer)
         } else {
             throw new Error(`No employee with this userId: ${req.user.id}`)
         }
@@ -72,36 +82,6 @@ router.post('/company-logo', auth, upload.single('logo'), async (req, res) => {
             }
         })
 
-        if (!employeer) {
-            throw new Error(`No employeer with this userId: ${req.user.id}`)
-        }
-
-        const url = await uploadFile(logo)
-
-        await employeer.update({
-            company_logo: url
-        })
-        const responseMessage = {
-            message: 'Logo was added',
-            url
-        }
-        res.status(201).send(responseMessage)
-    } catch (error) {
-        console.log(error)
-        res.send(error.toString())
-    }
-})
-
-router.patch('/', auth, upload.single('logo'), async (req, res) => {
-    try {
-        const { company_name, phone_number } = req.body
-        const logo = req.file
-
-        const employeer = await Employeer.findOne({
-            where: {
-                userId: req.user.id
-            }
-        })
         if (!employeer) {
             throw new Error(`No employeer with this userId: ${req.user.id}`)
         }
@@ -126,9 +106,37 @@ router.patch('/', auth, upload.single('logo'), async (req, res) => {
         }
 
         await employeer.update({
+            company_logo: url
+        })
+        const responseMessage = {
+            message: 'Logo was added',
+            url
+        }
+        res.status(201).send(responseMessage)
+    } catch (error) {
+        console.log(error)
+        res.send(error.toString())
+    }
+})
+
+router.patch('/', auth, async (req, res) => {
+    try {
+        const { company_name, phone_number, www, employee_number } = req.body
+
+        const employeer = await Employeer.findOne({
+            where: {
+                userId: req.user.id
+            }
+        })
+        if (!employeer) {
+            throw new Error(`No employeer with this userId: ${req.user.id}`)
+        }
+
+        await employeer.update({
             company_name: company_name || employeer.dataValues.company_name,
             phone_number: phone_number || employeer.dataValues.phone_number,
-            company_logo: url || employeer.dataValues.company_logo
+            www: www || employeer.dataValues.www,
+            employee_number: employee_number || employeer.dataValues.employee_number
         })
 
         res.send(employeer)
@@ -150,7 +158,39 @@ router.get('/:id', async (req, res) => {
             throw new Error(`No employeer with this userId: ${req.params.id}`)
         }
 
-        res.send(employeer)
+        const employeerDescription = await EmployeerDescription.findAll({
+            where: {
+                employeerId: employeer.dataValues.id
+            }
+        })
+
+        const employeerDocument = await EmployeerDocument.findAll({
+            where: {
+                employeerId: employeer.dataValues.id
+            }
+        })
+
+        const employeerTechnologies = await EmployeerTechnologies.findAll({
+            where: {
+                employeerId: employeer.dataValues.id
+            }
+        })
+
+        const employeerOffice = await EmployeerOffice.findAll({
+            where: {
+                employeerId: employeer.dataValues.id
+            }
+        })
+
+        const responseMessage = {
+            employeer,
+            employeerDescription,
+            employeerDocument,
+            employeerOffice,
+            employeerTechnologies
+        }
+
+        res.send(responseMessage)
     } catch (error) {
         console.log(error)
         res.send(error.toString())
@@ -169,7 +209,39 @@ router.get('/', auth, async (req, res) => {
             throw new Error(`No employeer with this userId: ${req.user.id}`)
         }
 
-        res.send(employeer)
+        const employeerDescription = await EmployeerDescription.findAll({
+            where: {
+                employeerId: employeer.dataValues.id
+            }
+        })
+
+        const employeerDocument = await EmployeerDocument.findAll({
+            where: {
+                employeerId: employeer.dataValues.id
+            }
+        })
+
+        const employeerTechnologies = await EmployeerTechnologies.findAll({
+            where: {
+                employeerId: employeer.dataValues.id
+            }
+        })
+
+        const employeerOffice = await EmployeerOffice.findAll({
+            where: {
+                employeerId: employeer.dataValues.id
+            }
+        })
+
+        const responseMessage = {
+            employeer,
+            employeerDescription,
+            employeerDocument,
+            employeerOffice,
+            employeerTechnologies
+        }
+
+        res.send(responseMessage)
     } catch (error) {
         console.log(error)
         res.send(error.toString())

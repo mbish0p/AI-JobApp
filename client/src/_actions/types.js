@@ -20,5 +20,19 @@ export const SAVE_RECRUITMENT_TYPE = 'save_recruitment_type'
 export const SAVE_TECHNOLOGIES = 'save_technologies'
 
 export const SAVE_USER_DATA = 'save_user_data'
-
 export const SAVE_EMPLOYEE_PHOTO = 'save_employee_photo'
+
+export const SAVE_EMPLOYEER_DATA = 'save_employeer_data'
+export const SAVE_EMPLOYEER_LOGO = 'save_employeer_logo'
+export const SAVE_EMPLOYEER_TECHNOLOGIES = 'save_employeer_technologies'
+export const SAVE_EMPLOYEER_OFFICES = 'save_employeer_offices'
+export const SAVE_EMPLOYEER_COMPANY_NAME = 'save_employeer_company_name'
+export const SAVE_EMPLOYEER_EMPLOYEES_NUMBER = 'save_employeer_employees_number'
+export const SAVE_EMPLOYEER_WWW = 'save_employeer_www'
+
+export const SAVE_EMPLOYEER_FETCHED_TECHNOLOGIES = 'save_employeer_fetched_technologies'
+export const SAVE_EMPLOYEER_FETCHED_OFFICES = 'save_employeer_fetched_offices'
+
+export const SAVE_EMPLOYEER_DESCRIPTION_ONE = 'save_employeer_description_one'
+export const SAVE_EMPLOYEER_DESCRIPTION_TWO = 'save_employeer_description_two'
+export const SAVE_EMPLOYEER_DESCRIPTION_THREE = 'save_employeer_description_three'

@@ -1,0 +1,39 @@
+.employeer--header-container{
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 2px 0 0  #adacac73;
+    justify-content: center;
+    align-items: center;
+    background: white;
+}
+
+.employeer--sidebar{
+    background: #4e4e4e;
+}
+
+.employeer--container{
+    height: 100%;
+    overflow: hidden;
+    margin: 0px;
+    display: flex;
+    box-sizing: border-box;
+}
+body {
+    overflow: hidden;
+}
+
+.employeer--main_dashboard--container{
+    display: flex;
+}
+
+.employeer--main_dashboard--container-leftside{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+}
+
+.employeer--main_dashboard--container-rightside{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
