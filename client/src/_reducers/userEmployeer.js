@@ -23,7 +23,7 @@ const initialState = {
     textarea_one: undefined,
     textarea_two: undefined,
     textarea_three: undefined,
-    offices: [{ officeName: '', city: '', street: '' }],
+    offices: [],
     technologies: [],
     fetched_offices: [],
     fetched_technologies: []
@@ -52,19 +52,19 @@ export default function (state = initialState, action) {
         case SAVE_EMPLOYEER_DESCRIPTION_ONE: {
             return {
                 ...state,
-                textarea_one: action.payload.description
+                textarea_one: action.payload
             }
         }
         case SAVE_EMPLOYEER_DESCRIPTION_TWO: {
             return {
                 ...state,
-                textarea_two: action.payload.description
+                textarea_two: action.payload
             }
         }
         case SAVE_EMPLOYEER_DESCRIPTION_THREE: {
             return {
                 ...state,
-                textarea_three: action.payload.description
+                textarea_three: action.payload
             }
         }
         case SAVE_EMPLOYEER_COMPANY_NAME: {
@@ -98,6 +98,7 @@ export default function (state = initialState, action) {
             }
         }
         case SAVE_EMPLOYEER_FETCHED_OFFICES: {
+            console.log(action)
             return {
                 ...state,
                 fetched_offices: action.payload

@@ -94,6 +94,7 @@ const EmployeerProfileFormBasicInfo = () => {
             officeList[index].officeName = office.office_name
             officeList[index].city = office.city
             officeList[index].street = office.street
+            officeList[index].id = office.id
             officeList.push({ officeName: '', city: '', street: '' })
         })
 

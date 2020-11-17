@@ -21,7 +21,6 @@ const UserLogo = (props) => {
         setShow(false)
     }
 
-    console.log('asdasdasasd', props)
 
     return (
         <div>
