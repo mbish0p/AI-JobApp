@@ -7,6 +7,7 @@ import Dashboard from '../Components/Dashboard';
 import EmployeerLogin from '../Components/EmployeerLogin'
 import EmployeerDashboard from '../Components/EmployeerDashboard'
 import EmployeerProfile from '../Components/EmployeerProfile'
+import EmployeerJobOfferProfile from '../Components/EmployeerJobOfferProfile'
 
 const AppRouter = () => {
     return (
@@ -19,6 +20,7 @@ const AppRouter = () => {
                 <Route exact={true} path="/employeer" component={EmployeerLogin} />
                 <Route exact={true} path='/employeer/:name' component={EmployeerDashboard} />
                 <Route exact={true} path='/employeer/:name/company-profile' component={EmployeerProfile} />
+                <Route exact={true} path='/employeer/:name/offers' component={EmployeerJobOfferProfile} />
             </Switch>
         </BrowserRouter>
     )
