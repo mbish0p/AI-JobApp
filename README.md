@@ -16,7 +16,4 @@ To use this application,
 
 If you have problem, feel free to ask me ^^ 
 
-You can view the tutorial through the link shown below.
-
-https://www.youtube.com/watch?v=h01cuxhteOA&t=4138s
 
