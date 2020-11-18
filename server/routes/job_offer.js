@@ -25,6 +25,7 @@ router.post('/', auth, async (req, res) => {
             min_salary,
             max_salary,
             experience,
+            currency,
             education,
             online_interview,
             active
@@ -41,6 +42,7 @@ router.post('/', auth, async (req, res) => {
             employeerId: employeer.dataValues.id,
             active,
             position_name,
+            currency,
             start_date,
             title,
             description,

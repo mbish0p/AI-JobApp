@@ -46,6 +46,10 @@ const JobOffer = sequelize.define('job_offer', {
         type: DataTypes.INTEGER,
         allowNull: true
     },
+    currency: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     contract_type: {
         type: DataTypes.STRING,
         allowNull: true

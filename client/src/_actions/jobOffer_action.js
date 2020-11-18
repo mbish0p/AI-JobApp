@@ -14,7 +14,8 @@ import {
     SAVE_START_DATE,
     SAVE_END_DATE,
     SAVE_CURRENCY,
-    SAVE_TECHNOLOGIES_V2
+    SAVE_TECHNOLOGIES_V2,
+    SAVE_EMPLOYEER_EDUCATION
 }
     from './types'
 
@@ -129,3 +130,11 @@ export function saveCurrency(currency) {
         payload: currency
     }
 }
+
+export function saveEducation(education) {
+    return {
+        type: SAVE_EMPLOYEER_EDUCATION,
+        payload: education
+    }
+}
+

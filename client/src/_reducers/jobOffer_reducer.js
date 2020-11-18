@@ -14,7 +14,8 @@ import {
     SAVE_START_DATE,
     SAVE_END_DATE,
     SAVE_CURRENCY,
-    SAVE_TECHNOLOGIES_V2
+    SAVE_TECHNOLOGIES_V2,
+    SAVE_EMPLOYEER_EDUCATION
 }
     from '../_actions/types'
 
@@ -31,6 +32,7 @@ const initialState = {
     description: undefined,
     recruitmentOnline: undefined,
     start_date: undefined,
+    education: undefined,
     end_date: undefined,
     currency: undefined,
     technologies: []
@@ -119,6 +121,12 @@ export default function (state = initialState, action) {
                 ...state,
                 currency: action.payload
             }
+        case SAVE_EMPLOYEER_EDUCATION: {
+            return {
+                ...state,
+                education: action.payload
+            }
+        }
         default:
             return state
     }

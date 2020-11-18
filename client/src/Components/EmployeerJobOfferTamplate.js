@@ -6,7 +6,6 @@ import 'react-dates/lib/css/_datepicker.css';
 import { useDispatch } from 'react-redux'
 import {
     savePositionName,
-    saveTechnologies,
     saveCityAddress,
     saveExperienceLvl,
     saveContractType,
@@ -20,8 +19,10 @@ import {
     saveStartDate,
     saveStreetAddress,
     saveCurrency,
-    saveTechnologies_v2
+    saveTechnologies_v2,
+    saveEducation
 } from '../_actions/jobOffer_action'
+import EmployeerJobOfferSave from './EmployeerJobOfferSave'
 
 import '../styles/EmployeerJobOffer.css'
 
@@ -39,10 +40,11 @@ const EmployeerJobOfferDashboard = () => {
     const [currency, setCurrency] = useState('PLN')
     const [onlineInterview, setOnlineInterview] = useState(false)
     const [description, setDescription] = useState('')
-    const [technologiesList, setTechnologiesList] = useState([{ technology: '', experience: undefined, primaryTechnology: false }])
+    const [technologiesList, setTechnologiesList] = useState([{ technology: '', experience: "> 6 months", primaryTechnology: false }])
     const [startDate, setStartDate] = useState(null)
     const [endDate, setEndDate] = useState(null)
     const [focusedInput, setFocusedInput] = useState(null)
+    const [education, setEducation] = useState('')
 
     const addLocation = () => {
         setAddress({ city: '', street: '' })
@@ -170,6 +172,11 @@ const EmployeerJobOfferDashboard = () => {
         dispatch(saveDescription(event.target.value))
     }
 
+    const handleEducation = (event) => {
+        setEducation(event.target.value)
+        dispatch(saveEducation(event.target.value))
+    }
+
 
     return (
         <div className='main_dashboard--container'>
@@ -223,6 +230,17 @@ const EmployeerJobOfferDashboard = () => {
                         </div>
 
                 }
+
+                <p className='employeer--job--label'>Education</p>
+                <select className='employeer--job--select' value={education} onChange={(event) => handleEducation(event)}>
+                    <option value=""></option>
+                    <option value="High School Diploma">High School Diploma</option>
+                    <option value="Associate's Degree">Associate's Degree</option>
+                    <option value="Bachelor's Degree">Bachelor's Degree</option>
+                    <option value="Master's Degree">Master's Degree</option>
+                    <option value="Doctoral Degree">Doctoral Degree</option>
+                    <option value="Professional Degree">Professional Degree</option>
+                </select>
 
                 <p className='employeer--job--label'>Remote work</p>
                 <Slider
@@ -317,6 +335,8 @@ const EmployeerJobOfferDashboard = () => {
                 })}
                 <button className='employeer--job--button' onClick={handleAddClick}>+</button>
             </div>
+
+            <EmployeerJobOfferSave />
 
         </div>
     )
