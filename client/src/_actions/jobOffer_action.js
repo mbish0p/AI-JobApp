@@ -10,7 +10,11 @@ import {
     SAVE_DESCRIPTION,
     SAVE_CONTRACT_TYPE,
     SAVE_RECRUITMENT_TYPE,
-    SAVE_TECHNOLOGIES
+    SAVE_TECHNOLOGIES,
+    SAVE_START_DATE,
+    SAVE_END_DATE,
+    SAVE_CURRENCY,
+    SAVE_TECHNOLOGIES_V2
 }
     from './types'
 
@@ -96,5 +100,32 @@ export function saveTechnologies(technologies) {
     return {
         type: SAVE_TECHNOLOGIES,
         payload: technologies
+    }
+}
+export function saveTechnologies_v2(technologies) {
+    return {
+        type: SAVE_TECHNOLOGIES_V2,
+        payload: technologies
+    }
+}
+
+export function saveStartDate(startDate) {
+    return {
+        type: SAVE_START_DATE,
+        payload: startDate
+    }
+}
+
+export function saveEndDate(endDate) {
+    return {
+        type: SAVE_END_DATE,
+        payload: endDate
+    }
+}
+
+export function saveCurrency(currency) {
+    return {
+        type: SAVE_CURRENCY,
+        payload: currency
     }
 }

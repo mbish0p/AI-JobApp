@@ -3,10 +3,31 @@ import Slider from '@material-ui/core/Slider';
 import { DateRangePicker } from 'react-dates'
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
+import { useDispatch } from 'react-redux'
+import {
+    savePositionName,
+    saveTechnologies,
+    saveCityAddress,
+    saveExperienceLvl,
+    saveContractType,
+    saveDescription,
+    saveEndDate,
+    saveJobCategory,
+    saveMaxSalary,
+    saveMinSalary,
+    saveRecruitmentType,
+    saveRemoteWork,
+    saveStartDate,
+    saveStreetAddress,
+    saveCurrency,
+    saveTechnologies_v2
+} from '../_actions/jobOffer_action'
 
 import '../styles/EmployeerJobOffer.css'
 
 const EmployeerJobOfferDashboard = () => {
+    const dispatch = useDispatch()
+
     const [positionCategory, setPositionCategory] = useState('')
     const [jobTitle, setJobTitle] = useState('')
     const [experienceLvl, setExperienceLvl] = useState('')
@@ -22,7 +43,6 @@ const EmployeerJobOfferDashboard = () => {
     const [startDate, setStartDate] = useState(null)
     const [endDate, setEndDate] = useState(null)
     const [focusedInput, setFocusedInput] = useState(null)
-
 
     const addLocation = () => {
         setAddress({ city: '', street: '' })
@@ -47,6 +67,7 @@ const EmployeerJobOfferDashboard = () => {
 
         // be aware of errors, cousing warning
         setSliderValue(value)
+        dispatch(saveRemoteWork(value))
         return `{value}%`
     }
 
@@ -56,6 +77,7 @@ const EmployeerJobOfferDashboard = () => {
         const list = [...technologiesList]
         key === 'technology' ? list[index]['technology'] = value : list[index]['experience'] = value
         setTechnologiesList(list)
+        dispatch(saveTechnologies_v2([...list]))
     }
 
     const handlePrimaryTech = (index) => {
@@ -63,6 +85,7 @@ const EmployeerJobOfferDashboard = () => {
 
         list[index]["primaryTechnology"] = !list[index]["primaryTechnology"]
         setTechnologiesList(list)
+        dispatch(saveTechnologies_v2([...list]))
     }
 
     const handleRemoveClick = (event, index) => {
@@ -71,6 +94,7 @@ const EmployeerJobOfferDashboard = () => {
 
         list.splice(index, 1);
         setTechnologiesList(list);
+        dispatch(saveTechnologies_v2([...list]))
     };
 
     const handleAddClick = (event) => {
@@ -78,17 +102,81 @@ const EmployeerJobOfferDashboard = () => {
         setTechnologiesList([...technologiesList, { technology: '', experience: undefined, primaryTechnology: false }]);
     };
 
-    const setDates = (airbnbStartDate, airbnbEndDate) => {
+    const handlePositionCategory = (event) => {
+        setPositionCategory(event.target.value)
+        dispatch(saveJobCategory(event.target.value))
+    }
+
+    const handleJobTitle = (event) => {
+        setJobTitle(event.target.value)
+        dispatch(savePositionName(event.target.value))
+    }
+
+    const handleExperienceLvl = (event) => {
+        setExperienceLvl(event.target.value)
+        dispatch(saveExperienceLvl(event.target.value))
+    }
+
+    const handleCityAddress = (event) => {
+        setAddress({
+            city: event.target.value,
+            street: address.street
+        })
+        dispatch(saveCityAddress(event.target.value))
+    }
+
+    const handleStreetAddress = (event) => {
+        setAddress({
+            city: address.city,
+            street: event.target.value
+        })
+        dispatch(saveStreetAddress(event.target.value))
+    }
+
+    const handleContractType = (event) => {
+        setContractType(event.target.value)
+        dispatch(saveContractType(event.target.value))
+    }
+
+    const handleMinSalary = (event) => {
+        setMinSalary(event.target.value)
+        dispatch(saveMinSalary(event.target.value))
+    }
+
+    const handleMaxSalary = (event) => {
+        setMaxSalary(event.target.value)
+        dispatch(saveMaxSalary(event.target.value))
+    }
+
+    const handleCurrency = (event) => {
+        setCurrency(event.target.value)
+        dispatch(saveCurrency(event.target.value))
+    }
+
+    const handleOnlineInterview = () => {
+        setOnlineInterview(!onlineInterview)
+        dispatch(saveRecruitmentType(!onlineInterview))
+    }
+
+    const handleDates = (airbnbStartDate, airbnbEndDate) => {
         setStartDate(airbnbStartDate)
         setEndDate(airbnbEndDate)
+        dispatch(saveStartDate(airbnbStartDate))
+        dispatch(saveEndDate(airbnbEndDate))
     }
+
+    const handleDescription = (event) => {
+        setDescription(event.target.value)
+        dispatch(saveDescription(event.target.value))
+    }
+
 
     return (
         <div className='main_dashboard--container'>
             <div className='employeer--job--container'>
                 <h2 className='employeer--job--title'>Job category</h2>
                 <p className='employeer--job--label'>Position category</p>
-                <select className='employeer--job--select' value={positionCategory} onChange={(event) => setPositionCategory(event.target.value)}>
+                <select className='employeer--job--select' value={positionCategory} onChange={(event) => handlePositionCategory(event)}>
                     <option value=""></option>
                     <option value="Frontend">Frontend</option>
                     <option value="Backend">Backend</option>
@@ -113,9 +201,9 @@ const EmployeerJobOfferDashboard = () => {
             <div className='employeer--job--container'>
                 <h2 className='employeer--job--title'>Basic information</h2>
                 <p className='employeer--job--label'>Job offer title</p>
-                <input className='employeer--job--input' value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} />
+                <input className='employeer--job--input' value={jobTitle} onChange={(event) => handleJobTitle(event)} />
                 <p className='employeer--job--label'>Experience level</p>
-                <select className='employeer--job--select' value={experienceLvl} onChange={(event) => setExperienceLvl(event.target.value)}>
+                <select className='employeer--job--select' value={experienceLvl} onChange={(event) => handleExperienceLvl(event)}>
                     <option value=""></option>
                     <option value="Junior">Junior</option>
                     <option value="Mid">Mid</option>
@@ -128,16 +216,10 @@ const EmployeerJobOfferDashboard = () => {
                         <button className='employeer--job--button' onClick={addLocation}>Add</button>
                     ) : <div>
                             <div className='employeer--job--city-container'>
-                                <input className='employeer--job--input employeer--job--input-city' placeholder='  City' value={address.city} onChange={(e) => setAddress({
-                                    city: e.target.value,
-                                    street: address.street
-                                })} />
+                                <input className='employeer--job--input employeer--job--input-city' placeholder='  City' value={address.city} onChange={(event) => handleCityAddress(event)} />
                                 <button className='employeer--job--button employeer--job--button-address--remove' onClick={removeLocation}>Remove</button>
                             </div>
-                            <input className='employeer--job--input' placeholder='Street address' value={address.street} onChange={(e) => setAddress({
-                                city: address.city,
-                                street: e.target.value
-                            })} />
+                            <input className='employeer--job--input' placeholder='Street address' value={address.street} onChange={(event) => handleStreetAddress(event)} />
                         </div>
 
                 }
@@ -154,7 +236,7 @@ const EmployeerJobOfferDashboard = () => {
                 />
 
                 <p className='employeer--job--label'>Contract type</p>
-                <select className='employeer--job--select' value={contractType} onChange={(e) => setContractType(e.target.value)}>
+                <select className='employeer--job--select' value={contractType} onChange={(event) => handleContractType(event)}>
                     <option value=""></option>
                     <option value="Contract of employment">Contract of employment</option>
                     <option value="B2B contract">B2B contract</option>
@@ -167,14 +249,14 @@ const EmployeerJobOfferDashboard = () => {
                         className='employeer--job--input employeer--job--input-salary'
                         placeholder='From'
                         value={minSalary}
-                        onChange={(e) => setMinSalary(e.target.value)}
+                        onChange={(event) => handleMinSalary(event)}
                     /> <p className='employeer--job--separator'>___</p><input
                         className='employeer--job--input employeer--job--input-salary'
                         placeholder='To'
                         value={maxSalary}
-                        onChange={(e) => setMaxSalary(e.target.value)}
+                        onChange={(event) => handleMaxSalary(event)}
                     />
-                    <select className='employeer--job--select' value={currency} onChange={(e) => setCurrency(e.target.value)}>
+                    <select className='employeer--job--select' value={currency} onChange={(event) => handleCurrency(event)}>
                         <option value="PLN">PLN</option>
                         <option value="EUR">EUR</option>
                         <option value="USD">USD</option>
@@ -183,7 +265,7 @@ const EmployeerJobOfferDashboard = () => {
                 </div>
 
                 <div className='JO--chcekbox-container employeer--job--checkbox-container'>
-                    <input className='JO--checkbox  employeer--job--checkbox' type='checkbox' value={onlineInterview} onClick={() => { setOnlineInterview(!onlineInterview) }} />
+                    <input className='JO--checkbox  employeer--job--checkbox' type='checkbox' value={onlineInterview} onClick={() => handleOnlineInterview()} />
                     <p className='JO--checkbox-title'>Online interview</p>
                 </div>
 
@@ -194,7 +276,7 @@ const EmployeerJobOfferDashboard = () => {
                     startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
                     endDate={endDate} // momentPropTypes.momentObj or null,
                     endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-                    onDatesChange={({ startDate, endDate }) => setDates(startDate, endDate)} // PropTypes.func.isRequired,
+                    onDatesChange={({ startDate, endDate }) => handleDates(startDate, endDate)} // PropTypes.func.isRequired,
                     focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                     onFocusChange={focusedInput => setFocusedInput(focusedInput)} // PropTypes.func.isRequired,
                 />
@@ -207,7 +289,7 @@ const EmployeerJobOfferDashboard = () => {
                 <textarea
                     className='employeer--job--textarea'
                     value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    onChange={(event) => handleDescription(event)}
                 />
 
                 {technologiesList.map((technology, index) => {
