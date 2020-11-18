@@ -1,0 +1,151 @@
+.employeer--job--container{
+    margin: 2rem;
+    border: solid 1px #a8a8a877;
+    box-shadow: 1px 1px 10px 1px rgba(204,204,204,1);
+    border-radius: 1rem;
+    padding-bottom: 1.5rem;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.employeer--job--title{
+    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(228,99,167,1) 100%);
+    border-radius: 1rem 1rem 0 0;
+    padding: 1.3rem;
+    color: white;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.employeer--job--label{
+    margin-bottom: 0.4rem;
+    color: black;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-left: 2rem;
+}
+
+.employeer--job--select{
+    width: 80%;
+    margin-left: 2rem;
+    outline: none;
+    margin-bottom: 1.6rem;
+    padding: 0.3rem;
+    border-radius: 0.5rem;
+    background: rgb(36,0,0);
+    background: linear-gradient(79deg, rgba(36,0,0,1) 0%, rgba(255,255,255,1) 0%, rgba(218,211,218,1) 0%, rgba(231,212,230,1) 100%, rgba(213,178,211,1) 100%, rgba(176,111,172,1) 100%, rgba(169,98,165,1) 100%, rgba(121,9,115,1) 100%);
+}
+
+.employeer--job--input{
+    width: 80%;
+    margin-left: 2rem;
+    margin-bottom: 1.6rem;
+    outline: none;
+    border-style: solid;
+    border-width: 1px;
+    padding: 0.3rem;
+    border-radius: 0.5rem;
+    background: linear-gradient(79deg, rgba(36,0,0,1) 0%, rgba(255,255,255,1) 0%, rgba(218,211,218,1) 0%, rgba(231,212,230,1) 100%, rgba(213,178,211,1) 100%, rgba(176,111,172,1) 100%, rgba(169,98,165,1) 100%, rgba(121,9,115,1) 100%);
+}
+
+.employeer--job--button{
+    color: white;
+    background: #4732b9;
+    outline: none;
+    border-radius: 0.3rem;
+    margin-bottom: 1rem;
+    margin-left: 2rem;
+    padding: 0.2rem 2rem;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.employeer--job--button:hover{
+    cursor: pointer;
+    background: #4632b9ce;
+}
+
+.employeer--job--city-container{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin-left: 2rem;
+}
+
+.employeer--job--input-city{
+    margin-left: 0;
+    padding: 0.3rem 0;
+}
+
+.employeer--job--button-address--remove{
+    padding: 0rem 2rem;
+}
+
+.employeer--job--remote{
+    width: 80%;
+    margin-left: 2.2rem;
+}
+
+.employeer--job--salary-container{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin-left: 2rem;
+}
+
+.employeer--job--separator{
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.employeer--job--checkbox,
+.employeer--job--input-salary{
+    margin-left: 0;
+}
+
+.employeer--job--checkbox-container{
+    margin-left: 2rem;
+}
+
+.DateRangePicker{
+    margin-left: 2rem;
+}
+
+.DateRangePicker_picker{
+    margin-bottom: 3rem;
+}
+
+.employeer--job--textarea{
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+    width: 80%;
+    resize: none;
+    outline: none;
+    color: black;
+    overflow: auto;
+    background: linear-gradient(79deg, rgba(36,0,0,1) 0%, rgba(255,255,255,1) 0%, rgba(218,211,218,1) 0%, rgba(231,212,230,1) 100%, rgba(213,178,211,1) 100%, rgba(176,111,172,1) 100%, rgba(169,98,165,1) 100%, rgba(121,9,115,1) 100%);
+    min-height: 7rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
+
+.employeer--job--tech--conainer,
+.employeer--checkbox--container,
+.employeer--job--tech{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin-left: 2rem;
+}
+
+.employeer--job--tech--input{
+    margin-left: 0;
+    width: 150%;
+}
+
+.employeer--job--tech--button{
+    margin-left: auto;
+}
+
