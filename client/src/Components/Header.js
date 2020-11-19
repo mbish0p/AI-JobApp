@@ -38,7 +38,7 @@ const Header = (props) => {
     }
 
     return (
-        <div className='header-container'>
+        <div className={props.headerMenu ? 'header-container main--header--container' : "header-container"}>
             <Logo />
             {
                 props.headerMenu ? <HeaderMenu /> : ''

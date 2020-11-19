@@ -22,7 +22,7 @@ const AppRouter = () => {
                 <Route exact={true} path='/employeer/:name' component={EmployeerDashboard} />
                 <Route exact={true} path='/employeer/:name/company-profile' component={EmployeerProfile} />
                 <Route exact={true} path='/employeer/:name/offers' component={EmployeerJobOfferProfile} />
-                <Route exact={true} path='/job-offers/:name' component={JobOfferMainCard} />
+                <Route exact={true} path='/job-offers/:id' component={JobOfferMainCard} />
             </Switch>
         </BrowserRouter>
     )
