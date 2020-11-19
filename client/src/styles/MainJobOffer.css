@@ -1,0 +1,25 @@
+.header--menu--container{
+    margin-left: 7%;
+}
+
+.header--menu-item{
+    font-size: 1.1rem;
+    color: black;
+    margin-right: 1.5rem;
+    font-weight: 600;
+}
+
+.header--menu-item:hover{
+    color: #9350D3;
+}
+
+.header--menu-item-selected{
+    color: #9350D3;
+    padding-bottom: 0.5rem;
+    border-bottom: 4px solid #9350D3;
+}
+
+.jobOffer--main-dashoboard--container{
+    background: white;
+    min-height: 100%;
+}

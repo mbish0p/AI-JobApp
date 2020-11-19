@@ -3,10 +3,11 @@ import Logo from './Logo'
 import axios from 'axios'
 import { ReactComponent as Icon } from '../img/iconfinder_icons_exit2_1564506.svg'
 import { useHistory } from 'react-router-dom'
+import HeaderMenu from './HeaderMenu'
 
 import refreshToken from '../_helper/refreshToken'
 
-const Header = () => {
+const Header = (props) => {
     const history = useHistory()
 
     const handleLogout = () => {
@@ -39,6 +40,9 @@ const Header = () => {
     return (
         <div className='header-container'>
             <Logo />
+            {
+                props.headerMenu ? <HeaderMenu /> : ''
+            }
             <button className='header--employeer-button' onClick={(e) => handleEmployeerButton()}>For employeer</button>
             <button onClick={handleLogout} className='header--employeer-logout'>Logout <Icon className='logout-icon' /></button>
         </div>
