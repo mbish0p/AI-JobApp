@@ -21,7 +21,6 @@ const Sidebar = () => {
             const tryFetchPic = async () => {
                 try {
                     const result = await axios.get('http://localhost:5000/employeer', { withCredentials: true })
-                    console.log(result.data)
                     console.log('Successful fetch employeer profile')
                     if (result.data.employeer.company_logo) {
                         setImgUrl(result.data.employeer.company_logo)

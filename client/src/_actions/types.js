@@ -10,14 +10,18 @@ export const SAVE_CITY_ADDRESS = 'save_city_address'
 
 export const SAVE_REMOTE_WORK = 'save_remote_work'
 export const SAVE_CONTRACT_TYPE = 'save_contract_type'
+export const SAVE_CURRENCY = 'save_currency'
 
 export const SAVE_MIN_SALARY = 'save_min_salary'
 export const SAVE_MAX_SALARY = 'save_max_salary'
+export const SAVE_START_DATE = 'save_start_date'
+export const SAVE_END_DATE = 'save_end_date'
 
 export const SAVE_DESCRIPTION = 'save_description'
 export const SAVE_RECRUITMENT_TYPE = 'save_recruitment_type'
 
 export const SAVE_TECHNOLOGIES = 'save_technologies'
+export const SAVE_TECHNOLOGIES_V2 = 'save_technologies_v2'
 
 export const SAVE_USER_DATA = 'save_user_data'
 export const SAVE_EMPLOYEE_PHOTO = 'save_employee_photo'
@@ -36,3 +40,4 @@ export const SAVE_EMPLOYEER_FETCHED_OFFICES = 'save_employeer_fetched_offices'
 export const SAVE_EMPLOYEER_DESCRIPTION_ONE = 'save_employeer_description_one'
 export const SAVE_EMPLOYEER_DESCRIPTION_TWO = 'save_employeer_description_two'
 export const SAVE_EMPLOYEER_DESCRIPTION_THREE = 'save_employeer_description_three'
+export const SAVE_EMPLOYEER_EDUCATION = 'save_employeer_education'
