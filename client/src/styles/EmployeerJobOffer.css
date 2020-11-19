@@ -179,3 +179,62 @@
 .active--string:hover{
     cursor: pointer;
 }
+
+.employeer--joOffer--dispaly--container{
+    margin: 2rem;
+    border: solid 1px #a8a8a877;
+    box-shadow: 1px 1px 10px 1px rgba(204,204,204,1);
+    border-radius: 1rem;
+    padding-bottom: 1.5rem;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.employeer--joOffer--title{
+    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(228,99,167,1) 100%);
+    border-radius: 1rem 1rem 0 0;
+    padding: 1.3rem;
+    color: white;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.employeer--joOffer--buttons-container{
+    margin-top: 2rem;
+    margin-left: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.employeer--joOffer--button{
+    margin-right: 1rem;
+    color: white;
+    background: #4732b9;
+    outline: none;
+    border-radius: 0.3rem;
+    margin-bottom: 1rem;
+    padding: 0.2rem 2rem;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.employeer--joOffer--button:hover{
+    cursor: pointer;
+    background: #4632b9c9;
+}
+
+.employeer--header--container{
+    margin-right: 2rem;
+    margin-left: 2rem;
+}
+
+.employeer--offers--container{
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 3rem;
+}
+
+.employeer--offer-tab-position{
+    margin-right: 1rem;
+}

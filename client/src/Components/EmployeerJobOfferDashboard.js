@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import EmployeerJobOfferTamplate from './EmployeerJobOfferTamplate'
 import EmployeerJobOfferDisplay from './EmployeerJobOfferDisplay'
-import { useSelector } from 'react-redux'
 import moment from 'moment';
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
@@ -10,7 +9,6 @@ const EmployeerJobOfferDashboard = () => {
     moment().format();
     const [toggle, setToggle] = useState(false)
     const history = useHistory()
-    const employeerInfo = useSelector(state => state.userEmployeer)
     const [offers, setOffers] = useState('')
     const [activeOffers, setActiveOffers] = useState('')
     const [archivalOffers, setArchivalOffers] = useState('')
@@ -71,8 +69,6 @@ const EmployeerJobOfferDashboard = () => {
             setActiveOffers(_activeOffers)
             setArchivalOffers(_archivalOffers)
             setFutureOffers(_futureOffers)
-
-            console.log(_futureOffers)
         })
     }, [])
 

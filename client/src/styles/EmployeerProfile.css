@@ -201,6 +201,14 @@
     flex-grow: 2;
 }
 
+.ant-modal-content{
+    width: 150%
+}
+
+.ant-modal-body img{
+    width: 295px
+}
+
 .employeer--photo-description{
     height: 104px !important;
     margin-bottom: 0.5rem;

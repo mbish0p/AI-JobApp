@@ -30,7 +30,7 @@ const EmployeerJobOfferDisplay = (props) => {
 
     const ActiveOffers = () => {
         return (
-            <div>
+            <div className='employeer--offers--container'>
                 {
                     activeOffers ?
                         activeOffers.map((offer, index) => {
@@ -38,6 +38,7 @@ const EmployeerJobOfferDisplay = (props) => {
                             const endDate = moment(offer.offer.end_date).format("D MMMM YYYY")
                             return <div key={index} className='employeer--offer--istance'>
                                 <p className='employeer--offer--istance-name'>{offer.offer.title}</p>
+                                <p className='employeer--offer--istance-start-date'>{offer.offer.position_name}</p>
                                 <p className='employeer--offer--istance-start-date'>{startDate}</p>
                                 <p className='employeer--offer--istance-end-date'>{endDate}</p>
                             </div>
@@ -48,9 +49,8 @@ const EmployeerJobOfferDisplay = (props) => {
     }
 
     const ArchivalOffers = () => {
-        console.log('archivaaaaal',)
         return (
-            <div>
+            <div className='employeer--offers--container'>
                 {
                     archivalOffers ?
                         archivalOffers.map((offer, index) => {
@@ -58,6 +58,7 @@ const EmployeerJobOfferDisplay = (props) => {
                             const endDate = moment(offer.offer.end_date).format("D MMMM YYYY")
                             return <div key={index} className='employeer--offer--istance'>
                                 <p className='employeer--offer--istance-name'>{offer.offer.title}</p>
+                                <p className='employeer--offer--istance-start-date'>{offer.offer.position_name}</p>
                                 <p className='employeer--offer--istance-start-date'>{startDate}</p>
                                 <p className='employeer--offer--istance-end-date'>{endDate}</p>
                             </div>
@@ -69,7 +70,7 @@ const EmployeerJobOfferDisplay = (props) => {
 
     const FutureOffers = () => {
         return (
-            <div>
+            <div className='employeer--offers--container'>
                 {
                     futureOffers ?
                         futureOffers.map((offer, index) => {
@@ -77,6 +78,7 @@ const EmployeerJobOfferDisplay = (props) => {
                             const endDate = moment(offer.offer.end_date).format("D MMMM YYYY")
                             return <div key={index} className='employeer--offer--istance'>
                                 <p className='employeer--offer--istance-name'>{offer.offer.title}</p>
+                                <p className='employeer--offer--istance-start-date'>{offer.offer.position_name}</p>
                                 <p className='employeer--offer--istance-start-date'>{startDate}</p>
                                 <p className='employeer--offer--istance-end-date'>{endDate}</p>
                             </div>
@@ -99,15 +101,16 @@ const EmployeerJobOfferDisplay = (props) => {
     }
 
     return (
-        <div>
-            <h2>Your job offers</h2>
-            <div>
-                <button onClick={() => handleActiveButton()}>Active</button>
-                <button onClick={() => handleArchivalButton()}>Archival</button>
-                <button onClick={() => handleFutureButton()}>Future</button>
+        <div className='employeer--joOffer--dispaly--container'>
+            <h2 className='employeer--joOffer--title'>Your job offers</h2>
+            <div className='employeer--joOffer--buttons-container'>
+                <button className='employeer--joOffer--button' onClick={() => handleActiveButton()}>Active</button>
+                <button className='employeer--joOffer--button' onClick={() => handleArchivalButton()}>Archival</button>
+                <button className='employeer--joOffer--button' onClick={() => handleFutureButton()}>Future</button>
             </div>
-            <div className="employeer--offer-tab-header">
+            <div className="employeer--offer-tab-header employeer--header--container">
                 <p className="employeer--offer-tab-name">Offer name</p>
+                <p className="employeer--offer-tab-start employeer--offer-tab-position">Position</p>
                 <p className="employeer--offer-tab-start">Start date</p>
                 <p className="employeer--offer-tab-end">End date</p>
             </div>
