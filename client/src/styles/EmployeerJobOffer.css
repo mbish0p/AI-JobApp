@@ -149,3 +149,33 @@
     margin-left: auto;
 }
 
+.employeer--job--toggle{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.active--string{
+    margin-right: 1.5rem;
+    margin-left: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: black;
+    border-bottom: solid 2px black;
+}
+
+.disactive--string{
+    margin-right: 2rem;
+    margin-left: 2rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: rgba(121, 121, 121, 0.753);
+    border-bottom: solid 2px  rgba(121, 121, 121, 0.753);
+}
+
+
+.disactive--string:hover,
+.active--string:hover{
+    cursor: pointer;
+}

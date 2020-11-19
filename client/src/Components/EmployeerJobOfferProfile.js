@@ -1,14 +1,14 @@
 import React from 'react'
 import EmployeerHeader from './EmployeerHeader'
 import EmployeerSideBar from './EmployeerSideBar'
-import EmployeerJobOfferTamplate from './EmployeerJobOfferTamplate'
+import EmployeerJobOfferDashboard from './EmployeerJobOfferDashboard'
 
 const EmployeerJobOffer = () => {
     return (
         <div className='dashboard--container'>
             <EmployeerHeader />
             <EmployeerSideBar />
-            <EmployeerJobOfferTamplate />
+            <EmployeerJobOfferDashboard />
         </div>
     )
 }
