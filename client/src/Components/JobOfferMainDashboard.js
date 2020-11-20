@@ -3,12 +3,12 @@ import axios from 'axios'
 import { Avatar } from 'antd';
 import logo from '../img/default-avatar-profile.jpg'
 import moment from 'moment'
-import { StarOutlined, FileDoneOutlined } from '@ant-design/icons'
+import { StarOutlined, StarFilled, FileDoneOutlined } from '@ant-design/icons'
 import Location from '../img/placeholder.svg'
 import Remote from '../img/online-support.svg'
+import Contract from '../img/contract.svg'
 
 const JobOfferMainDashboard = (props) => {
-    const offer = props.offer
     console.log(props)
     moment().format();
     const [employeer, setEmployeer] = useState('')
@@ -32,59 +32,85 @@ const JobOfferMainDashboard = (props) => {
         if (props.offer) {
             return (
                 <div className='jobOffer--data-container'>
-                    <div>
-                        <div>
-                            <Avatar src={employeer.company_logo || logo} className='' />
-                            <p>{employeer.company_name}</p>
+                    <div className='jobOffer--main-container'>
+                        <div className='jobOffer--header--contaier'>
+                            <div className='jobOffer--company--logo'>
+                                <Avatar src={employeer.company_logo || logo} className='jobOffer--company--logo-image' />
+                                <p className='jobOffer--company--logo-name'>{employeer.company_name}</p>
+                            </div>
+                            <div className='jobOffer--right-header'>
+                                <div className='jobOffer--added-timestamp--container'>
+                                    <p className="jobOffer--_tmp"></p>
+                                    <p className='jobOffer--company--added-date'>Added : {moment(props.offer.offer.start_date).format("D MMMM YYYY")}</p>
+                                </div>
+                                <div className='jobOffer--title--container'>
+                                    <h2 className='jobOffer--company--title'>{props.offer.offer.title}</h2>
+                                    <p className='jobOffer--company--experience'>{props.offer.offer.experience_lvl}</p>
+                                </div>
+                            </div>
                         </div>
-                        <p>Added : {moment(props.offer.offer.start_date).format("D MMMM YYYY")}</p>
-                        <h2>{props.offer.offer.title}</h2>
-                        <p>{props.offer.offer.experience_lvl}</p>
-                    </div>
-
-                    <div>
-                        <p>{props.offer.offer.description}</p>
-                        <p>Technologies which we're looking for</p>
-                        {
-                            props.offer.techs.map((tech, index) => {
-                                return (
-                                    <div key={index}>
-                                        <p>{tech.name}</p>
-                                        <StarOutlined className={tech.main_technology ? "jobOffer--main-technology-true" : "jobOffer--main-technology-false"} />
-                                        <p>{`At least ${tech.experience} months`}</p>
+                        <div className='jobOffer--main-content--container'>
+                            <div className='jobOffer--main-content-rightside'>
+                                <div className='jobOffer--company--main-content'>
+                                    <h3 className='jobOffer--company--main-content-title'>Description</h3>
+                                    <p className='jobOffer--company--description'>{props.offer.offer.description}</p>
+                                    <h3 className='jobOffer--company--technologies--label'>Technologies which we're looking for</h3>
+                                    <div className='jobOffer--company--technologies' >
+                                        <ul>
+                                            {
+                                                props.offer.techs.map((tech, index) => {
+                                                    return (
+                                                        <li key={index} className='jobOffer--company--technology'>
+                                                            <div className='jobOffer--company--technology-container'>
+                                                                <div className='jobOffer--company--technology-content'>
+                                                                    <p className='jobOffer--company--technology--name'>{tech.name}: </p>
+                                                                    <p className='jobOffer--company--technology--exp'>{`at least ${tech.experience} months`}</p>
+                                                                </div>
+                                                                {
+                                                                    tech.main_technology ?
+                                                                        <StarFilled className={"jobOffer--main-technology-true"} /> :
+                                                                        <StarOutlined className="jobOffer--main-technology-false" />
+                                                                }
+                                                            </div>
+                                                        </li>
+                                                    )
+                                                })
+                                            }
+                                        </ul>
                                     </div>
-                                )
-                            })
-                        }
-                    </div>
-                    <div>
-                        <div>
-                            <p>{props.offer.offer.min_salary}</p>
-                            <p>____</p>
-                            <p>{props.offer.offer.max_salary}</p>
-                            <p>{props.offer.offer.currency}</p>
-                        </div>
-                        <div>
-                            {
-                                props.offer.offer.online_interview ? <div>
-                                    <img src={Remote} alt="Remote Logo" className='joboffer--location--image' />
-                                    <p> Online interview</p>
-                                </div> : ''
-                            }
-                            <div>
-                                <FileDoneOutlined />
-                                <p>{props.offer.offer.contract_type}</p>
+                                </div>
                             </div>
-                            <div>
-                                <img src={Location} alt="Location" className='joboffer--location--image' />
-                                <p>{props.offer.offer.city}</p>
-                                <p>{props.offer.offer.street}</p>
+                            <div className='jobOffer--apply-container-leftside'>
+                                <div className='jobOffer--company--apply-container'>
+                                    <div className='jobOffer--company--salary-container'>
+                                        <p className='jobOffer--company--salary'>{props.offer.offer.min_salary}</p>
+                                        <p className='jobOffer--company--separator'>-</p>
+                                        <p className='jobOffer--company--salary'>{props.offer.offer.max_salary}</p>
+                                        <p className='jobOffer--company--currency'>{props.offer.offer.currency}</p>
+                                    </div>
+                                    <div className='jobOffer--company--body-container'>
+                                        {
+                                            props.offer.offer.online_interview ? <div className='jobOffer--company--interview-container'>
+                                                <img className='jobOffer--company--interview-logo' src={Remote} alt="Remote Logo" />
+                                                <p className='jobOffer--company--interview-label'> Online interview</p>
+                                            </div> : ''
+                                        }
+                                        <div className='jobOffer--company--interview-container'>
+                                            <img className='jobOffer--company--interview-logo' src={Contract} alt='Contract' />
+                                            <p className='jobOffer--company--interview-label'>{props.offer.offer.contract_type}</p>
+                                        </div>
+                                        <div className='jobOffer--company--interview-container'>
+                                            <img className='jobOffer--company--interview-logo' src={Location} alt="Location" />
+                                            <p className='jobOffer--company--interview-label'>{props.offer.offer.city}, {props.offer.offer.street}</p>
+                                        </div>
+                                        <div className='jobOffer--company--remote-container'>
+                                            <p className='jobOffer--company--remote-label'>Remote possible</p>
+                                            <p className='jobOffer--company--remote-value'>{props.offer.offer.remote_work}%</p>
+                                        </div>
+                                        <button className='jobOffer--company--apply'>Apply</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <p>Remote possible</p>
-                                <p>{props.offer.offer.remote_work}%</p>
-                            </div>
-                            <button>Apply</button>
                         </div>
                     </div>
                 </div>

@@ -43,3 +43,229 @@
     width: 20px;
     height: 20px;
 }
+
+.jobOffer--main-container{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3rem;
+}
+
+.jobOffer--header--contaier{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    padding-top: 2rem;
+    border-top: dotted 1px rgb(145, 145, 145);
+    border-bottom: dotted 1px rgb(145, 145, 145);
+}
+
+.jobOffer--company--logo{
+    display: flex;
+    flex-direction: column;
+}
+
+.jobOffer--company--logo-image{
+    height: 120px;
+    width: 120px;
+    margin-right: 1rem;
+}
+
+.jobOffer--company--logo-name{
+    margin-left: 2rem;
+}
+
+.jobOffer--company--added-date{
+    margin-left: auto;
+    margin-right: 1rem;
+    color: rgb(139, 139, 139);
+}
+
+.jobOffer--added-timestamp--container{
+    display: flex;
+}
+
+.jobOffer--right-header{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.jobOffer--title--container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.jobOffer--company--experience{
+    margin-right: 1rem;
+    color: #9350D3;
+}
+
+.jobOffer--company--title{
+    font-weight: 500;
+    font-size: 2rem;
+    margin-left: 2rem;
+}
+
+.jobOffer--company--main-content{
+    margin: 2rem;
+    border: solid 1px #a8a8a877;
+    box-shadow: 1px 1px 10px 1px rgba(204,204,204,1);
+    border-radius: 1rem;
+    padding-bottom: 1.5rem;
+    padding: 2rem;
+    margin-bottom: 4rem;
+    margin-right: 0.5rem;
+}
+
+.jobOffer--company--apply-container{
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+    border: solid 1px #a8a8a877;
+    margin-right: 0;
+    box-shadow: 1px 1px 10px 1px rgba(204,204,204,1);
+    border-radius: 1rem;
+    padding-bottom: 1.5rem;
+    padding: 2rem;
+}
+
+.jobOffer--main-content--container{
+    display: flex;
+    flex-direction: row;
+}
+
+.jobOffer--main-content-rightside{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.jobOffer--apply-container-leftside{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+}
+
+.jobOffer--company--technologies--label,
+.jobOffer--company--main-content-title{
+    margin-bottom: 2rem;
+    font-size: 1.3rem;
+    font-weight: 500;
+    padding: 0.5rem;
+    border-bottom: 4px solid #9350D3;
+    border-radius: 0 0 0 1rem;
+    display: inline-block;
+}
+
+.jobOffer--company--description{
+    margin-left: 2rem;
+    margin-right: 2rem;
+    font-family: Verdana, Geneva, sans-serif;
+    margin-bottom: 3rem;
+}
+
+.jobOffer--company--technology-content{
+    display: flex;
+    align-items: baseline;
+}
+
+.jobOffer--company--technology--exp,
+.jobOffer--company--technology--name{
+    color: black;
+    font-weight: 500;
+    margin-right: 0.5rem;
+    font-size: 1rem;
+}
+
+.jobOffer--main-technology-true,
+.jobOffer--main-technology-false{
+    color: black;
+    font-size: 1rem;
+}
+
+.jobOffer--main-technology-true svg,
+.jobOffer--main-technology-false svg{
+    margin-top: 4px;
+}
+
+.jobOffer--company--technology-container{
+    display: flex;
+}
+
+.jobOffer--main-technology-true svg{
+    fill: goldenrod;
+    font-weight: 900;
+}
+
+.jobOffer--company--salary-container{
+    display: flex;
+    border-bottom: 1px dotted rgb(145, 145, 145);
+    margin-bottom: 1rem;
+}
+
+.jobOffer--company--salary{
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.jobOffer--company--separator{
+    font-size: 1.4rem;
+    margin: 0 0.5rem;
+}
+
+.jobOffer--company--currency{
+    font-size: 1.4rem;
+}
+
+.jobOffer--company--interview-container{
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.jobOffer--company--interview-logo{
+    margin-right: 2rem;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.jobOffer--company--interview-logo{
+    color: #FF064D;
+}
+
+.jobOffer--company--interview-label{
+    white-space: nowrap;
+    margin: 0;
+}
+
+.jobOffer--company--remote-container{
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+}
+
+.jobOffer--company--remote-value{
+    color: #000000;
+    font-weight: 600;
+}
+
+.jobOffer--company--apply{
+    width: 100%;
+    border-radius: 0.5rem;
+    border: none;
+    background: #FF064D;
+    color: white;
+    padding: 0.4rem 0;
+    outline: none;
+}
+
+.jobOffer--company--apply:hover{
+    cursor: pointer;
+    background: #ff064db6;
+}
