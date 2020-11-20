@@ -37,7 +37,7 @@ const EmployeerJobOfferDashboard = () => {
     const [contractType, setContractType] = useState('')
     const [minSalary, setMinSalary] = useState('')
     const [maxSalary, setMaxSalary] = useState('')
-    const [currency, setCurrency] = useState('PLN')
+    const [currency, setCurrency] = useState('')
     const [onlineInterview, setOnlineInterview] = useState(false)
     const [description, setDescription] = useState('')
     const [technologiesList, setTechnologiesList] = useState([{ technology: '', experience: "> 6 months", primaryTechnology: false }])
@@ -275,6 +275,7 @@ const EmployeerJobOfferDashboard = () => {
                         onChange={(event) => handleMaxSalary(event)}
                     />
                     <select className='employeer--job--select' value={currency} onChange={(event) => handleCurrency(event)}>
+                        <option></option>
                         <option value="PLN">PLN</option>
                         <option value="EUR">EUR</option>
                         <option value="USD">USD</option>

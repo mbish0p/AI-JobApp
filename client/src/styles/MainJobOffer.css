@@ -59,6 +59,9 @@
     padding-top: 2rem;
     border-top: dotted 1px rgb(145, 145, 145);
     border-bottom: dotted 1px rgb(145, 145, 145);
+    border-radius: 4rem 4rem 0 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 
 .jobOffer--company--logo{

@@ -12,7 +12,6 @@ const EmployeeMenu = () => {
             <NavLink exact to={`/job-offers`} className='employee--menu-item' activeClassName="employee--menu-item-selected">Job offers</NavLink>
             <NavLink exact to={`/applied-offers`} className='employee--menu-item' activeClassName="employee--menu-item-selected">Applied offer</NavLink>
             <NavLink exact to={`/company-profiles`} className='employee--menu-item' activeClassName="employee--menu-item-selected">Company profiles</NavLink>
-            <NavLink exact to={`/perfect_employeer`} className='employee--menu-item' activeClassName="employee--menu-item-selected">Perfect employeer</NavLink>
         </div>
     )
 }
