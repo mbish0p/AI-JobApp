@@ -1,5 +1,11 @@
 import React, { useState } from 'react'
-
+import { Upload, message, Button } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import axios from 'axios'
+import Doc from '../img/doc.svg'
+import Docx from '../img/docx.svg'
+import DefaultDoc from '../img/google-docs.svg'
+import Pdf from '../img/pdf.svg'
 
 const UserProfileDashboard = () => {
     const [name, setName] = useState('')
@@ -118,7 +124,8 @@ const UserProfileDashboard = () => {
     const [prefferedSalary, setPrefferedSalary] = useState('')
     const [city, setCity] = useState('')
     const [remoteWorking, setRemoteWorking] = useState('')
-
+    const [fileList, setFileList] = useState([]);
+    const [cvExtension, setCvExtension] = useState('');
 
     const handleNameInput = (event) => {
         setName(event.target.value)
@@ -219,6 +226,101 @@ const UserProfileDashboard = () => {
             index: event.target.value
         })
     }
+    const onChange = ({ fileList: newFileList }, info) => {
+        console.log('newFileList:', newFileList)
+        setFileList(newFileList);
+    };
+
+    const handlePreview = (file) => {
+        console.log(file)
+    }
+
+    const customRequest = async ({ onSuccess, onError, file, data }) => {
+        console.log(data)
+        const fmData = new FormData()
+        fmData.append("file", file);
+        fmData.append('name', file.name)
+        try {
+            const response = await axios.post('http://localhost:5000/files', fmData, {
+                headers: {
+                    'Content-Type': `multipart/form-data; boundary=${data._boundary}`
+                }, withCredentials: true
+            })
+            onSuccess(response.data);
+            console.log(response)
+        } catch (error) {
+            onError({ error });
+            console.log(error)
+        }
+    }
+
+    const onPreview = async file => {
+        let src = file.url;
+        console.log('file', file)
+        if (!src) {
+            src = await new Promise(resolve => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file.originFileObj);
+                reader.onload = () => resolve(reader.result);
+            });
+        }
+    };
+
+    const CVFile = () => {
+        const file = fileList[fileList.length - 1]
+        if (file) {
+            const fileName = file.name
+            const index = fileName.indexOf('.')
+            const fileExtension = fileName.slice(index + 1)
+            if (fileExtension === 'pdf') {
+                return (
+                    <div>
+                        <div>
+                            <img src={Pdf} alt='PDF' className='user-profile--CV--image' />
+                        </div>
+                        <p>{fileName}</p>
+                    </div>
+                )
+            }
+            else if (fileExtension === 'doc') {
+                return (
+                    <div>
+                        <div>
+                            <img src={Doc} alt='DOC' className='user-profile--CV--image' />
+                        </div>
+                        <p>{fileName}</p>
+                    </div>
+                )
+            }
+            else if (fileExtension === 'docx') {
+                console.log(fileExtension)
+
+                return (
+                    <div>
+                        <div>
+                            <img src={Docx} alt='DOCX' className='user-profile--CV--image' />
+                        </div>
+                        <p>{fileName}</p>
+                    </div>
+                )
+            }
+            else {
+                console.log(fileExtension)
+                return (
+                    <div>
+                        <div>
+                            <img src={DefaultDoc} alt='DEFAULT' className='user-profile--CV--image' />
+                        </div>
+                        <p>{fileName}</p>
+                    </div>
+                )
+            }
+        } else {
+            return (
+                <p></p>
+            )
+        }
+    }
 
     return (
         <div className='main_dashboard--container'>
@@ -281,7 +383,17 @@ const UserProfileDashboard = () => {
                     })
                 }
             </div>
-
+            <p>Attach CV</p>
+            <Upload
+                fileList={fileList}
+                onChange={onChange}
+                beforeUpload={() => true}
+                onPreview={handlePreview}
+                customRequest={customRequest}
+            >
+                <Button ><UploadOutlined /> Click to Upload</Button>
+            </Upload>
+            <CVFile />
         </div>
     )
 }
