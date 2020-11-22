@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Upload, message, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios'
@@ -6,8 +6,15 @@ import Doc from '../img/doc.svg'
 import Docx from '../img/docx.svg'
 import DefaultDoc from '../img/google-docs.svg'
 import Pdf from '../img/pdf.svg'
+import { useHistory } from 'react-router-dom'
 
 const UserProfileDashboard = () => {
+    const history = useHistory()
+
+    useEffect(() => {
+
+    }, [])
+
     const [name, setName] = useState('')
     const [surname, setSurname] = useState('')
     const [email, setEmail] = useState('')
@@ -119,13 +126,12 @@ const UserProfileDashboard = () => {
     const [activePosition, setActivePosition] = useState({ name: '', index: undefined })
     const [activeExperience, setActiveExperience] = useState({ name: '', index: undefined })
     const [activeEducation, setAactiveEducation] = useState({ name: '', index: undefined })
-    const [aciveContract, setAciveContract] = useState({ name: '', index: undefined })
+    const [activeContract, setAciveContract] = useState({ name: '', index: undefined })
     const [minSalary, setMinSalary] = useState('')
     const [prefferedSalary, setPrefferedSalary] = useState('')
     const [city, setCity] = useState('')
     const [remoteWorking, setRemoteWorking] = useState('')
     const [fileList, setFileList] = useState([]);
-    const [cvExtension, setCvExtension] = useState('');
 
     const handleNameInput = (event) => {
         setName(event.target.value)
@@ -194,7 +200,7 @@ const UserProfileDashboard = () => {
     }
 
     const handleEducation = (event) => {
-        const lastActive = aciveContract.index
+        const lastActive = activeEducation.index
         const _buttonList = [...educationList]
         const newActive = _buttonList[event.target.value]
         if (lastActive !== undefined) {
@@ -211,7 +217,7 @@ const UserProfileDashboard = () => {
     }
 
     const handleContractType = (event) => {
-        const lastActive = activeEducation.index
+        const lastActive = activeContract.index
         const _buttonList = [...contractList]
         const newActive = _buttonList[event.target.value]
         if (lastActive !== undefined) {
@@ -239,19 +245,49 @@ const UserProfileDashboard = () => {
         console.log(data)
         const fmData = new FormData()
         fmData.append("file", file);
-        fmData.append('name', file.name)
+        fmData.append('name', "CV")
         try {
             const response = await axios.post('http://localhost:5000/files', fmData, {
                 headers: {
                     'Content-Type': `multipart/form-data; boundary=${data._boundary}`
                 }, withCredentials: true
             })
+            message.success(`${file.name} file uploaded successfully`);
             onSuccess(response.data);
             console.log(response)
         } catch (error) {
             onError({ error });
             console.log(error)
+            if (error.response && error.response.data && error.response.data.error && error.response.data.error.message === 'jwt expired') {
+                try {
+                    const jwtResult = await axios('http://localhost:5000/users/refresh', {
+                        withCredentials: true,
+                        method: 'POST'
+                    })
+                    console.log(jwtResult)
+                    if (jwtResult.status === 201) {
+                        const response = await axios.post('http://localhost:5000/files', fmData, {
+                            headers: {
+                                'Content-Type': `multipart/form-data; boundary=${data._boundary}`
+                            }, withCredentials: true
+                        })
+                        onSuccess(response.data);
+                        message.success(`${file.name} file uploaded successfully`);
+                        console.log(response)
+                    }
+                    message.error(`${file.name} file upload failed.`);
+                } catch (error) {
+                    console.log(error)
+                    if (error.response.status === 400) {
+                        history.push('/')
+                    }
+                }
+            } else {
+                message.error(`${file.name} file upload failed.`);
+            }
+
         }
+
     }
 
     const onPreview = async file => {
@@ -274,21 +310,21 @@ const UserProfileDashboard = () => {
             const fileExtension = fileName.slice(index + 1)
             if (fileExtension === 'pdf') {
                 return (
-                    <div>
-                        <div>
+                    <div className='user-profile--CV--container'>
+                        <div className='user-profile--CV--image-container'>
                             <img src={Pdf} alt='PDF' className='user-profile--CV--image' />
                         </div>
-                        <p>{fileName}</p>
+                        <p className='user-profile--CV--label'>{fileName}</p>
                     </div>
                 )
             }
             else if (fileExtension === 'doc') {
                 return (
-                    <div>
-                        <div>
+                    <div className='user-profile--CV--container'>
+                        <div className='user-profile--CV--image-container'>
                             <img src={Doc} alt='DOC' className='user-profile--CV--image' />
                         </div>
-                        <p>{fileName}</p>
+                        <p className='user-profile--CV--label'>{fileName}</p>
                     </div>
                 )
             }
@@ -296,26 +332,26 @@ const UserProfileDashboard = () => {
                 console.log(fileExtension)
 
                 return (
-                    <div>
-                        <div>
+                    <div className='user-profile--CV--container'>
+                        <div className='user-profile--CV--image-container'>
                             <img src={Docx} alt='DOCX' className='user-profile--CV--image' />
                         </div>
-                        <p>{fileName}</p>
+                        <p className='user-profile--CV--label'>{fileName}</p>
                     </div>
                 )
             }
             else {
-                console.log(fileExtension)
                 return (
-                    <div>
-                        <div>
+                    <div className='user-profile--CV--container'>
+                        <div className='user-profile--CV--image-container'>
                             <img src={DefaultDoc} alt='DEFAULT' className='user-profile--CV--image' />
                         </div>
-                        <p>{fileName}</p>
+                        <p className='user-profile--CV--label'>{fileName}</p>
                     </div>
                 )
             }
-        } else {
+        }
+        else {
             return (
                 <p></p>
             )
@@ -324,76 +360,79 @@ const UserProfileDashboard = () => {
 
     return (
         <div className='main_dashboard--container'>
-            <div>
-                <h2>User information</h2>
-                <p>Name</p>
-                <input value={name} onChange={(event) => handleNameInput(event)} />
-                <p>Surname</p>
-                <input value={surname} onChange={(event) => handleSurnameInput(event)} />
-                <p>E-mail</p>
-                <input value={email} onChange={(event) => handleEmailInput(event)} />
-                <p>Phone number</p>
-                <input value={phoneNumber} onChange={(event) => handlePhoneInput(event)} />
-                <p>Position category</p>
-                <div>
+            <div className='user-profile--container'>
+                <h2 className='user-profile--title'>User information</h2>
+                <p className='user-profile--label'>Name</p>
+                <input className='user-profile--input' value={name} onChange={(event) => handleNameInput(event)} />
+                <p className='user-profile--label'>Surname</p>
+                <input className='user-profile--input' value={surname} onChange={(event) => handleSurnameInput(event)} />
+                <p className='user-profile--label'>E-mail</p>
+                <input className='user-profile--input' value={email} onChange={(event) => handleEmailInput(event)} />
+                <p className='user-profile--label'>Phone number</p>
+                <input className='user-profile--input' value={phoneNumber} onChange={(event) => handlePhoneInput(event)} />
+                <p className='user-profile--label'>Position category</p>
+                <div className='user-profile--select-button--container'>
                     {
                         buttonList.map((button, index) => {
                             return (
-                                <button value={index} key={index} onClick={(event) => handlePositionCategory(event)}>{button.name}</button>
+                                <button className={buttonList[index].active ? "user-profile--select-button-active" : "user-profile--select-button"} value={index} key={index} onClick={(event) => handlePositionCategory(event)}>{button.name}</button>
                             )
                         })
                     }
                 </div>
-                <p>Experience level</p>
-                <div>
+                <p className='user-profile--label'>Experience level</p>
+                <div className='user-profile--select-button--container'>
                     {
                         experienceLevel.map((exp, index) => {
                             return (
-                                <button value={index} key={index} onClick={(event) => handleExperience(event)}>{exp.name}</button>
+                                <button className={experienceLevel[index].active ? "user-profile--select-button-active" : "user-profile--select-button"} value={index} key={index} onClick={(event) => handleExperience(event)}>{exp.name}</button>
                             )
                         })
                     }
                 </div>
-                <p>Minimum salary</p>
-                <input value={minSalary} onChange={(event) => handleMinSalary(event)} />
-                <p>Prefferd salary</p>
-                <input value={prefferedSalary} onChange={(event) => handlePrefferedSalary(event)} />
+                <p className='user-profile--label'>Minimum salary</p>
+                <input className='user-profile--input' value={minSalary} onChange={(event) => handleMinSalary(event)} />
+                <p className='user-profile--label'>Prefferd salary</p>
+                <input className='user-profile--input' value={prefferedSalary} onChange={(event) => handlePrefferedSalary(event)} />
 
-                <p>Education</p>
-                {
-                    educationList.map((education, index) => {
-                        return (
-                            <button value={index} key={index} onClick={(event) => handleEducation(event)}>{education.name}</button>
-                        )
-                    })
-                }
-
-                <p>City</p>
-                <input value={city} onChange={(event) => handleCity(event)} />
-                <div>
-                    <input type='checkbox' value={remoteWorking} onChange={(event) => handleRemoteWorking(event)} />
-                    <p>Only looking for remote job</p>
+                <p className='user-profile--label'>Education</p>
+                <div className='user-profile--select-button--container'>
+                    {
+                        educationList.map((education, index) => {
+                            return (
+                                <button className={educationList[index].active ? "user-profile--select-button-active" : "user-profile--select-button"} value={index} key={index} onClick={(event) => handleEducation(event)}>{education.name}</button>
+                            )
+                        })
+                    }
                 </div>
-                <p>Contract type</p>
-                {
-                    contractList.map((contract, index) => {
-                        return (
-                            <button value={index} key={index} onClick={(event) => handleContractType(event)}>{contract.name}</button>
-                        )
-                    })
-                }
+                <p className='user-profile--label'>City</p>
+                <input className='user-profile--input' value={city} onChange={(event) => handleCity(event)} />
+                <div className='user-profile--checkbox--container'>
+                    <input className='user-profile--input-checkbox' type='checkbox' value={remoteWorking} onChange={(event) => handleRemoteWorking(event)} />
+                    <p className='user-profile--label'>Only looking for remote job</p>
+                </div>
+                <p className='user-profile--label'>Contract type</p>
+                <div className='user-profile--select-button--container'>
+                    {
+                        contractList.map((contract, index) => {
+                            return (
+                                <button className={contractList[index].active ? "user-profile--select-button-active" : "user-profile--select-button"} value={index} key={index} onClick={(event) => handleContractType(event)}>{contract.name}</button>
+                            )
+                        })
+                    }
+                </div>
+                <p className='user-profile--label'>Attach CV</p>
+                <Upload
+                    fileList={fileList}
+                    onChange={onChange}
+                    beforeUpload={() => true}
+                    onPreview={handlePreview}
+                    customRequest={customRequest}
+                >
+                    <Button className='user-profile--upload-button' ><UploadOutlined /> Click to Upload</Button>
+                </Upload>
+                <CVFile />
             </div>
-            <p>Attach CV</p>
-            <Upload
-                fileList={fileList}
-                onChange={onChange}
-                beforeUpload={() => true}
-                onPreview={handlePreview}
-                customRequest={customRequest}
-            >
-                <Button ><UploadOutlined /> Click to Upload</Button>
-            </Upload>
-            <CVFile />
         </div>
     )
 }
