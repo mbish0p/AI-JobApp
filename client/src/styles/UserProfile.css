@@ -12,7 +12,7 @@
     border: solid 1px #a8a8a877;
     box-shadow: 1px 1px 10px 1px rgba(204,204,204,1);
     border-radius: 1rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 1rem;
     width: 70%;
     margin-left: auto;
     margin-right: auto;
@@ -95,4 +95,27 @@
 
 .user-profile--CV--label{
     color: black;
+    margin-left: 1rem;
+}
+
+.user-profile--upload-button--container{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.user-profile--save-button{
+    padding: 0.3rem 4rem;
+    border-radius: 1rem;
+    border: solid 2px #4e4e4e;
+    background: #9350D3;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 4rem;
+    outline: none;
+}
+
+.user-profile--save-button:hover{
+    cursor: pointer;
+    background: #9450d3c2;
 }

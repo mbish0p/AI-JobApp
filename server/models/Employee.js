@@ -20,15 +20,7 @@ const Employee = sequelize.define('employee', {
         type: DataTypes.STRING,
         allowNull: true
     },
-    preffered_contract_type: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
     preffered_position: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    experience_lvl: {
         type: DataTypes.STRING,
         allowNull: true
     },
@@ -38,6 +30,22 @@ const Employee = sequelize.define('employee', {
     },
     preffered_salary: {
         type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    experience_level: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    contract_type: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    education: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    only_remote: {
+        type: DataTypes.BOOLEAN,
         allowNull: true
     }
 })

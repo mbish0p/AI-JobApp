@@ -7,17 +7,27 @@ import Docx from '../img/docx.svg'
 import DefaultDoc from '../img/google-docs.svg'
 import Pdf from '../img/pdf.svg'
 import { useHistory } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { saveUserData } from '../_actions/userEmployee'
+import { v4 as uuidv4 } from 'uuid';
 
 const UserProfileDashboard = () => {
     const history = useHistory()
+    const userInfo = useSelector(state => state.user)
+    const dispatch = useDispatch()
 
     useEffect(() => {
+        console.log(userInfo)
+        setName(userInfo.name || '')
+        setSurname(userInfo.surname || '')
+    }, [userInfo])
 
+    useEffect(() => {
+        fetchEmployeeData()
     }, [])
 
     const [name, setName] = useState('')
     const [surname, setSurname] = useState('')
-    const [email, setEmail] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const [buttonList, setButtonList] = useState([{
         name: "Frontend",
@@ -139,10 +149,6 @@ const UserProfileDashboard = () => {
 
     const handleSurnameInput = (event) => {
         setSurname(event.target.value)
-    }
-
-    const handleEmailInput = (event) => {
-        setEmail(event.target.value)
     }
 
     const handlePhoneInput = (event) => {
@@ -290,17 +296,107 @@ const UserProfileDashboard = () => {
 
     }
 
-    const onPreview = async file => {
-        let src = file.url;
-        console.log('file', file)
-        if (!src) {
-            src = await new Promise(resolve => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file.originFileObj);
-                reader.onload = () => resolve(reader.result);
-            });
+    const findAndSetActive = (list, key) => {
+        list.forEach((listItem, index) => {
+            if (listItem.name === key) {
+                listItem.active = true
+                return index
+            }
+        })
+    }
+
+    const doNothing = () => { }
+
+    const fetchEmployeeData = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/employee', { withCredentials: true })
+            console.log(response)
+            const files = response.data.files
+            const { phone_number, city, contract_type, preffered_position, experience_level, min_salary, preffered_salary, education, only_remote } = response.data.employee
+            setPhoneNumber(phone_number || '')
+            setMinSalary(min_salary || '')
+            setPrefferedSalary(preffered_salary || '')
+            setCity(city || '')
+            setRemoteWorking(only_remote || '')
+            contract_type ? (
+                setAciveContract({ name: contract_type, index: findAndSetActive(contractList, contract_type) })
+            ) : doNothing()
+            preffered_position ? (
+                setActivePosition({ name: preffered_position, index: findAndSetActive(buttonList, preffered_position) })
+            ) : doNothing()
+            experience_level ? (
+                setActiveExperience({ name: experience_level, index: findAndSetActive(experienceLevel, experience_level) })
+            ) : doNothing()
+            education ? (
+                setAactiveEducation({ name: education, index: findAndSetActive(educationList, education) })
+            ) : doNothing()
+            console.log(files)
+            const updatedFileList = [...fileList]
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i]
+                console.log('asdasda', file)
+                if (file.name === "CV") {
+                    const firstIndex = file.file.indexOf('_')
+                    const secondIndex = file.file.indexOf('?sv=')
+                    const fileName = file.file.slice(firstIndex + 1, secondIndex)
+                    file.name = fileName || file.name
+                    file.uid = uuidv4()
+                    updatedFileList.push(file)
+                }
+            }
+            console.log(updatedFileList)
+            setFileList(updatedFileList)
+        } catch (error) {
+            console.log(error)
         }
-    };
+    }
+
+    const refreshToken = () => {
+        try {
+            axios.post('http://localhost:5000/users/refresh', {}, { withCredentials: true })
+        } catch (error) {
+            console.log(error)
+            history.push('/login')
+        }
+    }
+
+    const updateUserInformation = () => {
+        try {
+            const data = {
+                name,
+                surname,
+            }
+            const response = axios.patch('http://localhost:5000/users', data, { withCredentials: true })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const updateEmployeeInformation = async () => {
+        try {
+            const data = {
+                phone_number: phoneNumber,
+                city,
+                contract_type: activeContract.name,
+                preffered_position: activePosition.name,
+                experience_level: activeExperience.name,
+                min_salary: minSalary,
+                preffered_salary: prefferedSalary,
+                education: activeEducation.name,
+                only_remote: remoteWorking
+            }
+
+            await axios.post('http://localhost:5000/employee', data, { withCredentials: true })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const saveUserData = (event) => {
+        refreshToken()
+        updateUserInformation()
+        updateEmployeeInformation()
+    }
 
     const CVFile = () => {
         const file = fileList[fileList.length - 1]
@@ -366,8 +462,6 @@ const UserProfileDashboard = () => {
                 <input className='user-profile--input' value={name} onChange={(event) => handleNameInput(event)} />
                 <p className='user-profile--label'>Surname</p>
                 <input className='user-profile--input' value={surname} onChange={(event) => handleSurnameInput(event)} />
-                <p className='user-profile--label'>E-mail</p>
-                <input className='user-profile--input' value={email} onChange={(event) => handleEmailInput(event)} />
                 <p className='user-profile--label'>Phone number</p>
                 <input className='user-profile--input' value={phoneNumber} onChange={(event) => handlePhoneInput(event)} />
                 <p className='user-profile--label'>Position category</p>
@@ -432,6 +526,9 @@ const UserProfileDashboard = () => {
                     <Button className='user-profile--upload-button' ><UploadOutlined /> Click to Upload</Button>
                 </Upload>
                 <CVFile />
+            </div>
+            <div className='user-profile--upload-button--container'>
+                <button onClick={event => saveUserData(event)} className='user-profile--save-button'>Save</button>
             </div>
         </div>
     )

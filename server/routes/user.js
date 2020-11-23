@@ -198,13 +198,13 @@ router.patch('/', auth, async (req, res) => {
                 email: email || user.email
             }
 
-            await User.update(newUserData, {
+            const updatedUser = await User.update(newUserData, {
                 where: {
                     id: user.id
                 }
             })
 
-            res.status(201).send({ message: 'Succesful updated user profile' })
+            res.status(201).send(updatedUser)
         }
         else {
             throw new Error('No user')
