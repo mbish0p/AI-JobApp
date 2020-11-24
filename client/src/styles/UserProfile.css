@@ -1,0 +1,121 @@
+.ant-upload-list{
+    display: none;
+}
+
+.user-profile--CV--image{
+    width: 120px;
+    height: 120px;
+}
+
+.user-profile--container{
+    margin: 2rem;
+    border: solid 1px #a8a8a877;
+    box-shadow: 1px 1px 10px 1px rgba(204,204,204,1);
+    border-radius: 1rem;
+    padding-bottom: 1rem;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.user-profile--title{
+    background: linear-gradient(90deg, rgba(162,0,110,1) 0%, rgba(158,50,190,1) 100%);
+    border-radius: 1rem 1rem 0 0;
+    padding: 1.3rem;
+    color: white;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.user-profile--label{
+    margin-bottom: 0.3rem;
+    margin-left: 2rem;
+    margin-top: 1rem;
+    color: #000;
+}
+
+.user-profile--input{
+    margin-left: 2rem;
+    width: 80%;
+    padding: 0.5rem;
+    background-color: rgba(187, 187, 187, 0.486);
+    border: none;
+}
+
+.user-profile--select-button--container{
+    margin-left: 2rem;
+}
+
+.user-profile--checkbox--container{
+    margin-left: 2rem;
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.user-profile--checkbox--container .user-profile--label{
+    margin-top: 0;
+    margin-left: 1rem;
+    margin-bottom: 0;
+}
+
+.user-profile--upload-button{
+    margin-left: 2rem;
+}
+
+.user-profile--select-button-active,
+.user-profile--select-button{
+    margin-right: 0.5rem;
+    border-radius: 0.5rem;
+    outline: none;
+    border: solid 2px #4e4e4e;
+    color: #4e4e4e;
+    background: none;
+    margin-bottom: 0.5rem;
+    padding: 0.2rem 0.4rem;
+}
+
+.user-profile--select-button-active{
+    background: #9350D3;
+    color: white;
+}
+
+.user-profile--select-button:hover{
+    cursor: pointer;
+}
+
+.user-profile--CV--container{
+    margin-left: 2rem;
+    margin-top: 1rem;
+}
+
+.user-profile--CV--image-container{
+    margin-bottom: 0.5rem;
+}
+
+.user-profile--CV--label{
+    color: black;
+    margin-left: 1rem;
+}
+
+.user-profile--upload-button--container{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.user-profile--save-button{
+    padding: 0.3rem 4rem;
+    border-radius: 1rem;
+    border: solid 2px #4e4e4e;
+    background: #9350D3;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 4rem;
+    outline: none;
+}
+
+.user-profile--save-button:hover{
+    cursor: pointer;
+    background: #9450d3c2;
+}

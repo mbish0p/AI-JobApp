@@ -3,10 +3,12 @@ import axios from 'axios'
 import Location from '../img/placeholder.svg'
 import Remote from '../img/online-support.svg'
 import DefaultCompanyLogo from '../img/logo-default.svg'
+import {useHistory} from 'react-router-dom'
 
 import '../styles/JobOffer.css'
 
 const JobOffer = (props) => {
+    const history = useHistory()
     const [employeerProfile, setEmployeerProfile] = useState({})
 
     const fetchEmployeerProfile = async () => {
@@ -22,8 +24,12 @@ const JobOffer = (props) => {
         fetchEmployeerProfile()
     }, [])
 
+    const transferToJobOffer = ()=>{
+        history.push(`/job-offers/${props.offer.offer.id}`)
+    }
+
     return (
-        <div className='joboffer--tamplate'>
+        <div className='joboffer--tamplate' onClick = {()=>transferToJobOffer()}>
         `   <img className='joboffer--company-logo' src={employeerProfile.company_logo || DefaultCompanyLogo} alt='company_logo' />
             <div className = 'joboffer--job-info'>
                 <div className = 'joboffer--header'>

@@ -134,6 +134,34 @@ router.get('/', auth, async (req, res) => {
     }
 })
 
+router.get('/:id', auth, async (req, res) => {
+    try {
+        const offer = await JobOffer.findOne({
+            where: {
+                id: req.params.id
+            }
+        })
+
+        if (!offer) throw new Error(`No offer with this id: ${req.params.id}`)
+
+        const technology = await JobOfferTechnologies.findAll({
+            where: {
+                jobOfferId: offer.dataValues.id
+            }
+        })
+
+        const responseDate = {
+            offer,
+            technology
+        }
+
+        res.send(responseDate)
+    } catch (error) {
+        console.log(error)
+        res.send(error.toString())
+    }
+})
+
 router.get('/:id/candidates/employees', auth, async (req, res) => {
     try {
         const candidates = await Candidates.findAll({

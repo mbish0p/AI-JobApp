@@ -19,9 +19,12 @@ router.post('/', auth, async (req, res) => {
             city,
             preffered_contract_type,
             preffered_position,
-            experience_lvl,
+            experience_level,
             min_salary,
-            preffered_salary
+            preffered_salary,
+            education,
+            only_remote,
+            contract_type
         } = req.body
 
         const employee = await Employee.findOne({
@@ -41,9 +44,12 @@ router.post('/', auth, async (req, res) => {
             city: city || employee.dataValues.city,
             preffered_contract_type: preffered_contract_type || employee.dataValues.preffered_contract_type,
             preffered_position: preffered_position || employee.dataValues.preffered_position,
-            experience_lvl: experience_lvl || employee.dataValues.experience_lvl,
+            experience_level: experience_level || employee.dataValues.experience_level,
             min_salary: min_salary || employee.dataValues.min_salary,
-            preffered_salary: preffered_salary || employee.dataValues.preffered_salary
+            preffered_salary: preffered_salary || employee.dataValues.preffered_salary,
+            contract_type: contract_type || employee.dataValues.contract_type,
+            education: education || employee.dataValues.education,
+            only_remote: only_remote || employee.dataValues.only_remote
         })
 
         res.status(201).send(newEmployee)
@@ -153,18 +159,6 @@ router.get('/', auth, async (req, res) => {
             }
         })
 
-        const education = await EmployeeEducation.findAll({
-            where: {
-                employeeId: employee.dataValues.id
-            }
-        })
-
-        const experience = await EmployeeExperience.findAll({
-            where: {
-                employeeId: employee.dataValues.id
-            }
-        })
-
         const files = await EmployeeDocument.findAll({
             where: {
                 employeeId: employee.dataValues.id
@@ -174,8 +168,6 @@ router.get('/', auth, async (req, res) => {
         const responseMessage = {
             employee,
             skills,
-            education,
-            experience,
             files
         }
 

@@ -3,6 +3,7 @@ import { Modal, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import axios from 'axios'
 
+import '../styles/UserProfile.css'
 
 const EmployeerProfileFormPhotos = () => {
     const [visible, setVisible] = useState(false);
