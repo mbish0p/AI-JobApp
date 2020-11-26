@@ -1,4 +1,5 @@
 .main-job-offer-header--label-iamge{
+    margin-top: 0.5rem;
     width: 24px;
     height: 24px;
 }
@@ -10,4 +11,80 @@
 .main-job-offer-header--tech-iamge{
     width: 16px;
     height: 16px;
+}
+
+.main-job-offer-header--content{
+    padding: 1rem 5rem;
+}
+
+.main-job-offer-header--location-container{
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.main-job-offer-header--location-input{
+    margin-left: 2rem;
+    border: none;
+    border-left: solid 2px #ffffff;
+    border-bottom: solid 2px #ffffff;
+    background: transparent;
+    outline: none;
+    color: white;
+    border-radius: 0 0 0 0.3rem;
+    padding: 0.1rem 0.4rem;
+    margin-top: 0.4rem;
+}
+
+.main-job-offer-header--position-container{
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: baseline;
+}
+
+.main-job-offer-header--button-list{
+    width: 80%;
+    margin-left: 1rem;
+}
+
+.main-job-offer-header--select-button-active,
+.main-job-offer-header--select-button{
+    margin-left: 1rem;
+    border: 1px solid white;
+    color: white;
+    background: transparent;
+    border-radius: 0.6rem;
+    padding: 0.2rem 1rem;
+    margin-bottom: 1rem;
+    outline: none;
+}
+
+.main-job-offer-header--select-button:hover{
+    border-color: #07FCB0;
+    cursor: pointer;
+}
+
+.main-job-offer-header--select-button-active:hover{
+    border-color: white;
+    cursor: pointer;
+}
+
+.main-job-offer-header--select-button-active{
+    background: #07FCB0;
+    color: black;
+}
+
+.main-job-offer-header--techs-container,
+.main-job-offer-header--experience-container{
+    display: flex;
+    align-items: baseline;
+}
+
+.main-job-offer-header--input-container{
+    display: flex;
+    align-items: center;
+}
+
+.main-job-offer-header--tech-button-list{
+    width: 100%;
 }
