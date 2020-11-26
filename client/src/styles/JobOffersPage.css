@@ -1,0 +1,13 @@
+.main-job-offer-header--label-iamge{
+    width: 24px;
+    height: 24px;
+}
+
+.main-job-offer-header--container{
+    background: linear-gradient(#5C1A89, #480E6F);
+}
+
+.main-job-offer-header--tech-iamge{
+    width: 16px;
+    height: 16px;
+}

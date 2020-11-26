@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Avatar } from 'antd';
 import logo from '../img/default-avatar-profile.jpg'
 import moment from 'moment'
-import { StarOutlined, StarFilled, FileDoneOutlined } from '@ant-design/icons'
+import { StarOutlined, StarFilled } from '@ant-design/icons'
 import Location from '../img/placeholder.svg'
 import Remote from '../img/online-support.svg'
 import Contract from '../img/contract.svg'

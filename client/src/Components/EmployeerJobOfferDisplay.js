@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import moment from 'moment';
+import { useHistory } from 'react-router-dom'
 
 const EmployeerJobOfferDisplay = (props) => {
     const activeOffers = props.activeOffers
     const archivalOffers = props.archivalOffers
     const futureOffers = props.futureOffers
+    const history = useHistory()
 
     const [activeOffersButton, setActiveOffersButton] = useState(true)
     const [archivalOffersButton, setArchivalOffersButton] = useState(false)
@@ -28,6 +30,10 @@ const EmployeerJobOfferDisplay = (props) => {
         setFutureOffersButton(true)
     }
 
+    const transferToJobOffer = (event, id) => {
+        history.push(`/job-offers/${id}`)
+    }
+
     const ActiveOffers = () => {
         return (
             <div className='employeer--offers--container'>
@@ -36,7 +42,7 @@ const EmployeerJobOfferDisplay = (props) => {
                         activeOffers.map((offer, index) => {
                             const startDate = moment(offer.offer.start_date).format("D MMMM YYYY")
                             const endDate = moment(offer.offer.end_date).format("D MMMM YYYY")
-                            return <div key={index} className='employeer--offer--istance'>
+                            return <div key={index} className='employeer--offer--istance' onClick={(event) => transferToJobOffer(event, offer.offer.id)}>
                                 <p className='employeer--offer--istance-name'>{offer.offer.title}</p>
                                 <p className='employeer--offer--istance-start-date'>{offer.offer.position_name}</p>
                                 <p className='employeer--offer--istance-start-date'>{startDate}</p>
@@ -56,7 +62,7 @@ const EmployeerJobOfferDisplay = (props) => {
                         archivalOffers.map((offer, index) => {
                             const startDate = moment(offer.offer.start_date).format("D MMMM YYYY")
                             const endDate = moment(offer.offer.end_date).format("D MMMM YYYY")
-                            return <div key={index} className='employeer--offer--istance'>
+                            return <div key={index} className='employeer--offer--istance' onClick={(event) => transferToJobOffer(event, offer.offer.id)}>
                                 <p className='employeer--offer--istance-name'>{offer.offer.title}</p>
                                 <p className='employeer--offer--istance-start-date'>{offer.offer.position_name}</p>
                                 <p className='employeer--offer--istance-start-date'>{startDate}</p>
@@ -76,7 +82,7 @@ const EmployeerJobOfferDisplay = (props) => {
                         futureOffers.map((offer, index) => {
                             const startDate = moment(offer.offer.start_date).format("D MMMM YYYY")
                             const endDate = moment(offer.offer.end_date).format("D MMMM YYYY")
-                            return <div key={index} className='employeer--offer--istance'>
+                            return <div key={index} className='employeer--offer--istance' onClick={(event) => transferToJobOffer(event, offer.offer.id)}>
                                 <p className='employeer--offer--istance-name'>{offer.offer.title}</p>
                                 <p className='employeer--offer--istance-start-date'>{offer.offer.position_name}</p>
                                 <p className='employeer--offer--istance-start-date'>{startDate}</p>

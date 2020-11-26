@@ -10,6 +10,7 @@ import EmployeerProfile from '../Components/EmployeerProfile'
 import EmployeerJobOfferProfile from '../Components/EmployeerJobOfferProfile'
 import JobOfferMainCard from '../Components/JobOfferMainCard'
 import UserProfile from '../Components/UserProfile'
+import MainJobOfferPage from '../Components/MainJobOfferPage'
 
 const AppRouter = () => {
     return (
@@ -25,6 +26,7 @@ const AppRouter = () => {
                 <Route exact={true} path='/employeer/:name/offers' component={EmployeerJobOfferProfile} />
                 <Route exact={true} path='/job-offers/:id' component={JobOfferMainCard} />
                 <Route exact={true} path='/employee/:email/profile' component={UserProfile} />
+                <Route exact={true} path='/job-offers' component={MainJobOfferPage} />
             </Switch>
         </BrowserRouter>
     )
