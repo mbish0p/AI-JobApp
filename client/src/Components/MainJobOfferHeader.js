@@ -10,6 +10,7 @@ import Python from '../img/python.svg'
 import HTML from '../img/html5.svg'
 import CSS from '../img/css-3.svg'
 import Star from '../img/star.svg'
+import Menu from '../img/menu.svg'
 
 import { saveExperience, saveLocation, savePositions, saveTechName, saveTechnologies } from '../_actions/filtring'
 import { useDispatch } from 'react-redux'
@@ -20,6 +21,7 @@ const MainJobOfferHeader = () => {
     const dispatch = useDispatch()
     const [location, setLocation] = useState('')
     const [techName, setTechName] = useState('')
+    const [toggle, setToggle] = useState(true)
 
     const handleLocation = (event) => {
         setLocation(event.target.value)
@@ -214,58 +216,74 @@ const MainJobOfferHeader = () => {
 
     return (
         <div className='main-job-offer-header--container'>
-            <div className='main-job-offer-header--content'>
-                <div className='main-job-offer-header--location-container'>
-                    <img src={Location} className='main-job-offer-header--label-iamge' alt='location_image' />
-                    <input placeholder='City' className='main-job-offer-header--location-input' value={location} onChange={(event) => handleLocation(event)} />
-                </div>
-                <div className='main-job-offer-header--position-container'>
-                    <img src={Position} className='main-job-offer-header--label-iamge' alt='position_image' />
-                    <div className='main-job-offer-header--button-list'>
-                        {
-                            positionList.map((button, index) => {
-                                return (
-                                    <button className={positionList[index].active ? "main-job-offer-header--select-button-active" : "main-job-offer-header--select-button"} value={index} key={index} onClick={(event) => handlePositionCategory(event)}>{button.name}</button>
-                                )
-                            })
-                        }
-                    </div>
-                </div>
-                <div className='main-job-offer-header--input-container'>
-                    <div className='main-job-offer-header--techs-container'>
-                        <img src={Technologies} className='main-job-offer-header--label-iamge' alt='tech_image' />
-                        <div className='main-job-offer-header--button-list main-job-offer-header--tech-button-list'>
-                            {
-                                technologiesList.map((button, index) => {
-                                    return (
-                                        <button className={technologiesList[index].active ? "main-job-offer-header--select-button-active" : "main-job-offer-header--select-button"}
-                                            value={index}
-                                            key={index}
-                                            onClick={(event) => handleTechs(event, index)}>
-                                            <img src={button.img} className='main-job-offer-header--tech-iamge' alt='tech-item_image' />
-                                            <p className='main-job-offer-header--label' value={index}>{button.name}</p>
-                                        </button>
-                                    )
-                                })
-                            }
+            {
+                toggle ?
+                    <div>
+                        <div className='main-job-offer-header--content'>
+                            <div className='main-job-offer-header--location-container'>
+                                <img src={Location} className='main-job-offer-header--label-iamge' alt='location_image' />
+                                <input placeholder='City' className='main-job-offer-header--location-input' value={location} onChange={(event) => handleLocation(event)} />
+                            </div>
+                            <div className='main-job-offer-header--position-container'>
+                                <img src={Position} className='main-job-offer-header--label-iamge' alt='position_image' />
+                                <div className='main-job-offer-header--button-list'>
+                                    {
+                                        positionList.map((button, index) => {
+                                            return (
+                                                <button className={positionList[index].active ? "main-job-offer-header--select-button-active" : "main-job-offer-header--select-button"} value={index} key={index} onClick={(event) => handlePositionCategory(event)}>{button.name}</button>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </div>
+                            <div className='main-job-offer-header--input-container'>
+                                <div className='main-job-offer-header--techs-container'>
+                                    <img src={Technologies} className='main-job-offer-header--label-iamge' alt='tech_image' />
+                                    <div className='main-job-offer-header--button-list main-job-offer-header--tech-button-list'>
+                                        {
+                                            technologiesList.map((button, index) => {
+                                                return (
+                                                    <button className={technologiesList[index].active ? "main-job-offer-header--select-button-active" : "main-job-offer-header--select-button"}
+                                                        value={index}
+                                                        key={index}
+                                                        onClick={(event) => handleTechs(event, index)}>
+                                                        <img src={button.img} className='main-job-offer-header--tech-iamge' alt='tech-item_image' />
+                                                        <p className='main-job-offer-header--label' value={index}>{button.name}</p>
+                                                    </button>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+
+                                <input placeholder='Other technology' className='main-job-offer-header--location-input main-job-offer-header--tech-input' value={techName} onChange={(event) => handleTechName(event)} />
+                            </div>
+                            <div className='main-job-offer-header--experience-container'>
+                                <img src={Star} className='main-job-offer-header--label-iamge' alt='star_image' />
+                                <div className='main-job-offer-header--button-list'>
+                                    {
+                                        experienceLevel.map((button, index) => {
+                                            return (
+                                                <button className={experienceLevel[index].active ? "main-job-offer-header--select-button-active" : "main-job-offer-header--select-button"} value={index} key={index} onClick={(event) => handleExperience(event)}>{button.name}</button>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </div>
                         </div>
+                        <div className='main-job-offer-header--burger-button--container'>
+                            <button onClick={() => setToggle(!toggle)} className='main-job-offer-header--burger-button'>
+                                <img src={Menu} alt='menu_icon' className='main-job-offer-header--burger-button--image' />
+                            </button>
+                        </div>
+                    </div> : <div className='main-job-offer-header--burger-button--container'>
+                        <button onClick={() => setToggle(!toggle)} className='main-job-offer-header--burger-button'>
+                            <img src={Menu} alt='menu_icon' className='main-job-offer-header--burger-button--image' />
+                        </button>
                     </div>
 
-                    <input placeholder='Other technology' className='main-job-offer-header--location-input main-job-offer-header--tech-input' value={techName} onChange={(event) => handleTechName(event)} />
-                </div>
-                <div className='main-job-offer-header--experience-container'>
-                    <img src={Star} className='main-job-offer-header--label-iamge' alt='star_image' />
-                    <div className='main-job-offer-header--button-list'>
-                        {
-                            experienceLevel.map((button, index) => {
-                                return (
-                                    <button className={experienceLevel[index].active ? "main-job-offer-header--select-button-active" : "main-job-offer-header--select-button"} value={index} key={index} onClick={(event) => handleExperience(event)}>{button.name}</button>
-                                )
-                            })
-                        }
-                    </div>
-                </div>
-            </div>
+            }
+
         </div>
     )
 }

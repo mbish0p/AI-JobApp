@@ -15,6 +15,7 @@
 
 .main-job-offer-header--content{
     padding: 1rem 5rem;
+    padding-bottom: 0;
 }
 
 .main-job-offer-header--location-container{
@@ -92,4 +93,27 @@
 .main-job-offer-header--label{
     margin-bottom: 0;
     margin-top: 0.2rem;
+}
+
+.main-job-offer-header--burger-button--container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+
+.main-job-offer-header--burger-button{
+    border: none;
+    background: transparent;
+    outline: none;
+}
+
+.main-job-offer-header--burger-button:hover{
+    cursor: pointer;
+}
+
+.main-job-offer-header--burger-button--image{
+    width: 16px;
+    height: 16px;
 }
