@@ -5,6 +5,7 @@ import userEmployee from './userEmployee'
 import user from './user'
 import userEmployeer from './userEmployeer'
 import filtring from './filtring'
+import offers from './offers'
 
 const rootReducer = combineReducers({
     message,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     user,
     userEmployee,
     userEmployeer,
-    filtring
+    filtring,
+    offers
 });
 
 export default rootReducer;

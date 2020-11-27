@@ -8,8 +8,8 @@ import {
 
 
 const initialState = {
-    loaction: '',
-    tech_name: '',
+    location: undefined,
+    tech_name: undefined,
     experiences: [],
     techs: [],
     positions: []
@@ -30,7 +30,7 @@ export default function (state = initialState, action) {
         case SAVE_FILTRING_LOCATION:
             return {
                 ...state,
-                loaction: action.payload
+                location: action.payload
             }
         case SAVE_FILTRING_TECHS:
             return {

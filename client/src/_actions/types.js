@@ -47,3 +47,5 @@ export const SAVE_FILTRING_POSTIONS = 'save_filtring_positions'
 export const SAVE_FILTRING_TECHS = 'save_filtring_techs'
 export const SAVE_FILTRING_TECH_NAME = 'save_filtring_tech_name'
 export const SAVE_FILTRING_EXPERIENCE = 'save_filtring_experience'
+
+export const SAVE_ALL_OFFERS = 'save_all_offers'

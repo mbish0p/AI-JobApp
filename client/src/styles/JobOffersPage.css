@@ -88,3 +88,8 @@
 .main-job-offer-header--tech-button-list{
     width: 100%;
 }
+
+.main-job-offer-header--label{
+    margin-bottom: 0;
+    margin-top: 0.2rem;
+}
