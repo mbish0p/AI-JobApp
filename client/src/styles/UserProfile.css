@@ -119,3 +119,13 @@
     cursor: pointer;
     background: #9450d3c2;
 }
+
+.user-profile--tech--input{
+    background-color: rgba(187, 187, 187, 0.486) !important;
+    border-radius: 0 !important;
+    border: none !important;
+}
+
+.user-profile--tech--input:focus{
+    border: solid 2px black !important;
+}
