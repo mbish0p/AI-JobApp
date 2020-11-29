@@ -41,3 +41,11 @@ export const SAVE_EMPLOYEER_DESCRIPTION_ONE = 'save_employeer_description_one'
 export const SAVE_EMPLOYEER_DESCRIPTION_TWO = 'save_employeer_description_two'
 export const SAVE_EMPLOYEER_DESCRIPTION_THREE = 'save_employeer_description_three'
 export const SAVE_EMPLOYEER_EDUCATION = 'save_employeer_education'
+
+export const SAVE_FILTRING_LOCATION = 'save_filtring_location'
+export const SAVE_FILTRING_POSTIONS = 'save_filtring_positions'
+export const SAVE_FILTRING_TECHS = 'save_filtring_techs'
+export const SAVE_FILTRING_TECH_NAME = 'save_filtring_tech_name'
+export const SAVE_FILTRING_EXPERIENCE = 'save_filtring_experience'
+
+export const SAVE_ALL_OFFERS = 'save_all_offers'

@@ -15,6 +15,8 @@ const UserProfileDashboard = () => {
     const history = useHistory()
     const userInfo = useSelector(state => state.user)
     const dispatch = useDispatch()
+    const [technologiesList, setTechnologiesList] = useState([{ technology: '', experience: "", primaryTechnology: false }])
+    const [fetchTechsList, setFetchTechList] = useState([])
 
     useEffect(() => {
         console.log(userInfo)
@@ -24,6 +26,7 @@ const UserProfileDashboard = () => {
 
     useEffect(() => {
         fetchEmployeeData()
+        fetchEmloyeeTechs()
     }, [])
 
     const [name, setName] = useState('')
@@ -351,6 +354,28 @@ const UserProfileDashboard = () => {
         }
     }
 
+    const fetchEmloyeeTechs = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/experience', { withCredentials: true })
+            console.log(response)
+            const fetchTechs = []
+            //{ technology: '', experience: "> 6 months", primaryTechnology: false }
+            for (let i = 0; i < response.data.length; i++) {
+                const { id, name, experience } = response.data[i]
+                fetchTechs.push({
+                    id,
+                    technology: name,
+                    experience
+                })
+            }
+
+            setTechnologiesList([...fetchTechs])
+            setFetchTechList([...fetchTechs])
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const refreshToken = () => {
         try {
             axios.post('http://localhost:5000/users/refresh', {}, { withCredentials: true })
@@ -392,11 +417,76 @@ const UserProfileDashboard = () => {
         }
     }
 
+    const saveEmplyeeTechs = async () => {
+        try {
+            const techsToSave = [...technologiesList]
+            const fetchTechnologies = [...fetchTechsList]
+            for (let i = 0; i < techsToSave.length; i++) {
+                const { technology, experience, id } = techsToSave[i]
+                if (!id) {
+                    const data = {
+                        name: technology,
+                        experience
+                    }
+                    const response = await axios.post('http://localhost:5000/experience', data, { withCredentials: true })
+                    console.log(response)
+                }
+                else {
+                    let index = undefined
+                    fetchTechnologies.forEach((tech, techIndex) => {
+                        if (tech.id === id) index = techIndex
+                    })
+                    fetchTechnologies.splice(index, 1)
+                }
+            }
+            for (let i = 0; i < fetchTechnologies.length; i++) {
+                const { id } = fetchTechnologies[i]
+                const response = axios.delete(`http://localhost:5000/experience/${id}`, { withCredentials: true })
+                console.log(response)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const saveUserData = (event) => {
         refreshToken()
         updateUserInformation()
         updateEmployeeInformation()
+        saveEmplyeeTechs()
     }
+
+    const handleTechnologyInput = (event, index, key) => {
+        const { value } = event.target
+
+        const list = [...technologiesList]
+        key === 'technology' ? list[index]['technology'] = value : list[index]['experience'] = value
+        setTechnologiesList(list)
+        //dispatch(saveTechnologies_v2([...list]))
+    }
+
+    const handlePrimaryTech = (index) => {
+        const list = [...technologiesList]
+
+        list[index]["primaryTechnology"] = !list[index]["primaryTechnology"]
+        setTechnologiesList(list)
+        //dispatch(saveTechnologies_v2([...list]))
+    }
+
+    const handleRemoveClick = (event, index) => {
+        event.preventDefault()
+        const list = [...technologiesList];
+
+        list.splice(index, 1);
+        setTechnologiesList(list);
+        //dispatch(saveTechnologies_v2([...list]))
+    };
+
+    const handleAddClick = (event) => {
+        event.preventDefault()
+        setTechnologiesList([...technologiesList, { technology: '', experience: '', primaryTechnology: false }]);
+    };
+
 
     const CVFile = () => {
         const file = fileList[fileList.length - 1]
@@ -526,6 +616,31 @@ const UserProfileDashboard = () => {
                     <Button className='user-profile--upload-button' ><UploadOutlined /> Click to Upload</Button>
                 </Upload>
                 <CVFile />
+                {technologiesList.map((technology, index) => {
+                    return (
+                        <div key={index} >
+                            <div className='employeer--job--tech'>
+                                <input placeholder='Technology'
+                                    className='employeer--job--input employeer--job--tech--input user-profile--tech--input'
+                                    value={technology.technology}
+                                    onChange={(event) => handleTechnologyInput(event, index, 'technology')} />
+                                <input placeholder='Experience in month'
+                                    className='employeer--job--input user-profile--tech--input'
+                                    value={technology.experience}
+                                    onChange={(event) => handleTechnologyInput(event, index, "experience")}
+                                />
+                            </div>
+                            <div className='employeer--job--checkbox  employeer--job--tech--conainer'>
+                                <div className='JO--chcekbox-container'>
+                                    <input className='JO--checkbox employeer--job--checkbox' type='checkbox' value={technology.primaryTechnology} onClick={() => { handlePrimaryTech(index) }} />
+                                    <p className='JO--checkbox-title'>Main technology</p>
+                                </div>
+                                <button className='employeer--job--button employeer--job--tech--button' onClick={(event) => handleRemoveClick(event, index)}>X</button>
+                            </div>
+                        </div>
+                    )
+                })}
+                <button className='employeer--job--button' onClick={handleAddClick}>+</button>
             </div>
             <div className='user-profile--upload-button--container'>
                 <button onClick={event => saveUserData(event)} className='user-profile--save-button'>Save</button>
